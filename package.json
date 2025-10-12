@@ -1,60 +1,65 @@
 {
-  "name": "apathy-theme",
-  "displayName": "Apathy Theme",
-  "description": "A dark, sophisticated color theme with purple/black backgrounds and vibrant neon-like syntax highlighting.",
-  "version": "1.10.0",
-  "icon": "icon.png",
-  "publisher": "coopermaruyama",
-  "engines": {
-    "vscode": "^1.98.0"
-  },
-  "categories": [
-    "Themes"
-  ],
-  "keywords": [
-    "dark",
-    "purple",
-    "neon",
-    "syntax",
-    "color-theme",
-    "apathy"
-  ],
-  "contributes": {
-    "themes": [
-      {
-        "label": "Apathy",
-        "uiTheme": "vs-dark",
-        "path": "./themes/Apathy-color-theme.json"
-      },
-      {
-        "label": "Apathetic Ocean",
-        "uiTheme": "vs-dark",
-        "path": "./themes/Apathetic-Ocean-color-theme.json"
-      },
-      {
-        "label": "Apathy (Experimental)",
-        "uiTheme": "vs-dark",
-        "path": "./themes/Apathy-experimental-color-theme.json"
-      }
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/coopermaruyama/apathy-theme-vscode"
-  },
-  "license": "MIT",
-  "private": true,
-  "scripts": {
-    "build": "bun run main.ts",
-    "watch": "bun run main.ts --watch"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "tsx": "^4.20.5"
-  }
+	"name": "apathy-theme",
+	"displayName": "Apathy Theme",
+	"description": "A dark, sophisticated color theme with purple/black backgrounds and vibrant neon-like syntax highlighting.",
+	"version": "1.11.0",
+	"icon": "icon.png",
+	"publisher": "coopermaruyama",
+	"engines": {
+		"vscode": "^1.98.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"keywords": [
+		"dark",
+		"purple",
+		"neon",
+		"syntax",
+		"color-theme",
+		"apathy"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "Apathy",
+				"uiTheme": "vs-dark",
+				"path": "./themes/Apathy-color-theme.json"
+			},
+			{
+				"label": "Apathetic Ocean",
+				"uiTheme": "vs-dark",
+				"path": "./themes/Apathetic-Ocean-color-theme.json"
+			},
+			{
+				"label": "Apathy (Experimental)",
+				"uiTheme": "vs-dark",
+				"path": "./themes/Apathy-experimental-color-theme.json"
+			}
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/coopermaruyama/apathy-theme-vscode"
+	},
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"build": "bun run src/main.ts",
+		"watch": "bun run src/main.ts --watch",
+		"bump:patch": "bun run src/main.ts bump patch",
+		"bump:minor": "bun run src/main.ts bump minor",
+		"bump:major": "bun run src/main.ts bump major",
+		"pack": "vsce package",
+		"publish": "vsce publish"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"tsx": "^4.20.5"
+	}
 }

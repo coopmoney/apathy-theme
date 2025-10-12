@@ -1024,7 +1024,7 @@
 			"name": "YAML - Values",
 			"scope": ["string.unquoted.plain.out.yaml"],
 			"settings": {
-				"foreground": "#6aa589"
+				"foreground": "#88c6a8"
 			}
 		},
 		{
