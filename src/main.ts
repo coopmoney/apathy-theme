@@ -59,7 +59,7 @@ async function main() {
 		await bumpversion(part);
 		return;
 	}
-	await bun.write("./themes/default.yaml", JSON.stringify(contents, null, 2));
+	await bun.write("./dist/theme/apathy.json", JSON.stringify(contents, null, 2));
 }
 
 main()
