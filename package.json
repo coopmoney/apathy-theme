@@ -57,11 +57,15 @@
 		"bump:patch": "bun run src/main.ts bump patch",
 		"bump:minor": "bun run src/main.ts bump minor",
 		"bump:major": "bun run src/main.ts bump major",
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch:extension": "tsc -watch -p ./",
 		"pack": "vsce package",
 		"publish": "vsce publish"
 	},
 	"devDependencies": {
-		"@types/bun": "latest"
+		"@types/bun": "latest",
+		"@types/vscode": "1.98.0"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
