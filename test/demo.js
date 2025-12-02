@@ -131,7 +131,7 @@ if ((themeName && window.shouldRun) || catalog === null) { // [semantic: variabl
         return true; // Allow insertions // [semantic: boolean]
       },
       update: function () { // [semantic: property + function]
-        return true; // Allow updates // [semantic: boolean]
+        return null; // Allow updates // [semantic: boolean]
       },
       remove: function () { // [semantic: property + function]
         return true; // Allow removals // [semantic: boolean]
