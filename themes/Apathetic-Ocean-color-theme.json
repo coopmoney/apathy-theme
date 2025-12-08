@@ -484,7 +484,7 @@
 			],
 			"settings": {
 				"foreground": "#f5e0dc",
-				// "foreground": "#e0a2d3",
+				// "foreground": "#e0a2b1",
 				"fontStyle": ""
 			}
 		},
@@ -505,7 +505,7 @@
 				"support.class"
 			],
 			"settings": {
-				"foreground": "#e0a2d3",
+				"foreground": "#e0a2b1",
 				"fontStyle": "bold underline"
 			}
 		},
@@ -529,7 +529,7 @@
 			"name": "Type",
 			"scope": ["entity.name.type", "support.type", "storage.type.primitive"],
 			"settings": {
-				"foreground": "#e0a2d3",
+				"foreground": "#e0a2b1",
 				"fontStyle": ""
 			}
 		},
@@ -1087,12 +1087,12 @@
 			"foreground": "#bb7494",
 			"fontStyle": ""
 		},
-		"class.defaultLibrary": "#e0a2d3",
+		"class.defaultLibrary": "#e0a2b1",
 		"interface": {
 			"foreground": "#93e3db",
 			"fontStyle": "italic"
 		},
-		"enum": "#e0a2d3",
+		"enum": "#e0a2b1",
 		"enumMember": "#33b3cc",
 		"type": "#ffcb6b",
 		"typeAlias": "#93e3db",
@@ -1100,7 +1100,7 @@
 			"foreground": "#93e3db",
 			"fontStyle": "italic"
 		},
-		"struct": "#e0a2d3",
+		"struct": "#e0a2b1",
 		"parameter": {
 			"foreground": "#8e8db3",
 			"fontStyle": "italic"
@@ -1112,8 +1112,8 @@
 		"variable": "#999eb8",
 		"variable.readonly": "#96a5b6",
 		"variable.defaultLibrary": "#ffa114",
-		"property": "#e0a2d3",
-		"property.definition": "#a09af7",
+		"property": "#e0a2b1",
+		"property.definition": "#74728f",
 		"property.static": "#96a5b6",
 		"typescript.property": "#96a5b6",
 		"property.readonly": "#96a5b6",

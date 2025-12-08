@@ -2,7 +2,7 @@
 	"name": "apathy-theme",
 	"displayName": "Apathy Theme",
 	"description": "A dark, sophisticated color theme with purple/black backgrounds and vibrant neon-like syntax highlighting.",
-	"version": "1.12.0",
+	"version": "1.12.1",
 	"icon": "icon.png",
 	"publisher": "coopermaruyama",
 	"engines": {
@@ -19,10 +19,6 @@
 		"color-theme",
 		"apathy"
 	],
-	"activationEvents": [
-		"onStartupFinished"
-	],
-	"main": "./out/extension.js",
 	"contributes": {
 		"configurationDefaults": {
 			"editor.semanticHighlighting.enabled": true
@@ -42,6 +38,11 @@
 				"label": "Apathy (Experimental)",
 				"uiTheme": "vs-dark",
 				"path": "./themes/Apathy-experimental-color-theme.json"
+			},
+			{
+				"label": "Minted",
+				"uiTheme": "vs-dark",
+				"path": "./themes/minted.json"
 			}
 		]
 	},
