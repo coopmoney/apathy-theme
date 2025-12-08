@@ -1,0 +1,8 @@
+[package]
+name = "apathy"
+description = "A dark, low-contrast theme with muted purple undertones for reduced eye strain."
+version = "0.1.0"
+authors = ["Cooper Maruyama"]
+repository = "https://github.com/coopermaruyama/apathy-theme"
+
+[themes]
