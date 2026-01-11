@@ -2,6 +2,7 @@
  * TypeScript Semantic Token Demonstration
  * This file showcases various semantic token types
  */
+/** biome-ignore-all lint: <demo> */
 
 // Interfaces and Types
 interface User { // [semantic: interface.declaration]

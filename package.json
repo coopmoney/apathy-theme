@@ -21,7 +21,15 @@
 	],
 	"contributes": {
 		"configurationDefaults": {
-			"editor.semanticHighlighting.enabled": true
+			"editor.semanticHighlighting.enabled": true,
+			"editor.semanticTokenColorCustomizations": {
+				"enabled": true,
+				"settings": {
+					"tokenColors": [
+
+					]
+				}
+			}
 		},
 		"themes": [
 			{
@@ -42,6 +50,11 @@
 			{
 				"label": "Minted",
 				"uiTheme": "vs-dark",
+				"path": "./dist/minted.json"
+			},
+			{
+				"label": "Slate",
+				"uiTheme": "vs-dark",
 				"path": "./themes/minted.json"
 			}
 		]
@@ -54,7 +67,7 @@
 	"private": true,
 	"scripts": {
 		"build": "bun run src/main.ts",
-		"watch": "bun run src/main.ts --watch",
+		"watch": "bun run --watch src/main.ts",
 		"bump:patch": "bun run src/main.ts bump patch",
 		"bump:minor": "bun run src/main.ts bump minor",
 		"bump:major": "bun run src/main.ts bump major",
@@ -65,6 +78,7 @@
 		"publish": "vsce publish"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "^2.3.8",
 		"@types/bun": "latest",
 		"@types/vscode": "1.98.0"
 	},
@@ -72,6 +86,7 @@
 		"typescript": "^5"
 	},
 	"dependencies": {
+		"color": "^5.0.3",
 		"tsx": "^4.20.5"
 	}
 }

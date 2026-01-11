@@ -386,7 +386,7 @@
 			"name": "Operator",
 			"scope": ["keyword.operator", "punctuation.accessor"],
 			"settings": {
-				"foreground": "#af0a52"
+				"foreground": "#e60063"
 			}
 		},
 		{
@@ -398,7 +398,7 @@
 				"keyword.operator.logical"
 			],
 			"settings": {
-				"foreground": "#af0a52"
+				"foreground": "#e60063"
 			}
 		},
 		{
@@ -521,7 +521,7 @@
 			"name": "JSX - Class",
 			"scope": ["support.class.component.tsx", "support.class.component.jsx"],
 			"settings": {
-				"foreground": "#faa629",
+				"foreground": "#eca350",
 				"fontStyle": ""
 			}
 		},
@@ -997,14 +997,18 @@
 		},
 		{
 			"name": "JavaScript - const foo = { a, b, ...|rest| }",
-			"scope": ["meta.object.member variable.other.readwrite"],
+			"scope": [
+				"meta.object.member variable.other.readwrite"
+			],
 			"settings": {
 				"foreground": "#f1e1ac"
 			}
 		},
 		{
 			"name": "JavaScript - const foo = { a, b, |...|rest }",
-			"scope": ["meta.object.member keyword.operator.spread"],
+			"scope": [
+				"meta.object.member keyword.operator.spread",
+			],
 			"settings": {
 				"foreground": "#f1e1ac"
 			}
@@ -1065,7 +1069,7 @@
 			"scope": ["entity.other.attribute-name.multipart.nix"],
 			"settings": {
 				// "foreground": "#8e8db3"
-				"foreground": "#ca94cd"
+				"foreground": "#e0a2b1"
 			}
 		},
 		{
@@ -1096,7 +1100,7 @@
 			"foreground": "#93e3db",
 			"fontStyle": "italic"
 		},
-		"struct": "#e0a2b1",
+		"struct": "#cdf6ff",
 		"parameter": {
 			"foreground": "#8e8db3",
 			"fontStyle": "italic"
@@ -1105,8 +1109,8 @@
 			"foreground": "#8e8db3",
 			"fontStyle": "italic"
 		},
-		"variable": "#999eb8",
-		"variable.readonly": "#96a5b6",
+		"variable": "#9aa1c7",
+		"variable.readonly": "#9aa1c7",
 		"variable.defaultLibrary": "#ffa114",
 		"property": "#e0a2b1",
 		"property.definition": "#74728f",
@@ -1118,9 +1122,9 @@
 		"function": "#7ce6bcff",
 		"function.defaultLibrary": "#7ce6bcff",
 		"function.declaration": "#7ce6bcff",
-		"method": "#7ce6bcff",
-		"method.defaultLibrary": "#7ce6bcff",
-		"method.declaration": "#7ce6bcff",
+		"method": "#baf8e5",
+		"method.defaultLibrary": "#baf8e5",
+		"method.declaration": "#baf8e5",
 		"macro": "#f184bce6",
 		"decorator": "#f184bce6",
 		"label": "#afd1e9cf",
@@ -1128,13 +1132,15 @@
 			"foreground": "#4D4A56",
 			"fontStyle": "italic"
 		},
-		"string": "#aac17b",
+		"string": "#c3dc8f",
 		"regexp": {
 			"foreground": "#FF6188",
 			"fontStyle": "italic"
 		},
 		"number": "#33b3cc",
-		"keyword": "#afd1e9cf",
+		"keyword": "#998fe1cf",
+		"keyword.wordlike": "#FF6188",
+		"keyword.unsafe": "#FF6188",
 		"operator": "#e60063",
 		"selfParameter": {
 			"foreground": "#ffa114",

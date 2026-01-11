@@ -1,14 +1,21 @@
-![Frame 2](https://github.com/user-attachments/assets/650e07c8-20f3-49ce-910f-b5f885453162)
+![005](/assets/006.png)
+<!-- <img alt="006" src="https://github.com/user-attachments/assets/768db3aa-572f-4f19-8922-539494fbf3e1" style="max-width: 100%;object-fit: cover;aspect-ratio: 16/9;object-position: top left;box-shadow: 0px 2px 5px hsla(0,0%,0%,0.2);border-radius: 6px;" /> -->
 
-<h1 style="text-align: center;"><center>Apathy</center></h1>
+<h1 style="text-align: center;"><center>apathy</center></h1>
 
-A sophisticated dark color theme ported from the original Atom version, featuring deep purple/black backgrounds with vibrant, neon-like syntax highlighting. Apathy provides excellent contrast and readability while maintaining a visually striking aesthetic.
+<center>
+  A sophisticated dark theme with vibrant, neon-like syntax highlighting.<br /> Excellent contrast and readability while maintaining a visually striking aesthetic.
+</center>
+<br />
 
-![Frame 2](https://github.com/user-attachments/assets/79dd7785-2f71-4eba-8d8e-742668e8156e)
+![005](/assets/005.png)
+<!-- <img src="/assets/005.png" style=" aspect-ratio: 16 / 9; object-fit: cover; object-position: top left; box-shadow: 0px 1px 5px hsla(0,0%,0%,.1);"/> -->
 
-![Frame 2](https://github.com/user-attachments/assets/d13cc1cf-5179-48bc-a249-db045307bfa9)
 
-![Frame 2](https://github.com/user-attachments/assets/8ce109e2-7823-4a96-a01e-36a3e86cecb3)
+![005](/assets/003.png)
+<!-- <img src="/assets/003.png" style=" aspect-ratio: 16 / 9; object-fit: cover; object-position: top left; box-shadow: 0px 1px 5px hsla(0,0%,0%,.1);"/> -->
+
+
 
 
 ## ⚙️ Recommended Settings

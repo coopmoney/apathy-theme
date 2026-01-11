@@ -3,16 +3,8 @@
 	"type": "dark",
 
 	"colors": {
-		// Editor Base Colors
-		// white: #e1e2e5
-		// cyan: #88e6d6
-		// blue: #1abdda
-		// purple: #7e89ec
-		// orange: #ffbf71
-
 		"editor.background": "#0e0e15",
 		"editorPane.background": "#0e0e15",
-		// "editor.foreground": "#96a5b6",
 		"editor.foreground": "#8e93b0c2",
 		"editorCursor.foreground": "#da4c51",
 		"editor.lineHighlightBackground": "#1b162994",
@@ -30,7 +22,6 @@
 		"foreground": "#5f6384b8",
 		"icon.foreground": "#5f6384b8",
 
-		// Editor Gutter
 		"editorLineNumber.foreground": "#454148",
 		"editorLineNumber.activeForeground": "#9B8FB5",
 		"editorGutter.background": "#0f0f12",
@@ -38,41 +29,38 @@
 		"editorGutter.addedBackground": "#A8FF60",
 		"editorGutter.deletedBackground": "#CC6666",
 
-		// Editor Indentation
-		"editorIndentGuide.background1": "#29192969",
-		"editorIndentGuide.activeBackground1": "#6b406b69",
 		"editorWhitespace.foreground": "#272636",
 		"editorRuler.foreground": "#29192969",
+		"editorIndentGuide.background1": "#29192969",
+		"editorIndentGuide.activeBackground1": "#6b406b69",
+		"editorIndentGuide.background2": "#182356",
+		"editorIndentGuide.activeBackground2": "#182356",
+		"editorIndentGuide.background3": "#29192969",
+		"editorIndentGuide.activeBackground3": "#6b406b69",
 
-		// Editor Widgets
 		"editorWidget.background": "#1c1e29cc",
 		"editorWidget.border": "#527bb254",
 		"editorWidget.foreground": "#d4edff99",
-		// Suggest Widget
 		"editorSuggestWidget.background": "#1B1629",
 		"editorSuggestWidget.border": "#45414C",
 		"editorSuggestWidget.foreground": "#E6E2D1",
 		"editorSuggestWidget.selectedBackground": "#2A2441",
-		// Hover Widget (Intellisense)
 		"editorHoverWidget.background": "#13141be7",
 		"editorHoverWidget.border": "#131a24",
 		"editorHoverWidget.foreground": "#d4edffc4",
 
-		// Side Bar
 		"sideBar.background": "#0f0f12",
 		"sideBar.foreground": "#827b90cf",
 		"sideBarTitle.foreground": "#e3e1e880",
 		"sideBarSectionHeader.background": "#0f0e1000",
 		"sideBarSectionHeader.foreground": "#e3e1e8b7",
 
-		// Activity Bar
 		"activityBar.background": "#0f0f12",
 		"activityBar.foreground": "#96a5b6",
 		"activityBar.inactiveForeground": "#45414C",
 		"activityBarBadge.background": "#FF7A0000",
 		"activityBarBadge.foreground": "#b3e740",
 
-		// Status Bar
 		"statusBar.background": "#0f0f12",
 		"statusBar.foreground": "#5f6384b8",
 		"statusBar.debuggingBackground": "#3fffbdf2",
@@ -81,13 +69,11 @@
 		"statusBar.noFolderBackground": "#0B0915",
 		"statusBar.border": "#ffffff00",
 
-		// Title Bar
 		"titleBar.activeBackground": "#0f0f12",
 		"titleBar.activeForeground": "#96a5b6",
 		"titleBar.inactiveBackground": "#0f0f12",
 		"titleBar.inactiveForeground": "#8d8d8d",
 
-		// Tabs
 		"tab.activeBackground": "#0f0e10",
 		"tab.activeForeground": "#96a5b6",
 		"tab.inactiveBackground": "#0f0f12",

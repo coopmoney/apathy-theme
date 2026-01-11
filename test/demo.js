@@ -1,4 +1,6 @@
 // @ts-nocheck
+/** biome-ignore-all lint: reason */
+
 /**
  * Apathy Theme Demo File
  * This file showcases the various syntax highlighting features

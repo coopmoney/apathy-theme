@@ -1,7 +1,7 @@
 /**
- * Apathy theme - converted to hierarchical slate-style format
+ * Apathy Experimental theme - converted to hierarchical slate-style format
  *
- * A dark, muted theme with warm accents focused on readability.
+ * An experimental variant with brighter foreground and slightly different background.
  */
 
 import { make, type ThemeDefinition } from "./types";
@@ -15,16 +15,15 @@ import { mix } from "./utils";
 
 export enum palette {
   // Backgrounds
-  background = "#0e0b13",
-  editorPaneBackground = "#0e0a12",
-  gutterBg = "#0c0a10",
+  background = "#12121c",
   panelBg = "#0e0b13",
+  gutterBg = "#0c0c13",
   tabBg = "#0f0e10",
   tabHeaderBg = "#0d0b17",
 
   // Grays & Neutrals
-  white = "#e3e1e8e4",
-  source = "#e3e1e8c8",
+  white = "#e1e2e5",
+  softWhite = "#e3e1e8c8",
   muted = "#4D4A56",
   steel = "#829297",
   slate = "#9B8FB5",
@@ -32,8 +31,6 @@ export enum palette {
   gray = "#7d7a8b",
   lightGray = "#B5B5B5",
   faintGray = "#74727794",
-  editorFg = "#6e6a7b",
-  uiForeground = "#cbdbe0b3",
 
   // Blues & Cyans
   cyan = "#33b3cc",
@@ -52,8 +49,6 @@ export enum palette {
   brightGreen = "#C3E88D",
   addedGreen = "#47cf7ec9",
   gitInserted = "#A7DA1E",
-  jsonValue = "#afe641",
-  yamlValue = "#8dc781",
 
   // Warm accents
   gold = "#ffb547",
@@ -74,14 +69,12 @@ export enum palette {
   errorRed = "#b70b24",
   gitDeleted = "#E61F44",
   deletedRed = "#F92672",
-  pythonDef = "#fe90a0",
 
   // Purples
   lavender = "#998fe1cf",
   purple = "#C792EA",
   lilac = "#C574DD",
   paramPurple = "#8e8db3",
-  paramValue = "#c3c1d3",
   accessor = "#7a73cc",
 
   // Browns
@@ -114,27 +107,10 @@ export enum palette {
   tabBorder = "#212131",
   tabActiveBorder = "#d0cfd3",
   buttonBg = "#443e5040",
-  buttonFg = "#acecff7d",
+  buttonFg = "#acecffba",
   buttonBorder = "#60537836",
   inputBg = "#110f12",
   inputBorder = "#26242a",
-
-  // Misc
-  tagName = "#DEDEDE",
-  cssProperty = "#4b6672",
-  cssPropertyValue = "#d0cfd3",
-  cssSelector = "#e5e3e8",
-  bracketPunctuation = "#747277",
-  jsBraces = "#5b6567b0",
-  jsFunctionVar = "#a3c1c7",
-  jsFunctionCall = "#DCDCAA",
-  jsMemberExpr = "#E0E0E0",
-  markdownHeading = "#79e3bd",
-  markdownBold = "#5983a2",
-  markdownLink = "#78DCE8",
-  codeTagNotation = "#4d7461",
-  yamlSource = "#cfccd7e3",
-  controlConditional = "#e3e1e8a8",
 
   // Terminal ANSI
   ansiBlack = "#2A273F",
@@ -151,15 +127,14 @@ export const v = (k: PaletteValue): PaletteValue => k;
 // 2. Theme Definition
 // ============================================================================
 
-export const apathy: ThemeDefinition = {
-  name: "Apathy",
+export const apathyExperimental: ThemeDefinition = {
+  name: "Apathy Experimental",
   type: "dark",
   palette,
   background: palette.background,
-  semanticHighlighting: true,
 
   tokens: {
-    source: palette.source,
+    source: palette.softWhite,
     comments: palette.muted,
     strings: make({
       default: palette.wasabi,
@@ -181,7 +156,7 @@ export const apathy: ThemeDefinition = {
 
     keywords: {
       default: palette.softBlue,
-      control: palette.controlConditional,
+      control: "#e3e1e8a8",
       declaration: palette.gray,
       import: palette.importPurple,
       modifier: palette.steel,
@@ -189,19 +164,19 @@ export const apathy: ThemeDefinition = {
     },
 
     variables: {
-      default: palette.white,
-      local: palette.white,
+      default: "#e3e1e8e4",
+      local: "#e3e1e8e4",
       parameter: palette.paramPurple,
-      property: palette.white,
+      property: "#e3e1e8e4",
       global: palette.amber,
-      other: palette.white,
+      other: "#e3e1e8e4",
     },
 
     constants: {
       default: palette.cyan,
       numeric: palette.cyan,
       language: palette.cyan,
-      userDefined: palette.white,
+      userDefined: "#e3e1e8e4",
     },
 
     functions: {
@@ -224,9 +199,9 @@ export const apathy: ThemeDefinition = {
 
     punctuation: {
       default: palette.faintGray,
-      definition: palette.faintGray,
+      definition: "#808080",
       delimiter: palette.faintGray,
-      bracket: palette.bracketPunctuation,
+      bracket: "#747277",
       accessor: palette.accessor,
     },
 
@@ -251,27 +226,13 @@ export const apathy: ThemeDefinition = {
         call: "#96d5ce",
       },
       storage: {
-        default: palette.pythonDef,
-        type: palette.pythonDef,
+        default: "#fe90a0",
+        type: "#fe90a0",
       },
     },
     go: {
       functions: {
         default: palette.seafoam,
-      },
-    },
-    javascript: {
-      functions: {
-        default: palette.jsFunctionCall,
-        declaration: palette.seafoam,
-        call: palette.jsFunctionCall,
-      },
-    },
-    typescript: {
-      functions: {
-        default: palette.jsFunctionCall,
-        declaration: palette.seafoam,
-        call: palette.jsFunctionCall,
       },
     },
   },
@@ -295,9 +256,9 @@ export const apathy: ThemeDefinition = {
     method: palette.gold,
     decorator: palette.pink,
     macro: palette.pink,
-    variable: palette.white,
+    variable: "#e3e1e8e4",
     parameter: palette.paramPurple,
-    property: palette.white,
+    property: "#e3e1e8e4",
     label: palette.softBlue,
   },
 
@@ -323,12 +284,12 @@ export const apathy: ThemeDefinition = {
   ui: {
     backgrounds: {
       base: palette.background,
-      surface: palette.background,
+      surface: palette.panelBg,
       raised: palette.suggestBg,
       overlay: palette.widgetBg,
     },
     foregrounds: {
-      default: palette.uiForeground,
+      default: "#cbdbe0b3",
       muted: palette.charcoal,
       subtle: palette.inputBorder,
       accent: palette.cyan,
@@ -359,13 +320,13 @@ export const apathy: ThemeDefinition = {
       modified: palette.gitModified,
       deleted: palette.deletedRed,
       untracked: "#e1d9e79e",
-      ignored: "#3b4940",
+      ignored: "#444248",
       conflict: palette.orange,
     },
     overrides: {
       editor: {
         background: palette.background,
-        foreground: palette.editorFg,
+        foreground: palette.white,
         lineHighlight: palette.lineHighlight,
         lineHighlightBorder: palette.lineHighlight,
         selectionHighlight: palette.selectionHighlight,
@@ -387,44 +348,44 @@ export const apathy: ThemeDefinition = {
         activeForeground: palette.slate,
       },
       activityBar: {
-        background: palette.background,
-        foreground: palette.white,
-        inactiveForeground: "#e0dfe127",
-        border: palette.background,
+        background: palette.panelBg,
+        foreground: "#e3e1e8e4",
+        inactiveForeground: palette.widgetBorder,
+        border: palette.panelBg,
         badgeBackground: "#FF7A0000",
         badgeForeground: palette.brightGreen,
       },
       sideBar: {
-        background: palette.background,
+        background: palette.panelBg,
         foreground: "#827b90cf",
-        border: palette.background,
+        border: palette.panelBg,
         sectionHeaderBackground: "#0f0e1000",
         sectionHeaderForeground: "#e3e1e8b7",
       },
       panel: {
-        background: palette.background,
-        foreground: palette.white,
-        border: "#352b4655",
-        titleActiveForeground: "#e3e1e891",
-        titleInactiveForeground: "#e0e0e069",
+        background: palette.panelBg,
+        foreground: "#e3e1e8e4",
+        border: "#372d47",
+        titleActiveForeground: "#e3e1e8e4",
+        titleInactiveForeground: "#E0E0E0",
         titleActiveBorder: "#ffffff",
       },
       statusBar: {
-        background: palette.background,
-        foreground: "#7c7c7c8a",
-        border: palette.background,
+        background: palette.panelBg,
+        foreground: "#e3e1e88f",
+        border: palette.panelBg,
         debuggingBackground: "#1f1a38",
-        debuggingForeground: "#bd5e2b",
+        debuggingForeground: "#000000",
         noFolderBackground: "#0B0915",
         noFolderForeground: palette.muted,
       },
       tabs: {
         activeBackground: palette.tabBg,
-        activeForeground: "#e3e1e894",
+        activeForeground: "#e3e1e8e4",
         activeBorder: palette.tabActiveBorder,
         activeBorderTop: palette.tabActiveBorder,
         inactiveBackground: palette.tabBg,
-        inactiveForeground: "#b5b5b59e",
+        inactiveForeground: palette.lightGray,
         hoverBackground: palette.tabBg,
         hoverForeground: palette.white,
         unfocusedActiveBackground: palette.tabBg,
@@ -453,7 +414,7 @@ export const apathy: ThemeDefinition = {
         foreground: palette.buttonFg,
         hoverBackground: "#443e5053",
         secondaryBackground: "#17161e54",
-        secondaryForeground: "#d0d5db83",
+        secondaryForeground: "#d0d5dbba",
         secondaryHoverBackground: "#2b293754",
       },
       dropdown: {
@@ -486,7 +447,7 @@ export const apathy: ThemeDefinition = {
         activeSelectionForeground: palette.yellow,
       },
       terminal: {
-        background: palette.background,
+        background: palette.panelBg,
         foreground: "#dddde8dc",
         cursorForeground: palette.white,
         selectionBackground: palette.selection,
@@ -522,12 +483,10 @@ export const apathy: ThemeDefinition = {
         titleForeground: "#E6E2D1",
       },
       diffEditor: {
-        // insertedTextBackground: "#13232080",
-        insertedTextBackground: "#1b373473",
+        insertedTextBackground: "#13232080",
         removedTextBackground: "#f9267213",
-        // insertedLineBackground: "#132320bd",
-        insertedLineBackground: "#1b373473",
-        removedLineBackground: "#3c152578",
+        insertedLineBackground: "#132320bd",
+        removedLineBackground: "#f9267213",
         diagonalFill: palette.widgetBorder,
       },
       merge: {
@@ -540,101 +499,6 @@ export const apathy: ThemeDefinition = {
       },
     },
   },
-
-  // Extra VS Code colors not covered by structured UI
-  extraColors: {
-    // Focus border override (use focusBorder not borders.active)
-    "focusBorder": palette.focusBorder,
-
-    // Editor extras
-    "editorPane.background": palette.editorPaneBackground,
-    "editorCursor.foreground": "#da4c51",
-    "editor.selectionBackground": palette.selection,
-    "editor.inactiveSelectionBackground": palette.inactiveSelection,
-
-    // Editor hints
-    "editorHint.foreground": "#404970",
-    "editorHint.border": palette.findMatch,
-    "editorInlayHint.background": palette.findMatch,
-    "editorInlayHint.foreground": "#404970",
-    "editorInlayHint.parameterBackground": "#2a5b7edc",
-    "editorInlayHint.parameterForeground": "#404970",
-    "editorInlayHint.typeBackground": palette.findMatch,
-    "editorInlayHint.typeForeground": "#404970",
-
-    // Editor indentation
-    "editorIndentGuide.background1": palette.indentGuide,
-    "editorIndentGuide.activeBackground1": palette.indentGuideActive,
-    "editorWhitespace.foreground": palette.whitespace,
-    "editorRuler.foreground": palette.ruler,
-
-    // Editor widgets
-    "editorWidget.background": palette.widgetBg,
-    "editorWidget.border": palette.widgetBorder,
-    "editorSuggestWidget.background": palette.suggestBg,
-    "editorSuggestWidget.border": palette.widgetBorder,
-    "editorSuggestWidget.foreground": "#E6E2D1",
-    "editorSuggestWidget.selectedBackground": palette.listActive,
-
-    // Sidebar extras
-    "sideBarTitle.foreground": "#e3e1e880",
-
-    // Title bar
-    "titleBar.activeBackground": palette.background,
-    "titleBar.activeForeground": "#e3e1e887",
-    "titleBar.inactiveBackground": palette.background,
-    "titleBar.inactiveForeground": "#8d8d8d90",
-
-    // Tabs extras
-    "tab.border": palette.tabBorder,
-    "editorGroupHeader.tabsBackground": palette.tabHeaderBg,
-
-    // Sticky scroll
-    "editorStickyScroll.background": "#0f0b1581",
-    "editorStickyScroll.border": "#10091814",
-    "editorStickyScroll.shadow": "#00000080",
-
-    // Focus borders
-    "focusBorder": palette.focusBorder,
-    "gauge.border": palette.focusBorder,
-    "sash.hoverBorder": palette.focusBorder,
-    "editorGroup.border": palette.focusBorder,
-
-    // Tree & separators
-    "tree.indentGuidesStroke": palette.widgetBorder,
-    "textSeparator.foreground": "#45414c6b",
-    "contrastBorder": palette.focusBorder,
-
-    // Progress bar (use brightGreen C3E88D per original theme)
-    "progressBar.background": palette.brightGreen,
-
-    // Menu
-    "menu.background": palette.suggestBg,
-    "menu.foreground": palette.white,
-    "menu.selectionBackground": palette.listActive,
-    "menu.selectionForeground": "#E6E2D1",
-    "menu.separatorBackground": palette.widgetBorder,
-
-    // Button extras
-    "button.border": palette.buttonBorder,
-    "button.separator": "#6053786e",
-
-    // Peek view extras
-    "peekViewEditor.matchHighlightBackground": "#CC850040",
-    "peekViewResult.matchHighlightBackground": "#CC850040",
-    "peekViewTitleDescription.foreground": palette.lightGray,
-
-    // Debug console
-    "debugConsole.sourceForeground": "#e5e3e8",
-    "debugConsole.infoForeground": palette.paleBlue,
-    "debugConsole.errorForeground": "#ff6161",
-    "debugConsole.warningForeground": palette.yellow,
-    "editorError.background": "#52000045",
-    "list.errorForeground": "#a84e4e",
-
-    // Settings
-    "settings.headerForeground": "#d1deea75",
-  },
 };
 
-export default apathy;
+export default apathyExperimental;
