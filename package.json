@@ -25,34 +25,35 @@
 		},
 		"themes": [
 			{
-				"label": "Apathy",
-				"uiTheme": "vs-dark",
-				"path": "./dist/apathy.json"
-			},
-			{
-				"label": "Apathetic Ocean",
-				"uiTheme": "vs-dark",
-				"path": "./dist/apathetic-ocean.json"
-			},
-			{
-				"label": "Apathy (Experimental)",
-				"uiTheme": "vs-dark",
-				"path": "./dist/apathy-experimental.json"
-			},
-			{
-				"label": "Minted",
+				"label": "apathy // minted",
 				"uiTheme": "vs-dark",
 				"path": "./dist/minted.json"
 			},
 			{
-				"label": "Minted Reference",
+				"label": "apathy // classic",
+				"uiTheme": "vs-dark",
+				"path": "./dist/apathy.json"
+			},
+			{
+				"label": "apathy // ocean",
+				"uiTheme": "vs-dark",
+				"path": "./dist/apathetic-ocean.json"
+			},
+			// {
+			// 	"label": "apathy (Experimental)",
+			// 	"uiTheme": "vs-dark",
+			// 	"path": "./dist/apathy-experimental.json"
+			// },
+			{
+				"label": "apathy // slate",
 				"uiTheme": "vs-dark",
 				"path": "./themes/minted.json"
 			},
+			// backwards compatibility
 			{
-				"label": "Slate",
+				"label": "Apathy",
 				"uiTheme": "vs-dark",
-				"path": "./dist/slate.json"
+				"path": "./dist/minted.json"
 			}
 		]
 	},

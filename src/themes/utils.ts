@@ -16,6 +16,13 @@ export function mix(color1: string, color2: string, amount: number = 0.5): strin
   return Color(color1).mix(Color(color2), amount).hex();
 }
 
+export function accent(color: string, color2: string, _lighten: number = 0.1, _mix: number = 0.1): string {
+  return lighten(
+    mix(color, color2, _mix),
+    _lighten
+  );
+}
+
 export function lighter(color: string) {
   return lighten(color, 0.2);
 }

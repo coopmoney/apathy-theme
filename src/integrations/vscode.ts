@@ -207,16 +207,24 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"editor.foreground": c("ui.overrides.editor.foreground", "ui.foregrounds.default"),
 		"editor.hoverHighlightBackground": c("ui.overrides.editor.lineHighlight", "ui.selection.background"),
 		"editor.selectionHighlightBorder": c("ui.overrides.editor.lineHighlightBorder", "ui.borders.active"),
-		"editor.selectionHighlightBackground": c("ui.overrides.editor.selectionHighlight", "ui.selection.background"),
+		// "editor.selectionHighlightBackground": c("ui.overrides.editor.selectionHighlight", "ui.selection.background"),
 		// "editor.wordHighlightBackground": c("ui.overrides.editor.wordHighlight", "ui.selection.background"),
 		// "editor.wordHighlightStrongBackground": c("ui.overrides.editor.wordHighlightStrong", "ui.selection.background"),
-		"editor.findMatchBackground": c("ui.overrides.editor.findMatch", "ui.foregrounds.accent"),
-		"editor.findMatchHighlightBackground": c("ui.overrides.editor.findMatchHighlight", "ui.selection.background"),
-		"editor.findRangeHighlightBackground": c("ui.overrides.editor.rangeHighlight", "ui.selection.background"),
-		"editor.selectionBackground": c("ui.selection.background", "ui.selection.background"),
+		// "editor.findMatchBackground": c("ui.overrides.editor.findMatch", "ui.foregrounds.accent"),
+		// "editor.findMatchHighlightBackground": c("ui.overrides.editor.findMatchHighlight", "ui.selection.background"),
+		// "editor.findRangeHighlightBackground": c("ui.overrides.editor.rangeHighlight", "ui.selection.background"),
+		// "editor.selectionBackground": c("ui.selection.background", "ui.selection.background"),
 		// @ts-ignore
-		"editor.wordHighlightStrongBackground": c("ui.overrides.editor.wordHighlightStrong", "ui.selection.background"),
+		// "editor.wordHighlightStrongBackground": c("ui.overrides.editor.wordHighlightStrong", "ui.selection.background"),
 		"list.highlightForeground": c("ui.overrides.list.highlightForeground", "ui.foregrounds.accent"),
+		"editor.selectionBackground": c("ui.overrides.editor.selectionBackground"),
+		"editor.selectionHighlightBackground": c("ui.overrides.editor.selectionHighlightBackground"),
+		"editor.inactiveSelectionBackground": c("ui.overrides.editor.inactiveSelectionBackground"),
+		// "editor.wordHighlightBackground": c("ui.overrides.editor.wordHighlightBackground"),
+		// "editor.wordHighlightStrongBackground": c("ui.overrides.editor.wordHighlightStrongBackground"),
+		"editor.findMatchBackground": c("ui.overrides.editor.findMatchBackground"),
+		"editor.findMatchHighlightBackground": c("ui.overrides.editor.findMatchHighlightBackground"),
+		"editor.findRangeHighlightBackground": c("ui.overrides.editor.findRangeHighlightBackground"),
 		// ═══════════════════════════════════════════════════════════════════════
 		// Editor Gutter
 		// ═══════════════════════════════════════════════════════════════════════
@@ -225,7 +233,12 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"diffEditorGutter.insertedLineBackground": c("ui.overrides.editorGutter.addedBackground", "ui.git.added"),
 		"diffEditorGutter.removedLineBackground": c("ui.overrides.editorGutter.deletedBackground", "ui.git.deleted"),
 		// "editorGutter.foldingControlForeground": c("ui.overrides.editorGutter.foldingControl", "ui.foregrounds.muted"),
-
+		// @ts-ignore
+		"editorGutter.modifiedBackground": c("ui.overrides.editorGutter.modifiedBackground", "ui.git.modified"),
+		// @ts-ignore
+		"editorGutter.addedBackground": c("ui.overrides.editorGutter.addedBackground", "ui.git.added"),
+		// @ts-ignore
+		"editorGutter.deletedBackground": c("ui.overrides.editorGutter.deletedBackground", "ui.git.deleted"),
 		"quickInput.background": c("ui.backgrounds.surface"),
 		"quickInput.foreground": c("ui.foregrounds.default"),
 		"quickInputList.focusBackground": c("ui.backgrounds.overlay"),
@@ -237,13 +250,13 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		// Editor Line Number
 		// ═══════════════════════════════════════════════════════════════════════
-		"editorLineNumber.foreground": c("ui.overrides.editorLineNumber.foreground", "ui.foregrounds.muted"),
-		"editorLineNumber.activeForeground": c("ui.overrides.editorLineNumber.activeForeground", "ui.foregrounds.default"),
-		"chat.requestBackground": c("ui.overrides.chat.requestBackground", "ui.backgrounds.surface"),
-		"chat.requestForeground": c("ui.overrides.editor.foreground", "ui.foregrounds.default"),
-		"chat.requestBorder": c("ui.borders.default", "ui.borders.default"),
-		"chat.checkpointSeparator": c("ui.borders.active", "ui.borders.subtle"),
-		"chat.editedFileForeground": c("ui.overrides.chat.codeBlockBackground", "ui.foregrounds.muted"),
+		// "editorLineNumber.foreground": c("ui.overrides.editor.lineNumberForeground", "ui.foregrounds.muted"),
+		// "editorLineNumber.activeForeground": c("ui.overrides.editor.lineNumberActiveForeground", "ui.foregrounds.default"),
+		// "chat.requestBackground": c("ui.overrides.chat.requestBackground", "ui.backgrounds.surface"),
+		// "chat.requestForeground": c("ui.overrides.editor.foreground", "ui.foregrounds.default"),
+		// "chat.requestBorder": c("ui.borders.default", "ui.borders.default"),
+		// "chat.checkpointSeparator": c("ui.borders.active", "ui.borders.subtle"),
+		// "chat.editedFileForeground": c("ui.overrides.chat.codeBlockBackground", "ui.foregrounds.muted"),
 
 
 		// ═══════════════════════════════════════════════════════════════════════
@@ -265,31 +278,40 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"sideBarSectionHeader.background": c("ui.overrides.sideBar.sectionHeaderBackground", "ui.backgrounds.raised"),
 		"sideBarSectionHeader.foreground": c("ui.overrides.sideBar.sectionHeaderForeground", "ui.foregrounds.default"),
 		"panel.border": c( "ui.borders.default"),
-		"gauge.border": c("ui.borders.subtle"),
+		// "gauge.border": c("ui.borders.subtle"),
 		"sash.hoverBorder": c("ui.borders.active"),
 		"editorGroup.border": c("ui.borders.subtle"),
-		"composerPane.background": c("ui.backgrounds.surface"),
+		// "composerPane.background": c("ui.backgrounds.surface"),
 		"editor.compositionBorder": c("ui.borders.active"),
+		"editorWidget.background": c("ui.overrides.editorWidget.background", "ui.backgrounds.overlay"),
+		"editorWidget.border": c("ui.overrides.editorWidget.border", "ui.borders.default"),
+		"editorWidget.foreground": c("ui.overrides.editorWidget.foreground", "ui.foregrounds.default"),
+		"input.border": c("ui.overrides.input.border", "ui.borders.default"),
+		"diffEditorGutter.insertedLineBackground": c("ui.overrides.editorGutter.addedBackground", "ui.git.added"),
+		"diffEditorGutter.removedLineBackground": c("ui.overrides.editorGutter.deletedBackground", "ui.git.deleted"),
 
 
 		// ═══════════════════════════════════════════════════════════════════════
 		// Panel
 		// ═══════════════════════════════════════════════════════════════════════
 		"panel.background": c("ui.overrides.panel.background", "ui.backgrounds.surface"),
-		"panel.foreground": c("ui.overrides.panel.foreground", "ui.foregrounds.default"),
+		// "panel.foreground": c("ui.overrides.panel.foreground", "ui.foregrounds.default"),
 		// "panel.border": c("ui.overrides.panel.border", "ui.borders.default"),
 		"panelTitle.activeForeground": c("ui.overrides.panel.titleActiveForeground", "ui.foregrounds.default"),
 		"panelTitle.inactiveForeground": c("ui.overrides.panel.titleInactiveForeground", "ui.foregrounds.muted"),
 		"panelTitle.activeBorder": c("ui.overrides.panel.titleActiveBorder", "ui.accent.primary"),
-
+		"titleBar.activeBackground": c("ui.overrides.titleBar.activeBackground", "ui.backgrounds.base"),
+		"titleBar.activeForeground": c("ui.overrides.titleBar.activeForeground", "ui.foregrounds.default"),
+		"titleBar.inactiveBackground": c("ui.overrides.titleBar.inactiveBackground", "ui.backgrounds.base"),
+		"titleBar.inactiveForeground": c("ui.overrides.titleBar.inactiveForeground", "ui.foregrounds.muted"),
 		// ═══════════════════════════════════════════════════════════════════════
 		// Status Bar
 		// ═══════════════════════════════════════════════════════════════════════
 		"statusBar.background": c("ui.overrides.statusBar.background", "ui.backgrounds.base"),
 		"statusBar.foreground": c("ui.overrides.statusBar.foreground", "ui.foregrounds.default"),
 		"statusBar.border": c("ui.overrides.statusBar.border", "ui.borders.subtle"),
-		"statusBar.debuggingBackground": c("ui.overrides.statusBar.debuggingBackground", "ui.status.warning"),
-		"statusBar.debuggingForeground": c("ui.overrides.statusBar.debuggingForeground", "ui.foregrounds.default"),
+		// "statusBar.debuggingBackground": c("ui.overrides.statusBar.debuggingBackground", "ui.status.warning"),
+		// "statusBar.debuggingForeground": c("ui.overrides.statusBar.debuggingForeground", "ui.foregrounds.default"),
 		"statusBar.noFolderBackground": c("ui.overrides.statusBar.noFolderBackground", "ui.backgrounds.surface"),
 		"statusBar.noFolderForeground": c("ui.overrides.statusBar.noFolderForeground", "ui.foregrounds.muted"),
 
@@ -315,18 +337,18 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"list.activeSelectionForeground": c("ui.overrides.list.activeSelectionForeground", "ui.foregrounds.default"),
 		"list.inactiveSelectionBackground": c("ui.overrides.list.inactiveSelectionBackground", "ui.backgrounds.raised"),
 		"list.inactiveSelectionForeground": c("ui.overrides.list.inactiveSelectionForeground", "ui.foregrounds.muted"),
-		"list.hoverBackground": c("ui.overrides.list.hoverBackground", "ui.backgrounds.raised"),
-		"list.hoverForeground": c("ui.overrides.list.hoverForeground", "ui.foregrounds.default"),
+		// "list.hoverBackground": c("ui.overrides.list.hoverBackground", "ui.backgrounds.raised"),
+		// "list.hoverForeground": c("ui.overrides.list.hoverForeground", "ui.foregrounds.default"),
 		"list.focusBackground": c("ui.overrides.list.focusBackground", "ui.selection.background"),
 		"list.focusForeground": c("ui.overrides.list.focusForeground", "ui.foregrounds.default"),
-		"list.highlightForeground": c("ui.overrides.list.highlightForeground", "ui.foregrounds.accent"),
+		// "list.highlightForeground": c("ui.overrides.list.highlightForeground", "ui.foregrounds.accent"),
 
 		// ═══════════════════════════════════════════════════════════════════════
 		// Input
 		// ═══════════════════════════════════════════════════════════════════════
 		"input.background": c("ui.overrides.input.background", "ui.backgrounds.raised"),
 		"input.foreground": c("ui.overrides.input.foreground", "ui.foregrounds.default"),
-		"input.border": c("ui.overrides.input.border", "ui.borders.default"),
+		// "input.border": c("ui.overrides.input.border", "ui.borders.default"),
 		"input.placeholderForeground": c("ui.overrides.input.placeholderForeground", "ui.foregrounds.subtle"),
 
 		// ═══════════════════════════════════════════════════════════════════════
@@ -446,8 +468,8 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		// Widget & Suggest
 		// ═══════════════════════════════════════════════════════════════════════
-		"editorWidget.background": c("ui.backgrounds.overlay"),
-		"editorWidget.border": c("ui.borders.default"),
+		// "editorWidget.background": c("ui.backgrounds.overlay"),
+		// "editorWidget.border": c("ui.borders.default"),
 		"editorSuggestWidget.background": c("ui.backgrounds.raised"),
 
 		// ═══════════════════════════════════════════════════════════════════════

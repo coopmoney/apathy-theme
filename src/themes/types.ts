@@ -27,6 +27,7 @@ import Color from "color";
 // Color Palette
 // ============================================================================
 
+
 export type ColorPalette = Record<string, string>;
 
 // ============================================================================
@@ -203,286 +204,309 @@ export interface TokenAssignments {
 // User Interface (workbench colors)
 // ===========================================================================
 
-export interface UIComponents {
+export interface UIComponents<ColorValue extends string = string> {
 	editor: {
-		background: string;
-		foreground: string;
-		lineHighlight: string;
-		lineHighlightBorder: string;
-		rangeHighlight: string;
-		wordHighlight: string;
-		wordHighlightStrong: string;
-		findMatch: string;
-		findMatchHighlight: string;
-		selectionHighlight: string;
+		background: ColorValue;
+		foreground: ColorValue;
+
+		selectionBackground: ColorValue;
+		selectionHighlightBackground: ColorValue;
+		inactiveSelectionBackground: ColorValue;
+		findMatchBackground: ColorValue;
+		findMatchHighlightBackground: ColorValue;
+		findRangeHighlightBackground: ColorValue;
+
+		lineHighlight: ColorValue;
+		lineHighlightBorder: ColorValue;
+		lineNumberForeground: ColorValue;
+		lineNumberActiveForeground: ColorValue;
+		// rangeHighlight: ColorValue;
+		// wordHighlight: ColorValue;
+		// wordHighlightStrong: ColorValue;
+		// findMatch: ColorValue;
+		// findMatchHighlight: ColorValue;
+		// selectionHighlight: ColorValue;
 	};
 
 	editorGutter: {
-		background: string;
-		modifiedBackground: string;
-		addedBackground: string;
-		deletedBackground: string;
-		foldingControl: string;
+		background: ColorValue;
+		modifiedBackground: ColorValue;
+		addedBackground: ColorValue;
+		deletedBackground: ColorValue;
+		foldingControl: ColorValue;
 	};
 
 	editorLineNumber: {
-		foreground: string;
-		activeForeground: string;
+		foreground: ColorValue;
+		activeForeground: ColorValue;
+	};
+
+	editorWidget: {
+		background: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
+	};
+
+	titleBar: {
+		activeBackground: ColorValue;
+		activeForeground: ColorValue;
+		inactiveBackground: ColorValue;
+		inactiveForeground: ColorValue;
 	};
 
 	activityBar: {
-		background: string;
-		foreground: string;
-		inactiveForeground: string;
-		border: string;
-		badgeBackground: string;
-		badgeForeground: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		inactiveForeground: ColorValue;
+		border: ColorValue;
+		badgeBackground: ColorValue;
+		badgeForeground: ColorValue;
 	};
 
 	sideBar: {
-		background: string;
-		foreground: string;
-		border: string;
-		sectionHeaderBackground: string;
-		sectionHeaderForeground: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
+		sectionHeaderBackground: ColorValue;
+		sectionHeaderForeground: ColorValue;
 	};
 
 	panel: {
-		background: string;
-		foreground: string;
-		border: string;
-		titleActiveForeground: string;
-		titleInactiveForeground: string;
-		titleActiveBorder: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
+		titleActiveForeground: ColorValue;
+		titleInactiveForeground: ColorValue;
+		titleActiveBorder: ColorValue;
 	};
 
 	statusBar: {
-		background: string;
-		foreground: string;
-		border: string;
-		debuggingBackground: string;
-		debuggingForeground: string;
-		noFolderBackground: string;
-		noFolderForeground: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
+		debuggingBackground: ColorValue;
+		debuggingForeground: ColorValue;
+		noFolderBackground: ColorValue;
+		noFolderForeground: ColorValue;
 	};
 
 	tabs: {
-		activeBackground: string;
-		activeForeground: string;
-		activeBorder: string;
-		activeBorderTop: string;
-		inactiveBackground: string;
-		inactiveForeground: string;
-		hoverBackground: string;
-		hoverForeground: string;
-		unfocusedActiveBackground: string;
-		unfocusedActiveForeground: string;
-		modifiedBorder: string;
+		activeBackground: ColorValue;
+		activeForeground: ColorValue;
+		activeBorder: ColorValue;
+		activeBorderTop: ColorValue;
+		inactiveBackground: ColorValue;
+		inactiveForeground: ColorValue;
+		hoverBackground: ColorValue;
+		hoverForeground: ColorValue;
+		unfocusedActiveBackground: ColorValue;
+		unfocusedActiveForeground: ColorValue;
+		modifiedBorder: ColorValue;
 	};
 
 	list: {
-		activeSelectionBackground: string;
-		activeSelectionForeground: string;
-		inactiveSelectionBackground: string;
-		inactiveSelectionForeground: string;
-		hoverBackground: string;
-		hoverForeground: string;
-		focusBackground: string;
-		focusForeground: string;
-		highlightForeground: string;
+		activeSelectionBackground: ColorValue;
+		activeSelectionForeground: ColorValue;
+		inactiveSelectionBackground: ColorValue;
+		inactiveSelectionForeground: ColorValue;
+		hoverBackground: ColorValue;
+		hoverForeground: ColorValue;
+		focusBackground: ColorValue;
+		focusForeground: ColorValue;
+		highlightForeground: ColorValue;
 	};
 
 	input: {
-		background: string;
-		foreground: string;
-		border: string;
-		placeholderForeground: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
+		placeholderForeground: ColorValue;
 	};
 
 	button: {
-		background: string;
-		foreground: string;
-		hoverBackground: string;
-		secondaryBackground: string;
-		secondaryForeground: string;
-		secondaryHoverBackground: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		hoverBackground: ColorValue;
+		secondaryBackground: ColorValue;
+		secondaryForeground: ColorValue;
+		secondaryHoverBackground: ColorValue;
 	};
 
 	dropdown: {
-		background: string;
-		foreground: string;
-		border: string;
-		listBackground: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
+		listBackground: ColorValue;
 	};
 
 	badge: {
-		background: string;
-		foreground: string;
-		border: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
 	};
 
 	scrollbar: {
-		shadow: string;
-		sliderBackground: string;
-		sliderHoverBackground: string;
-		sliderActiveBackground: string;
+		shadow: ColorValue;
+		sliderBackground: ColorValue;
+		sliderHoverBackground: ColorValue;
+		sliderActiveBackground: ColorValue;
 	};
 
 	minimap: {
-		background: string;
-		selectionHighlight: string;
-		errorHighlight: string;
-		warningHighlight: string;
-		findMatchHighlight: string;
+		background: ColorValue;
+		selectionHighlight: ColorValue;
+		errorHighlight: ColorValue;
+		warningHighlight: ColorValue;
+		findMatchHighlight: ColorValue;
 	};
 
 	breadcrumb: {
-		foreground: string;
-		focusForeground: string;
-		activeSelectionForeground: string;
-		background: string;
+		foreground: ColorValue;
+		focusForeground: ColorValue;
+		activeSelectionForeground: ColorValue;
+		background: ColorValue;
 	};
 
 	terminal: {
-		background: string;
-		foreground: string;
-		cursor: string;
-		cursorForeground: string;
-		selectionBackground: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		cursor: ColorValue;
+		cursorForeground: ColorValue;
+		selectionBackground: ColorValue;
 		// ANSI colors
-		ansiBlack: string;
-		ansiRed: string;
-		ansiGreen: string;
-		ansiYellow: string;
-		ansiBlue: string;
-		ansiMagenta: string;
-		ansiCyan: string;
-		ansiWhite: string;
-		ansiBrightBlack: string;
-		ansiBrightRed: string;
-		ansiBrightGreen: string;
-		ansiBrightYellow: string;
-		ansiBrightBlue: string;
-		ansiBrightMagenta: string;
-		ansiBrightCyan: string;
-		ansiBrightWhite: string;
+		ansiBlack: ColorValue;
+		ansiRed: ColorValue;
+		ansiGreen: ColorValue;
+		ansiYellow: ColorValue;
+		ansiBlue: ColorValue;
+		ansiMagenta: ColorValue;
+		ansiCyan: ColorValue;
+		ansiWhite: ColorValue;
+		ansiBrightBlack: ColorValue;
+		ansiBrightRed: ColorValue;
+		ansiBrightGreen: ColorValue;
+		ansiBrightYellow: ColorValue;
+		ansiBrightBlue: ColorValue;
+		ansiBrightMagenta: ColorValue;
+		ansiBrightCyan: ColorValue;
+		ansiBrightWhite: ColorValue;
 	};
 
 	notification: {
-		background: string;
-		foreground: string;
-		border: string;
+		background: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
 	};
 
 	peekView: {
-		editorBackground: string;
-		editorBorder: string;
-		resultBackground: string;
-		resultSelectionBackground: string;
-		titleBackground: string;
-		titleForeground: string;
+		editorBackground: ColorValue;
+		editorBorder: ColorValue;
+		resultBackground: ColorValue;
+		resultSelectionBackground: ColorValue;
+		titleBackground: ColorValue;
+		titleForeground: ColorValue;
 	};
 
 	chat?: {
-		background?: string;
-		foreground?: string;
-		border?: string;
-		surface?: string;
-		requestBackground?: string;
-		codeBlockBackground?: string;
+		background?: ColorValue;
+		foreground?: ColorValue;
+		border?: ColorValue;
+		surface?: ColorValue;
+		requestBackground?: ColorValue;
+		codeBlockBackground?: ColorValue;
 	};
 
 	diffEditor: {
-		insertedTextBackground: string;
-		removedTextBackground: string;
-		insertedLineBackground: string;
-		removedLineBackground: string;
-		diagonalFill: string;
+		insertedTextBackground: ColorValue;
+		removedTextBackground: ColorValue;
+		insertedLineBackground: ColorValue;
+		removedLineBackground: ColorValue;
+		diagonalFill: ColorValue;
 	};
 
 	merge: {
-		currentHeaderBackground: string;
-		currentContentBackground: string;
-		incomingHeaderBackground: string;
-		incomingContentBackground: string;
-		commonHeaderBackground: string;
-		commonContentBackground: string;
+		currentHeaderBackground: ColorValue;
+		currentContentBackground: ColorValue;
+		incomingHeaderBackground: ColorValue;
+		incomingContentBackground: ColorValue;
+		commonHeaderBackground: ColorValue;
+		commonContentBackground: ColorValue;
 	};
 }
 
-export interface UserInterface {
+export interface UserInterface<ColorValue extends string> {
 	// ═══════════════════════════════════════════════════════════════════════════
 	// Primitives (semantic building blocks)
 	// ═══════════════════════════════════════════════════════════════════════════
 
 	/** Background layers from back to front */
 	backgrounds: {
-		base: string; // window/titlebar
-		darker: string; // panels, sidebars
-		surface: string; // editor, sidebar, panel
-		raised: string; // dropdowns, widgets, hover cards
-		overlay: string; // modals, notifications
-		codeBlock: string; // code blocks (optional)
+		base: ColorValue; // window/titlebar
+		darker: ColorValue; // panels, sidebars
+		surface: ColorValue; // editor, sidebar, panel
+		raised: ColorValue; // dropdowns, widgets, hover cards
+		overlay: ColorValue; // modals, notifications
+		codeBlock: ColorValue; // code blocks (optional)
 	};
 
 	/** Foreground/text colors */
 	foregrounds: {
-		default: string; // primary text
-		muted: string; // secondary text (inactive tabs, descriptions)
-		subtle: string; // disabled, placeholders
-		accent: string; // links, highlighted text
-		focused: string; // focused elements
+		default: ColorValue; // primary text
+		muted: ColorValue; // secondary text (inactive tabs, descriptions)
+		subtle: ColorValue; // disabled, placeholders
+		accent: ColorValue; // links, highlighted text
+		focused: ColorValue; // focused elements
 	};
 
 	/** Border colors */
 	borders: {
-		default: string; // standard borders
-		active: string; // focused/selected borders
-		subtle: string; // subtle dividers
-		separator: string; // separators
+		default: ColorValue; // standard borders
+		active: ColorValue; // focused/selected borders
+		subtle: ColorValue; // subtle dividers
+		separator: ColorValue; // separators
 	};
 
 	/** Accent/brand colors */
 	accent: {
-		primary: string; // buttons, badges, focus rings
-		primaryForeground: string; // text on primary accent
-		secondary?: string; // secondary actions
+		primary: ColorValue; // buttons, badges, focus rings
+		primaryForeground: ColorValue; // text on primary accent
+		secondary?: ColorValue; // secondary actions
 	};
 
 	/** Status/feedback colors */
 	status: {
-		error: string;
-		warning: string;
-		info: string;
-		success: string;
+		error: ColorValue;
+		warning: ColorValue;
+		info: ColorValue;
+		success: ColorValue;
 	};
 
 	/** Selection & highlighting */
 	selection: {
-		background: string;
-		backgroundActive?: string;
-		backgroundInactive?: string;
-		text?: string; // text selection in inputs
+		background: ColorValue;
+		backgroundActive?: ColorValue;
+		backgroundInactive?: ColorValue;
+		text?: ColorValue; // text selection in inputs
 	};
 
 	highlights?: {
-		wordBackground?: string;
-		wordBorder?: string;
-		wordForeground?: string;
-		selectionForeground?: string;
-		selectionBorder?: string;
-		selectionBackgroundInactive?: string;
-		selectionBackgroundActive?: string;
+		wordBackground?: ColorValue;
+		wordBorder?: ColorValue;
+		wordForeground?: ColorValue;
+		selectionForeground?: ColorValue;
+		selectionBorder?: ColorValue;
+		selectionBackgroundInactive?: ColorValue;
+		selectionBackgroundActive?: ColorValue;
 	};
 
 	/** Git/SCM decorations */
 	git: {
-		added: string;
-		modified: string;
-		deleted: string;
-		untracked?: string;
-		ignored?: string;
-		conflict?: string;
+		added: ColorValue;
+		modified: ColorValue;
+		deleted: ColorValue;
+		untracked?: ColorValue;
+		ignored?: ColorValue;
+		conflict?: ColorValue;
 	};
 
 	// ═══════════════════════════════════════════════════════════════════════════
@@ -530,7 +554,7 @@ export interface SemanticOverrides
 // Complete Theme Definition
 // ============================================================================
 
-export interface ThemeDefinition {
+export interface ThemeDefinition<ColorValue extends string = string> {
 	/** Name of the theme */
 	name: string;
 
@@ -551,7 +575,7 @@ export interface ThemeDefinition {
 		[languageId: string]: Partial<TokenAssignments>;
 	};
 
-	ui: UserInterface;
+	ui: UserInterface<ColorValue>;
 
 	/** Optional semantic token overrides for fine-tuning */
 	semantic?: Semantic;
@@ -629,7 +653,7 @@ export type LeafPath<T, Prefix extends string = ""> = T extends object
 export type ThemePath = DotPath<ThemeDefinition>;
 export type ThemeColorPath = LeafPath<ThemeDefinition>;
 export type UIPath = Omit<
-	DotPath<UserInterface>,
+	DotPath<UserInterface<string>>,
 	"overrides" | `overrides.${string}`
 >;
 export type ComponentPath = LeafPath<UIComponents>;
@@ -870,7 +894,7 @@ export function uiFactory(t: ThemeDefinition) {
 	};
 }
 
-const fallbacks: Record<ComponentPath, UIPath> = {
+const fallbacks: Partial<Record<ComponentPath, UIPath>> = {
 	// Editor
 	"editor.background": "backgrounds.surface",
 	"editor.foreground": "foregrounds.default",
