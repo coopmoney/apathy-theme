@@ -274,6 +274,9 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
 
   const selection = c("ui.selection.background");
 
+  // Predictive/ghost text color - use parameter color for better visibility
+  const predictiveColor = get(t.tokens.variables, "parameter") || muted;
+
   const gitAdded = c("ui.git.added", "ui.status.success");
   const gitModified = c("ui.git.modified", "ui.status.warning");
   const gitDeleted = c("ui.git.deleted", "ui.status.error");
@@ -352,7 +355,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
       color: get(tokens.constants, "default"),
     },
     constructor: {
-      color: get(tokens.types, "class") || get(tokens.types, "default"),
+      color: get(tokens.types, "class") || get(tokens.types, "default") || pal("lightOrchid", foreground),
     },
     embedded: {
       color: tokens.source,
@@ -364,7 +367,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
       font_weight: 700,
     },
     enum: {
-      color: get(tokens.types, "enum") || get(tokens.types, "default"),
+      color: get(tokens.types, "enum") || get(tokens.types, "default") || pal("lightOrchid", foreground),
     },
     function: {
       color: get(tokens.functions, "call") || get(tokens.functions, "default"),
@@ -396,7 +399,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
       color: get(tokens.literals, "number") || get(tokens.literals, "default"),
     },
     operator: {
-      color: get(tokens.operators, "default"),
+      color: get(tokens.operators, "default") || pal("razzmatazz", foreground),
     },
     predictive: {
       color: get(tokens.variables, "parameter") || muted,
@@ -449,11 +452,11 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
       color: get(tokens.strings, "default"),
     },
     title: {
-      color: pal("lime", pal("markdownHeading", success)),
+      color: pal("markdownHeading", pal("lime", success)),
       font_weight: 700,
     },
     type: {
-      color: get(tokens.types, "default"),
+      color: get(tokens.types, "default") || pal("lightOrchid", foreground),
     },
     variable: {
       color: get(tokens.variables, "default"),
@@ -463,7 +466,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
       font_style: "italic",
     },
     variant: {
-      color: get(tokens.types, "enum") || get(tokens.types, "default"),
+      color: get(tokens.types, "enum") || get(tokens.types, "default") || pal("lightOrchid", foreground),
     },
   };
 
@@ -481,28 +484,28 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     background,
 
     // Borders
-    border: withAlpha(borderDefault, 0.08),
-    "border.variant": borderSubtle,
+    border: pal("focusBorder", withAlpha(borderDefault, 0.08)),
+    "border.variant": withAlpha(borderSubtle, 0.6),
     "border.focused": borderActive,
-    "border.selected": withAlpha(borderDefault, 0.08),
+    "border.selected": pal("focusBorder", withAlpha(borderDefault, 0.08)),
     "border.transparent": "#00000000",
-    "border.disabled": borderSubtle,
+    "border.disabled": withAlpha(borderSubtle, 0.6),
 
     // Surfaces
     "elevated_surface.background": raised,
     "surface.background": surface,
 
     // Elements
-    "element.background": withAlpha(raised, 0.25),
-    "element.hover": withAlpha(raised, 0.33),
-    "element.active": withAlpha(raised, 0.25),
-    "element.selected": overlay,
+    "element.background": pal("elementBg", withAlpha(raised, 0.25)),
+    "element.hover": pal("elementHover", withAlpha(raised, 0.33)),
+    "element.active": pal("elementBg", withAlpha(raised, 0.25)),
+    "element.selected": pal("listActive", overlay),
     "element.disabled": withAlpha(subtle, 0.33),
     "drop_target.background": withAlpha(overlay, 0.13),
     "ghost_element.background": "#00000000",
-    "ghost_element.hover": withAlpha(overlay, 0.25),
-    "ghost_element.active": withAlpha(raised, 0.25),
-    "ghost_element.selected": overlay,
+    "ghost_element.hover": withAlpha(pal("listActive", overlay), 0.25),
+    "ghost_element.active": pal("elementBg", withAlpha(raised, 0.25)),
+    "ghost_element.selected": pal("listActive", overlay),
     "ghost_element.disabled": withAlpha(subtle, 0.33),
 
     // Text
@@ -513,8 +516,8 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "text.accent": withAlpha(accent, 0.83),
 
     // Icons
-    icon: foreground,
-    "icon.muted": muted,
+    icon: pal("steel", foreground),
+    "icon.muted": pal("iconMuted", muted),
     "icon.disabled": withAlpha(subtle, 0.62),
     "icon.placeholder": withAlpha(subtle, 0.27),
     "icon.accent": withAlpha(accent, 0.83),
@@ -530,12 +533,12 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "search.match_background": findMatch,
     "panel.background": panelBg,
     "panel.focused_border": panelBorder,
-    "pane.focused_border": withAlpha(borderDefault, 0.08),
+    "pane.focused_border": pal("focusBorder", withAlpha(borderDefault, 0.08)),
 
     // Scrollbar
     "scrollbar.thumb.background": withAlpha(scrollbarThumb, 0.25),
     "scrollbar.thumb.hover_background": withAlpha(scrollbarThumbHover, 0.5),
-    "scrollbar.thumb.border": scrollbarBorder,
+    "scrollbar.thumb.border": pal("scrollbarBorder", scrollbarBorder),
     "scrollbar.track.background": "#00000000",
     "scrollbar.track.border": "#00000000",
 
@@ -548,9 +551,9 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "editor.highlighted_line.background": lineHighlight,
     "editor.line_number": lineNumber,
     "editor.active_line_number": activeLineNumber,
-    "editor.invisible": borderSubtle,
-    "editor.wrap_guide": withAlpha(borderDefault, 0.13),
-    "editor.active_wrap_guide": withAlpha(borderActive, 0.86),
+    "editor.invisible": pal("whitespace", borderSubtle),
+    "editor.wrap_guide": pal("ruler", withAlpha(borderDefault, 0.13)),
+    "editor.active_wrap_guide": pal("indentGuideActive", withAlpha(borderActive, 0.86)),
     "editor.document_highlight.read_background": wordHighlight,
     "editor.document_highlight.write_background": wordHighlightStrong,
 
@@ -585,7 +588,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "terminal.ansi.dim_white": ansiWhite,
 
     // Links & Status
-    "link_text.hover": info,
+    "link_text.hover": pal("linkGreen", info),
     conflict: gitConflict,
     "conflict.background": withAlpha(gitConflict, 0.25),
     "conflict.border": gitConflict,
@@ -613,9 +616,9 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     modified: gitModified,
     "modified.background": withAlpha(gitModified, 0.25),
     "modified.border": gitModified,
-    predictive: muted,
-    "predictive.background": withAlpha(muted, 0.25),
-    "predictive.border": muted,
+    predictive: predictiveColor,
+    "predictive.background": withAlpha(predictiveColor, 0.25),
+    "predictive.border": predictiveColor,
     renamed: gitAdded,
     "renamed.background": withAlpha(gitAdded, 0.25),
     "renamed.border": gitAdded,

@@ -287,7 +287,9 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"editorWidget.border": c("ui.overrides.editorWidget.border", "ui.borders.default"),
 		"editorWidget.foreground": c("ui.overrides.editorWidget.foreground", "ui.foregrounds.default"),
 		"input.border": c("ui.overrides.input.border", "ui.borders.default"),
+		// @ts-ignore
 		"diffEditorGutter.insertedLineBackground": c("ui.overrides.editorGutter.addedBackground", "ui.git.added"),
+		// @ts-ignore
 		"diffEditorGutter.removedLineBackground": c("ui.overrides.editorGutter.deletedBackground", "ui.git.deleted"),
 
 
@@ -405,6 +407,8 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		"terminal.background": c("ui.overrides.terminal.background", "ui.backgrounds.surface"),
 		"terminal.foreground": c("ui.overrides.terminal.foreground", "ui.foregrounds.default"),
+		// @ts-ignore
+		"terminal.border": c("ui.overrides.terminal.border", "ui.borders.default"),
 		"terminalCursor.foreground": c("ui.overrides.terminal.cursor", "ui.accent.primary"),
 		"terminal.selectionBackground": c("ui.overrides.terminal.selectionBackground", "ui.selection.background"),
 		"terminal.ansiBlack": c("ui.overrides.terminal.ansiBlack", "ui.backgrounds.base"),
@@ -488,12 +492,20 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"editorError.foreground": c("ui.status.error"),
 		"editorWarning.foreground": c("ui.status.warning"),
 		"editorInfo.foreground": c("ui.status.info"),
+		"terminal.border": c("ui.overrides.terminal.border", "ui.borders.default"),
+		"terminal.dropBackground": c("ui.backgrounds.raised"),
 
 		// ═══════════════════════════════════════════════════════════════════════
 		// Global foreground
 		// ═══════════════════════════════════════════════════════════════════════
 		"foreground": c("ui.foregrounds.default"),
 	};
+	// for (const key in tokenMap) {
+	// 	const override = c(`ui.overrides.${key}` as any);
+	// 	if (tokenMap[key as keyof vscode.VSCodeColors] === undefined) {
+	// 		delete tokenMap[key as keyof vscode.VSCodeColors];
+	// 	}
+	// }
 	return tokenMap;
 }
 
@@ -800,6 +812,8 @@ export function mapVSCode(
 			result = {
 				name: theme.name,
 				type: theme.type,
+				// @ts-ignore
+				"$schema": "vscode://schemas/color-theme",
 				colors: deepMerge(baseTheme.colors || {}, generated.colors),
 				tokenColors: mergeTokenColors(
 					baseTheme.tokenColors || [],

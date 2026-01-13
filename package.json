@@ -25,22 +25,22 @@
 		},
 		"themes": [
 			{
-				"label": "apathy // minted",
+				"label": "[apathy] minted",
 				"uiTheme": "vs-dark",
 				"path": "./dist/minted.json"
 			},
 			{
-				"label": "apathy // classic",
+				"label": "[apathy] classic",
 				"uiTheme": "vs-dark",
 				"path": "./dist/apathy.json"
 			},
 			{
-				"label": "apathy // ocean",
+				"label": "[apathy] ocean",
 				"uiTheme": "vs-dark",
 				"path": "./dist/apathetic-ocean.json"
 			},
 			{
-				"label": "apathy // slate",
+				"label": "[apathy] slate",
 				"uiTheme": "vs-dark",
 				"path": "./themes/minted.json"
 			},

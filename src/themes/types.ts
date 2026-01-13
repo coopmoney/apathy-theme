@@ -370,6 +370,7 @@ export interface UIComponents<ColorValue extends string = string> {
 	terminal: {
 		background: ColorValue;
 		foreground: ColorValue;
+		border: ColorValue;
 		cursor: ColorValue;
 		cursorForeground: ColorValue;
 		selectionBackground: ColorValue;
@@ -1020,6 +1021,7 @@ const fallbacks: Partial<Record<ComponentPath, UIPath>> = {
 	// Terminal
 	"terminal.background": "backgrounds.surface",
 	"terminal.foreground": "foregrounds.default",
+	"terminal.border": "borders.default",
 	"terminal.cursor": "accent.primary",
 	"terminal.cursorForeground": "backgrounds.surface",
 	"terminal.selectionBackground": "selection.background",

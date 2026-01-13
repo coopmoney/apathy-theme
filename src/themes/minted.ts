@@ -33,8 +33,9 @@ export enum palette {
   darkBlue = "#4B6672",      // luminance ~95
   bluegray = "#6372a1",      // luminance ~115
   "#527bb254" = "#527bb254", // luminance ~117
-  taupe = "#888278ff",         // luminance ~131
-  mist = "#868ba5c2",        // luminance ~149
+  taupe = "#7f7888cc",         // luminance ~131
+  // taupe = "#888278ff",         // luminance ~131
+  mist = "#767b95c2",        // luminance ~149
   steel = "#96a5b6",         // luminance ~163
   slate = "#9aa1c7",         // luminance ~163
   flatwhite = "#b1b1bffa",   // luminance ~179
@@ -43,7 +44,7 @@ export enum palette {
 
   // Greens
   wasabi = "#c3dc8f",
-  wasabi2 = "#98bf82",
+  wasabi2 = "#82bfa6ff",
   seafoam = "#7ce6bc",
 
   // Blues & Cyans
@@ -62,7 +63,7 @@ export enum palette {
 
   // todo
   gray1 = "#5C5675",
-  gray2 = "#362942",
+  gray2 = "#3e3645d2",
   orange1 = "#FF7859",
 
 
@@ -97,7 +98,7 @@ const tokens: ThemeDefinition["tokens"] = {
     source: palette.mist,
     comments: palette.charcoal,
     strings: make({
-      default: palette.wasabi,
+      default: palette.wasabi2,
       regex: palette.peach,
     }),
     operators: {
@@ -106,7 +107,7 @@ const tokens: ThemeDefinition["tokens"] = {
 
     literals: {
       default: palette.cyan,
-      string: palette.wasabi,
+      string: palette.wasabi2,
       number: palette.cyan,
       boolean: palette.cyan,
       null: palette.lavender,
@@ -177,7 +178,7 @@ const tokens: ThemeDefinition["tokens"] = {
 const ui: UserInterface<PaletteValue | string> = {
   backgrounds: {
     base: palette.midnight,
-    darker: darken(palette.midnight, 0.1),
+    darker: darken(palette.midnight, 0.2),
     surface: lighten(palette.midnight, 0.15),
     raised: lighten(palette.midnight, 1),
     overlay: lighten(palette.midnight, 1),
@@ -193,7 +194,7 @@ const ui: UserInterface<PaletteValue | string> = {
   borders: {
     default: lighten(palette.midnight, 0.4),
     active: palette.semiblack,
-    subtle: palette.semiblack,
+    subtle: lighten(palette.midnight, 0.2),
     separator: palette.semiblack,
   },
   accent: {
@@ -232,13 +233,13 @@ const ui: UserInterface<PaletteValue | string> = {
 
 const components: UIComponents<PaletteValue | string> = {
   editor: {
-    background: ui.backgrounds.darker,
+    background: darken(ui.backgrounds.base, 0.1),
     foreground: ui.foregrounds.default,
     lineHighlight: ui.highlights?.selectionBackgroundActive || ui.backgrounds.overlay,
     lineHighlightBorder: lighten(ui.backgrounds.base, 0.15),
-    findMatchHighlightBackground: mix(ui.backgrounds.surface, palette.lavender, 0.1),
-    findRangeHighlightBackground: mix(ui.backgrounds.surface, palette.lavender, 0.1),
-    selectionHighlightBackground: mix(ui.backgrounds.darker, palette.lavender, 0.1),
+    findMatchHighlightBackground: transparentize(mix(palette.lavender, ui.backgrounds.base, 0.8), 0.5),
+    findRangeHighlightBackground: transparentize(mix(palette.lavender, ui.backgrounds.base, 0.8), 0.5),
+    selectionHighlightBackground: transparentize(mix(palette.lavender, ui.backgrounds.base, 0.8), 0.5),
     lineNumberActiveForeground: palette.mist,
     lineNumberForeground: darken(palette.mist, 0.7),
     selectionBackground: mix(tokens.source, palette.midnight, 0.8),
@@ -281,8 +282,8 @@ const components: UIComponents<PaletteValue | string> = {
   },
   activityBar: {
     background: ui.backgrounds.darker,
-    foreground: palette.mist,
-    inactiveForeground: palette.mist,
+    foreground: darken(palette.mist, 0.1),
+    inactiveForeground: darken(palette.mist, 0.5),
     border: palette.semiblack,
     badgeBackground: palette.alphaBlack,
     badgeForeground: palette.wasabi,
@@ -295,7 +296,7 @@ const components: UIComponents<PaletteValue | string> = {
     sectionHeaderForeground: palette.mist,
   },
   panel: {
-    background: ui.backgrounds.base,
+    background: darken(ui.backgrounds.base, 0.05),
     foreground: palette.mist,
     border: ui.borders.default,
     titleActiveForeground: palette.mist,
@@ -336,10 +337,10 @@ const components: UIComponents<PaletteValue | string> = {
     highlightForeground: palette.steel,
   },
   input: {
-    background: palette.midnightLight,
-    foreground: lighten(palette.mist, 0.1),
+    background: ui.backgrounds.surface,
+    foreground: lighten(palette.mist, 0.4),
     placeholderForeground: darken(palette.mist, 0.2),
-    border: palette.charcoal,
+    border: ui.borders.subtle,
   },
   button: {
     background: palette.midnight,
@@ -382,6 +383,7 @@ const components: UIComponents<PaletteValue | string> = {
   terminal: {
     background: ui.backgrounds.darker,
     foreground: palette.mist,
+    border: mix(ui.backgrounds.darker, palette.steel, 0.1),
     cursorForeground: palette.mist,
     selectionBackground: l10(palette.midnight),
     cursor: palette.mist,
@@ -430,6 +432,14 @@ const components: UIComponents<PaletteValue | string> = {
     incomingContentBackground: palette.peach,
     commonContentBackground: mix(palette.steel, palette.midnight, 0.3),
   },
+  chat: {
+    background: ui.backgrounds.darker,
+    foreground: ui.foregrounds.default,
+    border: ui.borders.default,
+    surface: ui.backgrounds.surface,
+    requestBackground: mix(palette.peach, palette.midnight, 0.2),
+    codeBlockBackground: ui.backgrounds.codeBlock,
+  }
 }
 
 export const minted: ThemeDefinition = {
@@ -457,7 +467,7 @@ export const minted: ThemeDefinition = {
   // Semantic overrides for fine-tuning
   semantic: {
     comment: palette.charcoal,
-    string: palette.wasabi,
+    string: mix(palette.wasabi2, ui.backgrounds.base, 0.3),
     keyword: palette.lavender,
     number: palette.cyan,
     regexp: palette.peach,
@@ -469,13 +479,13 @@ export const minted: ThemeDefinition = {
     interface: palette.ice,
     enum: palette.slate,
     typeParameter: palette.ice,
-    function: palette.seafoam,
+    function: mix(palette.seafoam, ui.backgrounds.base, 0.3),
     method: palette.seafoam,
     decorator: palette.peach,
     macro: palette.peach,
     variable: palette.slate,
     parameter: palette.slate,
-    property: palette.taupe,
+    property: mix(palette.taupe, ui.backgrounds.base, 0.3),
     label: palette.blush,
   },
 
@@ -494,6 +504,9 @@ export const minted: ThemeDefinition = {
     [SemanticTokenModifier.async]: {
       transform: (color: string) => Color(color).mix(Color(palette.lavender), 0.1).hex(),
     },
+    [SemanticTokenModifier.declaration]: {
+      transform: c => mix(c, ui.foregrounds.default, 0.5),
+    }
   },
   ui: {
     ...ui,
