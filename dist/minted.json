@@ -202,7 +202,7 @@
 		"minimap.selectionHighlight": "#8e93b0c2",
 		"minimap.errorHighlight": "#ca175d",
 		"minimap.warningHighlight": "#ffb389",
-		"minimap.findMatchHighlight": "#998fe1cf",
+		"minimap.findMatchHighlight": "#48446A",
 		"breadcrumb.background": "#0f0f15",
 		"terminalCursor.foreground": "#8e93b0c2",
 		"terminal.selectionBackground": "#111117",

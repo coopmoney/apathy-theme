@@ -264,7 +264,7 @@ const components: UIComponents = {
     selectionHighlight: palette.mist,
     errorHighlight: palette.crimson,
     warningHighlight: palette.peach,
-    findMatchHighlight: palette.lavender,
+    findMatchHighlight: mix(ui.backgrounds.surface, palette.lavender, 0.5),
   },
   breadcrumb: {
     background: palette.midnight,

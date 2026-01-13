@@ -4,6 +4,7 @@
 
 import * as bun from "bun";
 import { mapVSCode } from "./integrations/vscode";
+import { mapZed } from "./integrations/zed";
 import type { Modifier, ThemeDefinition, TokenAssignments } from "./themes/types";
 import { presets as filterPresets, type ThemeFilters } from "./filters";
 
@@ -22,6 +23,8 @@ interface ThemeConfig {
   basePath?: string;
   /** Build-time filter overrides (merged with theme.filters) */
   filters?: ThemeFilters;
+  /** Output path for Zed theme (optional) */
+  zedOutputPath?: string;
 }
 
 const themes: ThemeConfig[] = [
@@ -29,25 +32,30 @@ const themes: ThemeConfig[] = [
     theme: minted,
     outputPath: "./dist/minted.json",
     basePath: "./themes/minted.jsonc",
+    zedOutputPath: "./packages/zed/themes/minted.json",
     // Example: You can add filters here to override/add to theme.filters
     // filters: filterPresets.lowContrast,
   },
   {
     theme: slate,
     outputPath: "./dist/slate.json",
+    zedOutputPath: "./packages/zed/themes/slate.json",
     // No basePath = fresh build
   },
   {
     theme: apathy,
     outputPath: "./dist/apathy.json",
+    zedOutputPath: "./packages/zed/themes/apathy.json",
   },
   {
     theme: apatheticOcean,
     outputPath: "./dist/apathetic-ocean.json",
+    zedOutputPath: "./packages/zed/themes/apathetic-ocean.json",
   },
   {
     theme: apathyExperimental,
     outputPath: "./dist/apathy-experimental.json",
+    zedOutputPath: "./packages/zed/themes/apathy-experimental.json",
   },
 ];
 
@@ -173,6 +181,15 @@ Examples:
 
     if (config.basePath) {
       console.log(`  (merged with ${config.basePath})`);
+    }
+
+    // Build Zed theme if output path is specified
+    if (config.zedOutputPath) {
+      const zedTheme = mapZed(config.theme, {
+        filters: Object.keys(filters).length > 0 ? filters : undefined,
+      });
+      await bun.write(config.zedOutputPath, JSON.stringify(zedTheme, null, "\t"));
+      console.log(`Built: ${config.theme.name} (Zed) -> ${config.zedOutputPath}`);
     }
   }
 }

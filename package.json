@@ -21,31 +21,23 @@
 	],
 	"contributes": {
 		"configurationDefaults": {
-			"editor.semanticHighlighting.enabled": true,
-			"editor.semanticTokenColorCustomizations": {
-				"enabled": true,
-				"settings": {
-					"tokenColors": [
-
-					]
-				}
-			}
+			"editor.semanticHighlighting.enabled": true
 		},
 		"themes": [
 			{
 				"label": "Apathy",
 				"uiTheme": "vs-dark",
-				"path": "./themes/Apathy-color-theme.json"
+				"path": "./dist/apathy.json"
 			},
 			{
 				"label": "Apathetic Ocean",
 				"uiTheme": "vs-dark",
-				"path": "./themes/Apathetic-Ocean-color-theme.json"
+				"path": "./dist/apathetic-ocean.json"
 			},
 			{
 				"label": "Apathy (Experimental)",
 				"uiTheme": "vs-dark",
-				"path": "./themes/Apathy-experimental-color-theme.json"
+				"path": "./dist/apathy-experimental.json"
 			},
 			{
 				"label": "Minted",
@@ -53,9 +45,14 @@
 				"path": "./dist/minted.json"
 			},
 			{
-				"label": "Slate",
+				"label": "Minted Reference",
 				"uiTheme": "vs-dark",
 				"path": "./themes/minted.json"
+			},
+			{
+				"label": "Slate",
+				"uiTheme": "vs-dark",
+				"path": "./dist/slate.json"
 			}
 		]
 	},
