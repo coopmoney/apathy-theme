@@ -296,7 +296,7 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		// Panel
 		// ═══════════════════════════════════════════════════════════════════════
-		"panel.background": c("ui.overrides.panel.background", "ui.backgrounds.surface"),
+		"panel.background": c("ui.overrides.panel.background", "ui.panels.background", "ui.backgrounds.surface"),
 		// "panel.foreground": c("ui.overrides.panel.foreground", "ui.foregrounds.default"),
 		// "panel.border": c("ui.overrides.panel.border", "ui.borders.default"),
 		"panelTitle.activeForeground": c("ui.overrides.panel.titleActiveForeground", "ui.foregrounds.default"),
@@ -474,7 +474,25 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		// "editorWidget.background": c("ui.backgrounds.overlay"),
 		// "editorWidget.border": c("ui.borders.default"),
-		"editorSuggestWidget.background": c("ui.backgrounds.raised"),
+		"editorSuggestWidget.background": c("ui.suggestWidget.background", "ui.backgrounds.raised"),
+		"editorIndentGuide.background1": c("ui.indentGuide.background", "ui.borders.subtle"),
+		"editorIndentGuide.activeBackground1": c("ui.indentGuide.activeBackground", "ui.borders.default"),
+		"editorWhitespace.foreground": c("ui.whitespace.foreground", "ui.borders.subtle"),
+		"editorRuler.foreground": c("ui.ruler.foreground", "ui.borders.subtle"),
+		"editorLineNumber.foreground": c("ui.lineNumbers.foreground", "ui.foregrounds.muted"),
+		"editorLineNumber.activeForeground": c("ui.lineNumbers.activeForeground", "ui.foregrounds.default"),
+		"editorHoverWidget.background": c("ui.hoverWidget.background", "ui.backgrounds.overlay"),
+		"editorHoverWidget.border": c("ui.hoverWidget.border", "ui.borders.default"),
+		"editorHoverWidget.foreground": c("ui.hoverWidget.foreground", "ui.foregrounds.default"),
+		"sideBarTitle.background": c("ui.panels.titleBackground", "ui.backgrounds.surface"),
+		"sideBarTitle.foreground": c("ui.panels.titleForeground", "ui.foregrounds.default"),
+
+		"tab.border": c("ui.borders.subtle"),
+		"editorGroupHeader.tabsBackground": c("ui.backgrounds.surface"),
+		"button.border": c("ui.borders.subtle"),
+		"button.separator": c("ui.borders.separator"),
+		"tree.indentGuidesStroke": c("ui.borders.subtle"),
+		"composerPane.background": c("ui.overrides.chat.background", "ui.backgrounds.surface"),
 
 		// ═══════════════════════════════════════════════════════════════════════
 		// Git Decorations
@@ -485,6 +503,83 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"gitDecoration.untrackedResourceForeground": c("ui.git.untracked", "ui.foregrounds.muted"),
 		"gitDecoration.ignoredResourceForeground": c("ui.git.ignored", "ui.foregrounds.subtle"),
 		"gitDecoration.conflictingResourceForeground": c("ui.git.conflict", "ui.status.warning"),
+		"gitDecoration.renamedResourceForeground": c("ui.git.renamed", "ui.git.added"),
+		"gitDecoration.stageModifiedResourceForeground": c("ui.git.stageModified", "ui.git.modified"),
+		"gitDecoration.stageDeletedResourceForeground": c("ui.git.stageDeleted", "ui.git.deleted"),
+		"gitDecoration.submoduleResourceForeground": c("ui.git.submodule", "ui.foregrounds.muted"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Cursor
+		// ═══════════════════════════════════════════════════════════════════════
+		"editorCursor.foreground": c("ui.cursor.foreground", "ui.accent.primary"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Window
+		// ═══════════════════════════════════════════════════════════════════════
+		"window.activeBorder": c("ui.window.activeBorder", "ui.borders.active"),
+		"window.inactiveBorder": c("ui.window.inactiveBorder", "ui.borders.subtle"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Icon
+		// ═══════════════════════════════════════════════════════════════════════
+		"icon.foreground": c("ui.icon.foreground", "ui.foregrounds.muted"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Focus & Contrast Borders
+		// ═══════════════════════════════════════════════════════════════════════
+		"focusBorder": c("ui.focus.border", "ui.accent.primary"),
+		"contrastBorder": c("ui.focus.contrastBorder", "ui.borders.subtle"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Menu
+		// ═══════════════════════════════════════════════════════════════════════
+		"menu.background": c("ui.menu.background", "ui.backgrounds.raised"),
+		"menu.foreground": c("ui.menu.foreground", "ui.foregrounds.default"),
+		"menu.selectionBackground": c("ui.menu.selectionBackground", "ui.selection.background"),
+		"menu.selectionForeground": c("ui.menu.selectionForeground", "ui.foregrounds.default"),
+		"menu.separatorBackground": c("ui.menu.separatorBackground", "ui.borders.separator"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Suggest Widget (autocomplete)
+		// ═══════════════════════════════════════════════════════════════════════
+		"editorSuggestWidget.border": c("ui.suggestWidget.border", "ui.borders.default"),
+		"editorSuggestWidget.foreground": c("ui.suggestWidget.foreground", "ui.foregrounds.default"),
+		"editorSuggestWidget.selectedBackground": c("ui.suggestWidget.selectedBackground", "ui.selection.background"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Progress Bar
+		// ═══════════════════════════════════════════════════════════════════════
+		"progressBar.background": c("ui.progressBar.background", "ui.accent.primary"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Debug Console
+		// ═══════════════════════════════════════════════════════════════════════
+		"debugConsole.infoForeground": c("ui.debug.infoForeground", "ui.status.info"),
+		"debugConsole.warningForeground": c("ui.debug.warningForeground", "ui.status.warning"),
+		"debugConsole.errorForeground": c("ui.debug.errorForeground", "ui.status.error"),
+		"debugConsole.sourceForeground": c("ui.debug.sourceForeground", "ui.foregrounds.default"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Text (links, preformat, separators)
+		// ═══════════════════════════════════════════════════════════════════════
+		"textLink.foreground": c("ui.text.linkForeground", "ui.accent.primary"),
+		"textLink.activeForeground": c("ui.text.linkForeground", "ui.accent.primary"),
+		"textPreformat.background": c("ui.text.preformatBackground", "ui.backgrounds.raised"),
+		"textPreformat.foreground": c("ui.text.preformatForeground", "ui.foregrounds.default"),
+		"textSeparator.foreground": c("ui.text.separatorForeground", "ui.borders.separator"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Error Display
+		// ═══════════════════════════════════════════════════════════════════════
+		"editorError.background": c("ui.error.background", "ui.status.error"),
+		"list.errorForeground": c("ui.error.listForeground", "ui.status.error"),
+
+		// ═══════════════════════════════════════════════════════════════════════
+		// Peek View Extended
+		// ═══════════════════════════════════════════════════════════════════════
+		"peekViewEditor.matchHighlightBackground": c("ui.peekView.matchHighlightBackground", "ui.selection.background"),
+		"peekViewResult.matchHighlightBackground": c("ui.peekView.matchHighlightBackground", "ui.selection.background"),
+		"peekViewTitleDescription.foreground": c("ui.peekView.titleDescriptionForeground", "ui.foregrounds.muted"),
 
 		// ═══════════════════════════════════════════════════════════════════════
 		// Status (errors, warnings, info)
@@ -492,7 +587,6 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"editorError.foreground": c("ui.status.error"),
 		"editorWarning.foreground": c("ui.status.warning"),
 		"editorInfo.foreground": c("ui.status.info"),
-		"terminal.border": c("ui.overrides.terminal.border", "ui.borders.default"),
 		"terminal.dropBackground": c("ui.backgrounds.raised"),
 
 		// ═══════════════════════════════════════════════════════════════════════
@@ -635,8 +729,10 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 
 			// Tags & Attributes (HTML/JSX)
 			tokenColor("entity.name.tag", c("tokens.meta.tag")),
-			tokenColor("support.class.component", c("tokens.types.class")),
+			tokenColor("support.class.component", c("tokens.special.jsxClass")),
+			tokenColor("support.class.component.jsx", c("tokens.special.jsxClass")),
 			tokenColor("entity.other.attribute-name", c("tokens.variables.property")),
+			tokenColor("meta.tag keyword.operator.assignment", c("tokens.variables.property")),
 			tokenColor("meta.tag.attributes", c("tokens.variables.property")),
 
 			// Properties (covers CSS, JSON keys, object properties)

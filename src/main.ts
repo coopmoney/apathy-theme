@@ -31,7 +31,7 @@ const themes: ThemeConfig[] = [
   {
     theme: minted,
     outputPath: "./dist/minted.json",
-    basePath: "./themes/minted.jsonc",
+    // basePath: "./themes/minted.jsonc",
     zedOutputPath: "./packages/zed/themes/minted.json",
     // Example: You can add filters here to override/add to theme.filters
     // filters: filterPresets.lowContrast,
@@ -39,6 +39,7 @@ const themes: ThemeConfig[] = [
   {
     theme: slate,
     outputPath: "./dist/slate.json",
+    basePath: "./themes/minted.jsonc",
     zedOutputPath: "./packages/zed/themes/slate.json",
     // No basePath = fresh build
   },

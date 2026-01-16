@@ -1,12 +1,13 @@
 id = "apathy-theme"
 name = "Apathy Theme"
-version = "0.1.0"
+version = "0.2.0"
 schema_version = 1
-authors = ["Cooper Maruyama <cooper@example.com>"]
+authors = ["Cooper Maruyama <me@cooperm.com>"]
 description = "A dark, low-contrast theme family with muted purple undertones for reduced eye strain. Includes Apathy, Apathetic Ocean, and Minted variants."
 repository = "https://github.com/coopmoney/apathy-theme"
 themes = [
   "themes/apathy.json",
   "themes/apathetic-ocean.json",
   "themes/minted.json",
+  "themes/slate.json",
 ]

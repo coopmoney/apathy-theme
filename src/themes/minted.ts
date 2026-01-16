@@ -33,9 +33,9 @@ export enum palette {
   darkBlue = "#4B6672",      // luminance ~95
   bluegray = "#6372a1",      // luminance ~115
   "#527bb254" = "#527bb254", // luminance ~117
-  taupe = "#7f7888cc",         // luminance ~131
+  taupe = "#7f8797",         // luminance ~131
   // taupe = "#888278ff",         // luminance ~131
-  mist = "#767b95c2",        // luminance ~149
+  mist = "#767b95c2",        // luminance ~149 #7f8797
   steel = "#96a5b6",         // luminance ~163
   slate = "#9aa1c7",         // luminance ~163
   flatwhite = "#b1b1bffa",   // luminance ~179
@@ -44,7 +44,8 @@ export enum palette {
 
   // Greens
   wasabi = "#c3dc8f",
-  wasabi2 = "#82bfa6ff",
+  wasabi2 = "#b7d194",
+  // wasabi2 = "#82bfa6ff",
   seafoam = "#7ce6bc",
 
   // Blues & Cyans
@@ -57,7 +58,7 @@ export enum palette {
 
   // Warm accents
   peach = "#ffb389",
-  blush = "#e0a2b1",
+  blush = "#e0a2d3",
   crimson = "#ca175d",
   gold = "#ffd014d4",
 
@@ -85,6 +86,95 @@ export enum palette {
   "#ff9d9ddf" = "#ff9d9ddf",
   /** frost alpha */
   "#efadeab0" = "#efadeab0",
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // UI Colors (from minted.jsonc reference)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Cursor
+  cursorRed = "#da4c51",
+
+  // Editor highlights
+  lineHighlight = "#1b162994",
+  wordHighlight = "#383248a5",
+  wordHighlightStrong = "#564f66ab",
+
+  // Indent guides
+  indentGuide = "#291e2969",
+  indentGuideActive = "#654d6569",
+  editorWhitespace = "#272636",
+
+  // Widgets
+  widgetBorder = "#45414C",
+  widgetSelection = "#2A2441",
+  hoverBg = "#13141bbc",
+  hoverBorder = "#131a24",
+  hoverFg = "#d4edffa7",
+
+  // Menu
+  menuBg = "#1B1629",
+
+  // Window
+  windowBorder = "#183856ff",
+
+  // Focus
+  focusBorderAlpha = "#a099ae14",
+
+  // Tabs
+  tabBorder = "#212131",
+
+  // Git
+  gitRenamed = "#449dab",
+
+  gitStageDeleted = "#914c54",
+  gitSubmodule = "#8db9e2",
+
+
+
+  // Composer
+  composerBg = "#12151c",
+
+  // Debug
+  debugInfo = "#78DCE8",
+  debugError = "#ff6161",
+  debugWarning = "#FFCB6B",
+
+  debuggingBg = "#3fffbdf2",
+  debuggingFg = "#5b0092",
+  debuggingBorder = "#4be4b5f2",
+
+  // Peek
+  peekMatchHighlight = "#CC850040",
+
+  // Settings
+  settingsHeaderFg = "#d1deeacc",
+  settingsInputBg = "#121217",
+  settingsInputBorder = "#1c1c25",
+
+  // Errors
+  errorBg = "#52000045",
+  listError = "#a84e4e",
+
+  // Text
+  textPreformatBg = "#050e0cf0",
+  textPreformatFg = "#90e3bccf",
+
+  // Icons
+  iconFg = "#5f6384b8",
+
+  // Pull Requests
+  prDraft = "#331f57",
+
+  // Chat
+  chatRequestBg = "#04041b",
+
+  // Button
+  buttonBorder = "#3d374978",
+  buttonSeparator = "#584b7036",
+
+  // Line numbers (reference)
+  lineNumberFg = "#454148",
+  lineNumberActiveFg = "#9B8FB5",
 }
 
 export type PaletteValue = `${palette}`;
@@ -174,34 +264,50 @@ const tokens: ThemeDefinition["tokens"] = {
       default: palette.bluegray,
       type: palette.bluegray,
     },
-  };
+    special: {
+      jsxClass: palette.blush,
+    }
+};
+const backgrounds: UserInterface<PaletteValue | string>["backgrounds"] = {
+  base: palette.midnight,
+  darker: darken(palette.midnight, 0.2),
+  surface: lighten(palette.midnight, 0.15),
+  raised: lighten(palette.midnight, 1),
+  overlay: lighten(palette.midnight, 1),
+  codeBlock: palette["#08080c"],
+}
+const foregrounds: UserInterface<PaletteValue | string>["foregrounds"] = {
+  default: tokens.source,
+  muted: alpha20(palette.mist),
+  subtle: palette.charcoal,
+  accent: palette.cyan,
+  focused: lighten(palette.mist, 0.3),
+}
+const borders: UserInterface<PaletteValue | string>["borders"] = {
+  default: lighten(palette.midnight, 0.4),
+  active: palette.semiblack,
+  subtle: lighten(palette.midnight, 0.2),
+  separator: palette.semiblack,
+};
+const accent: UserInterface<PaletteValue | string>["accent"] = {
+  primary: palette.cyan,
+  primaryForeground: palette.cyan,
+  secondary: palette.peach,
+  palette: [
+    "#88e6d6",
+    "#C3E88D",
+    "#ffb389",
+    "#F07178",
+    "#6bffbfdb",
+    "#8b00ff",
+  ]
+};
+
 const ui: UserInterface<PaletteValue | string> = {
-  backgrounds: {
-    base: palette.midnight,
-    darker: darken(palette.midnight, 0.2),
-    surface: lighten(palette.midnight, 0.15),
-    raised: lighten(palette.midnight, 1),
-    overlay: lighten(palette.midnight, 1),
-    codeBlock: palette["#08080c"],
-  },
-  foregrounds: {
-    default: tokens.source,
-    muted: alpha20(palette.mist),
-    subtle: palette.charcoal,
-    accent: palette.cyan,
-    focused: lighten(palette.mist, 0.3),
-  },
-  borders: {
-    default: lighten(palette.midnight, 0.4),
-    active: palette.semiblack,
-    subtle: lighten(palette.midnight, 0.2),
-    separator: palette.semiblack,
-  },
-  accent: {
-    primary: palette.cyan,
-    primaryForeground: palette.cyan,
-    secondary: palette.peach,
-  },
+  backgrounds,
+  foregrounds,
+  borders,
+  accent,
   status: {
     error: palette.crimson,
     warning: palette.peach,
@@ -215,10 +321,41 @@ const ui: UserInterface<PaletteValue | string> = {
     backgroundActive: palette.darkBlue,
   },
   highlights: {
-    wordBackground: mix(tokens.source, palette.midnight, 0.5),
-    selectionBackgroundInactive: palette.charcoal,
-    selectionBackgroundActive: mix(tokens.source, palette.midnight, 0.5),
+    // wordBackground: mix(tokens.source, palette.midnight, 0.5),
+    // selectionBackgroundInactive: palette.charcoal,
+    // selectionBackgroundActive: mix(tokens.source, palette.midnight, 0.5),
+    word: {
+      background: palette.wordHighlight,
+      backgroundStrong: palette.wordHighlightStrong,
+    },
+    selection: {
+      backgroundActive: mix(tokens.source, palette.midnight, 0.5),
+      backgroundInactive: palette.charcoal,
+    },
+    activeLine: {
+      background: palette.lineHighlight
+    }
   },
+  indentGuide: {
+    background: palette.indentGuide,
+    activeBackground: palette.indentGuideActive,
+  },
+  whitespace: {
+    foreground: palette.editorWhitespace,
+  },
+  ruler: {
+    foreground: palette.indentGuide,
+  },
+  lineNumbers: {
+    foreground: palette.lineNumberFg,
+    activeForeground: palette.lineNumberActiveFg,
+  },
+  hoverWidget: {
+    background: palette.hoverBg,
+    border: palette.hoverBorder,
+    foreground: palette.hoverFg,
+  },
+
   git: {
     // added: mix(palette.seafoam, palette.midnight, 0.5),
     added: palette.seafoam,
@@ -228,6 +365,68 @@ const ui: UserInterface<PaletteValue | string> = {
     untracked: palette.mist,
     ignored: palette.mist,
     conflict: palette.crimson,
+    renamed: palette.gitRenamed,
+    stageModified: palette.bluegray,
+    stageDeleted: palette.gitStageDeleted,
+    submodule: palette.gitSubmodule,
+  },
+  cursor: {
+    foreground: palette.cursorRed,
+  },
+  window: {
+    activeBorder: palette.windowBorder,
+  },
+  icon: {
+    foreground: palette.iconFg,
+  },
+  focus: {
+    border: palette.focusBorderAlpha,
+    contrastBorder: palette.focusBorderAlpha,
+  },
+  menu: {
+    background: palette.menuBg,
+    foreground: palette.steel,
+    selectionBackground: palette.widgetSelection,
+    selectionForeground: palette.white,
+    separatorBackground: palette.widgetBorder,
+  },
+  suggestWidget: {
+    border: palette.widgetBorder,
+    foreground: palette.white,
+    selectedBackground: palette.widgetSelection,
+  },
+  progressBar: {
+    background: palette["#C3E88D"],
+  },
+  debug: {
+    infoForeground: palette.debugInfo,
+    warningForeground: palette.debugWarning,
+    errorForeground: palette.debugError,
+    sourceForeground: palette.white,
+  },
+  text: {
+    linkForeground: palette.seafoam,
+    preformatBackground: palette.textPreformatBg,
+    preformatForeground: palette.textPreformatFg,
+    separatorForeground: transparentize(palette.widgetBorder, 0.5),
+  },
+  error: {
+    background: palette.errorBg,
+    listForeground: palette.listError,
+  },
+  peekView: {
+    matchHighlightBackground: palette.peekMatchHighlight,
+    titleDescriptionForeground: palette.flatwhite,
+  },
+  panels: {
+    background: darken(backgrounds.base, 0.05),
+    foreground: palette.mist,
+    titleForeground: transparentize(palette.white, 0.5),
+  },
+  inlineHints: {
+    background: backgrounds.raised,
+    foreground: lighten(palette.steel, 0.4),
+    border: borders.subtle,
   }
 };
 
@@ -235,7 +434,7 @@ const components: UIComponents<PaletteValue | string> = {
   editor: {
     background: darken(ui.backgrounds.base, 0.1),
     foreground: ui.foregrounds.default,
-    lineHighlight: ui.highlights?.selectionBackgroundActive || ui.backgrounds.overlay,
+    lineHighlight: ui.highlights?.activeLine?.background || ui.backgrounds.overlay,
     lineHighlightBorder: lighten(ui.backgrounds.base, 0.15),
     findMatchHighlightBackground: transparentize(mix(palette.lavender, ui.backgrounds.base, 0.8), 0.5),
     findRangeHighlightBackground: transparentize(mix(palette.lavender, ui.backgrounds.base, 0.8), 0.5),
@@ -363,7 +562,7 @@ const components: UIComponents<PaletteValue | string> = {
   },
   scrollbar: {
     shadow: palette.midnight,
-    sliderBackground: palette.midnight,
+    sliderBackground: transparentize(palette.steel, 0.7),
     sliderHoverBackground: palette.midnight,
     sliderActiveBackground: palette.midnight,
   },
@@ -437,9 +636,9 @@ const components: UIComponents<PaletteValue | string> = {
     foreground: ui.foregrounds.default,
     border: ui.borders.default,
     surface: ui.backgrounds.surface,
-    requestBackground: mix(palette.peach, palette.midnight, 0.2),
+    requestBackground: palette.chatRequestBg,
     codeBlockBackground: ui.backgrounds.codeBlock,
-  }
+  },
 }
 
 export const minted: ThemeDefinition = {
@@ -508,6 +707,66 @@ export const minted: ThemeDefinition = {
       transform: c => mix(c, ui.foregrounds.default, 0.5),
     }
   },
+
+  // Extra VS Code colors that don't fit the structured UI definition
+  extraColors: {
+    // Editor pane (VS Code specific - secondary editor background)
+    "editorPane.background": palette.midnight2,
+
+    // Editor highlights (VS Code specific numbered variants)
+    "editor.lineHighlightBackground": palette.lineHighlight,
+    "editor.wordHighlightBackground": palette.wordHighlight,
+    "editor.wordHighlightStrongBackground": palette.wordHighlightStrong,
+
+    // Indent guides (VS Code specific numbered variants)
+    "editorIndentGuide.background1": palette.indentGuide,
+    "editorIndentGuide.activeBackground1": palette.indentGuideActive,
+    "editorWhitespace.foreground": palette.editorWhitespace,
+    "editorRuler.foreground": palette.indentGuide,
+
+    // Line numbers (VS Code specific - overrides component)
+    "editorLineNumber.foreground": palette.lineNumberFg,
+    "editorLineNumber.activeForeground": palette.lineNumberActiveFg,
+
+    // Hover widget (VS Code specific styling)
+    "editorHoverWidget.background": palette.hoverBg,
+    "editorHoverWidget.border": palette.hoverBorder,
+    "editorHoverWidget.foreground": palette.hoverFg,
+
+    // Sidebar title (VS Code specific)
+    "sideBarTitle.foreground": transparentize(palette.white, 0.5),
+
+    // Status bar debugging (VS Code specific states)
+    "statusBar.debuggingBackground": palette.debuggingBg,
+    "statusBar.debuggingForeground": palette.debuggingFg,
+    "statusBar.debuggingBorder": palette.debuggingBorder,
+
+    // Tab border & group header (VS Code specific)
+    "tab.border": palette.tabBorder,
+    "editorGroupHeader.tabsBackground": palette.black,
+
+    // Button extended (VS Code specific)
+    "button.border": palette.buttonBorder,
+    "button.separator": palette.buttonSeparator,
+
+    // Tree indent guides (VS Code specific)
+    "tree.indentGuidesStroke": palette.widgetBorder,
+
+    // Settings (VS Code specific)
+    "settings.headerForeground": palette.settingsHeaderFg,
+    "settings.textInputBackground": palette.settingsInputBg,
+    "settings.textInputForeground": palette.steel,
+    "settings.textInputBorder": palette.settingsInputBorder,
+
+    // VS Code extensions (Composer, PR, Chat)
+    "composerPane.background": palette.composerBg,
+    "pullRequests.draft": palette.prDraft,
+    "chat.requestBackground": palette.chatRequestBg,
+
+    // List focus (VS Code specific override)
+    "list.focusBackground": palette.widgetSelection,
+  },
+
   ui: {
     ...ui,
     overrides: components

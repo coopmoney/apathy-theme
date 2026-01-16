@@ -12,6 +12,7 @@ import {
 } from "../themes/types";
 import type { ThemeFilters } from "../filters";
 import Color from "color";
+import { mix } from '../themes/utils';
 
 // ============================================================================
 // Zed Theme Output Types
@@ -82,9 +83,14 @@ export interface ZedThemeStyle {
   "tab.inactive_background": string;
   "tab.active_background": string;
   "search.match_background": string;
+  "search.active_match_background": string;
   "panel.background": string;
-  "panel.focused_border": string;
-  "pane.focused_border": string;
+  "panel.focused_border": string | null;
+  "panel.indent_guide": string;
+  "panel.indent_guide_active": string;
+  "panel.indent_guide_hover": string;
+  "pane.focused_border": string | null;
+  "pane_group.border": string;
 
   // Scrollbar
   "scrollbar.thumb.background": string;
@@ -102,14 +108,19 @@ export interface ZedThemeStyle {
   "editor.highlighted_line.background": string;
   "editor.line_number": string;
   "editor.active_line_number": string;
+  "editor.hover_line_number": string;
   "editor.invisible": string;
   "editor.wrap_guide": string;
   "editor.active_wrap_guide": string;
+  "editor.indent_guide": string;
+  "editor.indent_guide_active": string;
   "editor.document_highlight.read_background": string;
   "editor.document_highlight.write_background": string;
+  "editor.document_highlight.bracket_background": string;
 
   // Terminal
   "terminal.background": string;
+  "terminal.ansi.background": string;
   "terminal.foreground": string;
   "terminal.bright_foreground": string;
   "terminal.dim_foreground": string;
@@ -140,6 +151,16 @@ export interface ZedThemeStyle {
 
   // Links & Status
   "link_text.hover": string;
+
+  // Version Control
+  "version_control.added": string;
+  "version_control.modified": string;
+  "version_control.deleted": string;
+  "version_control.word_added": string;
+  "version_control.word_deleted": string;
+  "version_control.conflict_marker.ours": string;
+  "version_control.conflict_marker.theirs": string;
+
   conflict: string;
   "conflict.background": string;
   "conflict.border": string;
@@ -307,18 +328,18 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
   const editorBg = c("ui.overrides.editor.background", "ui.backgrounds.surface", "background");
   const editorFg = c("ui.overrides.editor.foreground", "ui.foregrounds.default");
   const gutterBg = c("ui.overrides.editorGutter.background", "ui.backgrounds.surface", "background");
-  const lineHighlight = c("ui.overrides.editor.lineHighlight", "ui.selection.background");
+  const lineHighlight = c("ui.highlights.activeLine.background", "ui.overrides.editor.lineHighlight", "ui.selection.background");
   const lineNumber = c("ui.overrides.editorLineNumber.foreground", "ui.foregrounds.muted");
   const activeLineNumber = c("ui.overrides.editorLineNumber.activeForeground", "ui.foregrounds.default");
-  const findMatch = c("ui.overrides.editor.findMatch", "ui.selection.background");
-  const wordHighlight = c("ui.overrides.editor.wordHighlight", "ui.selection.background");
-  const wordHighlightStrong = c("ui.overrides.editor.wordHighlightStrong", "ui.selection.background");
+  const findMatch = c("ui.overrides.editor.findMatchBackground", "ui.highlights.activeLine.background", "ui.backgrounds.raised");
+  const wordHighlight = c("ui.highlights.word.background", "ui.backgrounds.raised");
+  const wordHighlightStrong = c("ui.highlights.word.backgroundStrong", "ui.selection.background");
 
   // Status bar, tabs, etc.
-  const statusBarBg = c("ui.overrides.statusBar.background", "ui.backgrounds.base", "background");
+  const statusBarBg = c("ui.overrides.statusBar.background",  "ui.backgrounds.base", "background");
   const tabBg = c("ui.overrides.tabs.inactiveBackground", "ui.backgrounds.surface", "background");
   const tabActiveBg = c("ui.overrides.tabs.activeBackground", "ui.backgrounds.surface", "background");
-  const panelBg = c("ui.overrides.panel.background", "ui.backgrounds.surface", "background");
+  const panelBg = c( "ui.overrides.panel.background", "ui.panels.background", "ui.backgrounds.base", "background");
   const panelBorder = c("ui.overrides.panel.border", "ui.borders.default");
 
   // Scrollbar
@@ -395,6 +416,9 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     link_uri: {
       color: info,
     },
+    namespace: {
+      color: tokens.source,
+    },
     number: {
       color: get(tokens.literals, "number") || get(tokens.literals, "default"),
     },
@@ -426,8 +450,17 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "punctuation.list_marker": {
       color: get(tokens.punctuation, "default"),
     },
+    "punctuation.markup": {
+      color: get(tokens.meta, "tag") || get(tokens.punctuation, "default"),
+    },
     "punctuation.special": {
       color: get(tokens.punctuation, "accessor") || get(tokens.punctuation, "default"),
+    },
+    selector: {
+      color: get(tokens.types, "class") || get(tokens.types, "default") || pal("lightOrchid", foreground),
+    },
+    "selector.pseudo": {
+      color: get(tokens.keywords, "default") || info,
     },
     string: {
       color: get(tokens.strings, "default") || get(tokens.literals, "string"),
@@ -479,12 +512,12 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
   }));
 
   return {
-    "background.appearance": "opaque",
-    accents: ["#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#8b00ff"],
+    "background.appearance": "blurred",
+    accents: t.ui.accent.palette || ["#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#8b00ff"],
     background,
 
     // Borders
-    border: pal("focusBorder", withAlpha(borderDefault, 0.08)),
+    border: c("ui.borders.separator"),
     "border.variant": withAlpha(borderSubtle, 0.6),
     "border.focused": borderActive,
     "border.selected": pal("focusBorder", withAlpha(borderDefault, 0.08)),
@@ -496,22 +529,22 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "surface.background": surface,
 
     // Elements
-    "element.background": pal("elementBg", withAlpha(raised, 0.25)),
-    "element.hover": pal("elementHover", withAlpha(raised, 0.33)),
-    "element.active": pal("elementBg", withAlpha(raised, 0.25)),
-    "element.selected": pal("listActive", overlay),
-    "element.disabled": withAlpha(subtle, 0.33),
-    "drop_target.background": withAlpha(overlay, 0.13),
+    "element.background": c( "ui.elements.background", "ui.backgrounds.surface"),
+    "element.hover": c("ui.elements.hover", "ui.backgrounds.raised"),
+    "element.active": c("ui.elements.backgroundActive", "ui.backgrounds.overlay"),
+    "element.selected": c("ui.elements.backgroundActive", "ui.backgrounds.overlay"),
+    "element.disabled": c("ui.elements.disabled", "ui.foregrounds.subtle"),
+    "drop_target.background": c("ui.menu.background"),
     "ghost_element.background": "#00000000",
-    "ghost_element.hover": withAlpha(pal("listActive", overlay), 0.25),
-    "ghost_element.active": pal("elementBg", withAlpha(raised, 0.25)),
-    "ghost_element.selected": pal("listActive", overlay),
+    "ghost_element.hover": mix(c("ui.elements.hover", "ui.backgrounds.raised"), c("ui.backgrounds.base"), 0.5),
+    "ghost_element.active": c("ui.menu.selectionBackground"),
+    "ghost_element.selected": mix(c("ui.elements.hover", "ui.backgrounds.raised"), c("ui.backgrounds.base"), 0.5),
     "ghost_element.disabled": withAlpha(subtle, 0.33),
 
     // Text
     text: foreground,
     "text.muted": muted,
-    "text.placeholder": withAlpha(subtle, 0.27),
+    "text.placeholder": c("ui.foregrounds.subtle", "ui.foregrounds.muted"),
     "text.disabled": withAlpha(subtle, 0.62),
     "text.accent": withAlpha(accent, 0.83),
 
@@ -534,6 +567,10 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "panel.background": panelBg,
     "panel.focused_border": panelBorder,
     "pane.focused_border": pal("focusBorder", withAlpha(borderDefault, 0.08)),
+    "panel.indent_guide": pal("indentGuide", withAlpha(borderDefault, 0.1)),
+    "panel.indent_guide_active": pal("indentGuideActive", withAlpha(borderActive, 0.3)),
+    "panel.indent_guide_hover": pal("indentGuideActive", withAlpha(borderActive, 0.5)),
+    "pane_group.border": withAlpha(borderDefault, 0.15),
 
     // Scrollbar
     "scrollbar.thumb.background": withAlpha(scrollbarThumb, 0.25),
@@ -551,14 +588,19 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "editor.highlighted_line.background": lineHighlight,
     "editor.line_number": lineNumber,
     "editor.active_line_number": activeLineNumber,
+    "editor.hover_line_number": pal("lineNumberHover", muted),
     "editor.invisible": pal("whitespace", borderSubtle),
     "editor.wrap_guide": pal("ruler", withAlpha(borderDefault, 0.13)),
     "editor.active_wrap_guide": pal("indentGuideActive", withAlpha(borderActive, 0.86)),
+    "editor.indent_guide": pal("indentGuide", withAlpha(borderDefault, 0.1)),
+    "editor.indent_guide_active": pal("indentGuideActive", withAlpha(borderActive, 0.3)),
     "editor.document_highlight.read_background": wordHighlight,
     "editor.document_highlight.write_background": wordHighlightStrong,
+    "editor.document_highlight.bracket_background": withAlpha(accent, 0.2),
 
     // Terminal
     "terminal.background": terminalBg,
+    "terminal.ansi.background": terminalBg,
     "terminal.foreground": terminalFg,
     "terminal.bright_foreground": "#FFFFFF",
     "terminal.dim_foreground": muted,
@@ -589,6 +631,16 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
 
     // Links & Status
     "link_text.hover": pal("linkGreen", info),
+
+    // Version Control
+    "version_control.added": gitAdded,
+    "version_control.modified": gitModified,
+    "version_control.deleted": gitDeleted,
+    "version_control.word_added": withAlpha(gitAdded, 0.35),
+    "version_control.word_deleted": withAlpha(gitDeleted, 0.8),
+    "version_control.conflict_marker.ours": withAlpha(success, 0.1),
+    "version_control.conflict_marker.theirs": withAlpha(info, 0.1),
+
     conflict: gitConflict,
     "conflict.background": withAlpha(gitConflict, 0.25),
     "conflict.border": gitConflict,
@@ -599,7 +651,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "deleted.background": withAlpha(gitDeleted, 0.08),
     "deleted.border": gitDeleted,
     error,
-    "error.background": withAlpha(error, 0.27),
+    "error.background": withAlpha(darken(error, 0.5), 0.5),
     "error.border": error,
     hidden: gitIgnored,
     "hidden.background": withAlpha(gitIgnored, 0.25),
@@ -634,6 +686,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
 
     players,
     syntax,
+    "search.active_match_background": findMatch,
   };
 }
 

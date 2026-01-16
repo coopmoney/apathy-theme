@@ -7,7 +7,7 @@
 			"name": "Apathetic Ocean",
 			"appearance": "dark",
 			"style": {
-				"background.appearance": "opaque",
+				"background.appearance": "blurred",
 				"accents": [
 					"#ff0000",
 					"#ff7f00",
@@ -17,28 +17,28 @@
 					"#8b00ff"
 				],
 				"background": "#0e0e15",
-				"border": "#a099ae14",
+				"border": "#161621",
 				"border.variant": "#21213199",
 				"border.focused": "#182356",
 				"border.selected": "#a099ae14",
 				"border.transparent": "#00000000",
 				"border.disabled": "#21213199",
-				"elevated_surface.background": "#1B1629",
+				"elevated_surface.background": "#151520",
 				"surface.background": "#0f0f12",
 				"element.background": "#7a5acd2e",
 				"element.hover": "#8d61ff2e",
-				"element.active": "#7a5acd2e",
-				"element.selected": "#2A2441",
-				"element.disabled": "#26242A54",
-				"drop_target.background": "#1C1E2921",
+				"element.active": "#1c1e29cc",
+				"element.selected": "#1c1e29cc",
+				"element.disabled": "#26242a54",
+				"drop_target.background": "#a7a4af",
 				"ghost_element.background": "#00000000",
-				"ghost_element.hover": "#2A244140",
-				"ghost_element.active": "#7a5acd2e",
-				"ghost_element.selected": "#2A2441",
+				"ghost_element.hover": "#19152A",
+				"ghost_element.active": "#a7a4af",
+				"ghost_element.selected": "#19152A",
 				"ghost_element.disabled": "#26242A54",
 				"text": "#a7a4af",
 				"text.muted": "#827b90cf",
-				"text.placeholder": "#26242A45",
+				"text.placeholder": "#26242a99",
 				"text.disabled": "#26242A9E",
 				"text.accent": "#33B3CCD4",
 				"icon": "#96a5b6",
@@ -57,6 +57,10 @@
 				"panel.background": "#0f0f12",
 				"panel.focused_border": "#1a102b",
 				"pane.focused_border": "#a099ae14",
+				"panel.indent_guide": "#29192969",
+				"panel.indent_guide_active": "#6b406b69",
+				"panel.indent_guide_hover": "#6b406b69",
+				"pane_group.border": "#A099AE26",
 				"scrollbar.thumb.background": "#45414C40",
 				"scrollbar.thumb.hover_background": "#45414C80",
 				"scrollbar.thumb.border": "#45414C",
@@ -65,17 +69,22 @@
 				"editor.foreground": "#8e93b0c2",
 				"editor.background": "#0e0e15",
 				"editor.gutter.background": "#0f0f12",
-				"editor.subheader.background": "#1B1629",
+				"editor.subheader.background": "#151520",
 				"editor.active_line.background": "#1b162994",
 				"editor.highlighted_line.background": "#1b162994",
 				"editor.line_number": "#454148",
 				"editor.active_line_number": "#9B8FB5",
+				"editor.hover_line_number": "#827b90cf",
 				"editor.invisible": "#272636",
 				"editor.wrap_guide": "#29192969",
 				"editor.active_wrap_guide": "#6b406b69",
-				"editor.document_highlight.read_background": "#383248a5",
-				"editor.document_highlight.write_background": "#52486cab",
+				"editor.indent_guide": "#29192969",
+				"editor.indent_guide_active": "#6b406b69",
+				"editor.document_highlight.read_background": "#151520",
+				"editor.document_highlight.write_background": "#2d22476b",
+				"editor.document_highlight.bracket_background": "#33B3CC33",
 				"terminal.background": "#0f0d12",
+				"terminal.ansi.background": "#0f0d12",
 				"terminal.foreground": "#626274",
 				"terminal.bright_foreground": "#FFFFFF",
 				"terminal.dim_foreground": "#827b90cf",
@@ -104,6 +113,13 @@
 				"terminal.ansi.bright_white": "#FFFFFF",
 				"terminal.ansi.dim_white": "#D1D3D9",
 				"link_text.hover": "#7ce6ab",
+				"version_control.added": "#449dab",
+				"version_control.modified": "#6183bb",
+				"version_control.deleted": "#914c54",
+				"version_control.word_added": "#449DAB59",
+				"version_control.word_deleted": "#914C54CC",
+				"version_control.conflict_marker.ours": "#449DAB1A",
+				"version_control.conflict_marker.theirs": "#78DCE81A",
 				"conflict": "#e46876",
 				"conflict.background": "#E4687640",
 				"conflict.border": "#e46876",
@@ -114,7 +130,7 @@
 				"deleted.background": "#914C5414",
 				"deleted.border": "#914c54",
 				"error": "#b70b24",
-				"error.background": "#B70B2445",
+				"error.background": "#5B061280",
 				"error.border": "#b70b24",
 				"hidden": "#515670",
 				"hidden.background": "#51567040",
@@ -237,6 +253,9 @@
 					"link_uri": {
 						"color": "#78DCE8"
 					},
+					"namespace": {
+						"color": "#a7a4af"
+					},
 					"number": {
 						"color": "#33b3cc"
 					},
@@ -268,8 +287,17 @@
 					"punctuation.list_marker": {
 						"color": "#74727794"
 					},
+					"punctuation.markup": {
+						"color": "#e0a2d3"
+					},
 					"punctuation.special": {
 						"color": "#7a73cc"
+					},
+					"selector": {
+						"color": "#e0a2d3"
+					},
+					"selector.pseudo": {
+						"color": "#afd1e9cf"
 					},
 					"string": {
 						"color": "#aac17b"
@@ -310,7 +338,8 @@
 					"variant": {
 						"color": "#e0a2d3"
 					}
-				}
+				},
+				"search.active_match_background": "#2a2540dc"
 			}
 		}
 	]

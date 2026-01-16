@@ -80,6 +80,15 @@ const palette = {
   flatwhite: "#ffffff",
 } ;
 
+const whites = {
+  "100": palette["#d1d3d9"],
+  "200": palette["#a7a4af"],
+  "300": palette["#f5e0dc"],
+  "400": palette["#91aac0"],
+  "500": palette["#829297"],
+  "600": palette["#767a92"],
+  "700": palette["#527bb254"],
+}
 
 type CV = string;
 export const WHITE: CV = "#d1d3d9";
@@ -230,8 +239,65 @@ export const v = (k: string): k is keyof typeof palette => k in palette;
 // ============================================================================
 // 2. Theme Definition
 // ============================================================================
+const backgrounds: UserInterface<keyof typeof palette | string>["backgrounds"] = {
+  base: palette.midnight,
+  surface: lighten(palette.midnight, 0.2),
+  raised: lighten(palette.midnight, 0.6),
+  overlay: mix(lighten(palette.midnight, 0.6), palette.peach, 0.05),
+  darker: palette.black,
+  codeBlock: palette.black,
+};
+
+const foregrounds: UserInterface<keyof typeof palette | string>["foregrounds"] = {
+  default: palette.mutedwhite,
+  muted: palette.stormGray,
+  subtle: palette.charcoal,
+  accent: palette.peach,
+  focused: palette.vanillaCream,
+};
+
+const borders: UserInterface<keyof typeof palette | string>["borders"] = {
+  default: palette.sageGray,
+  active: palette.dustyBlue,
+  subtle: palette.black,
+  separator: palette.dark1,
+};
+
+const accent: UserInterface<keyof typeof palette | string>["accent"] = {
+  primary: palette.dustyBlue,
+  primaryForeground: palette.cyan,
+  secondary: palette.lavender,
+};
+
+const status: UserInterface<keyof typeof palette | string>["status"] = {
+  error: palette.crimson,
+  warning: palette.gold,
+  info: palette.cyan,
+  success: palette.celery,
+};
+
+const selection: UserInterface<keyof typeof palette | string>["selection"] = {
+  background: mix(foregrounds.default, palette.midnight, 0.5),
+  backgroundInactive: transparentize(palette.mutedwhite, 0.1),
+  text: palette.charcoal,
+  backgroundActive: lighten(palette.cyan, 0.4),
+};
+
+const highlights: UserInterface<keyof typeof palette | string>["highlights"] = {
+  activeLine: {
+    background: lighten(backgrounds.base, 0.5),
+  },
+  word: {
+    background: lighten(mix(backgrounds.base, palette.cyan, 0.9), 0.7),
+  },
+  selection: {
+    backgroundInactive: transparentize(lighten(backgrounds.base, 0.5), 0.5),
+    backgroundActive: mix(foregrounds.default, palette.midnight, 0.5),
+    foreground: lighten(foregrounds.default, 0.2),
+  }
+};
 const tokens: ThemeDefinition["tokens"] = {
-    source: palette.mutedwhite,
+    source: foregrounds.default,
     comments: mix(palette['#829297'], palette.midnight, 0.5),
     strings: make({
       default: palette.celery,
@@ -295,61 +361,30 @@ const tokens: ThemeDefinition["tokens"] = {
       default: palette["#8564d8"],
       type: palette["#8564d8"],
     },
+    special: {
+      jsxClass: palette.dustyBlue,
+    }
   };
 
+
+
 const ui: UserInterface<keyof typeof palette | string> = {
-  backgrounds: {
-    base: palette.midnight,
-    darker: palette.black,
-    surface: palette.midnightLight,
-    raised: palette.semiblack,
-    overlay: mix(palette.semiblack, palette.grape, 0.2),
-    codeBlock: palette.midnightLight,
-  },
-  foregrounds: {
-    default: palette.mutedwhite,
-    muted: palette.stormGray,
-    subtle: palette.charcoal,
-    accent: palette.peach,
-    focused: palette.vanillaCream,
-  },
-  borders: {
-    default: palette.sageGray,
-    active: palette.dustyBlue,
-    subtle: palette.black,
-    separator: palette.dark1,
-  },
-  accent: {
-    primary: palette.dustyBlue,
-    primaryForeground: palette.cyan,
-    secondary: palette.lavender,
-  },
-  status: {
-    error: palette.crimson,
-    warning: palette.gold,
-    info: palette.cyan,
-    success: palette.celery,
-  },
-  selection: {
-    background: mix(tokens.source, palette.midnight, 0.5),
-    backgroundInactive: transparentize(palette.mutedwhite, 0.1),
-    text: palette.charcoal,
-    backgroundActive: lighten(palette.cyan, 0.4),
-  },
-  highlights: {
-    wordBackground: mix(tokens.source, palette.midnight, 0.5),
-    selectionBackgroundInactive: palette.charcoal,
-    selectionBackgroundActive: mix(tokens.source, palette.midnight, 0.5),
-  },
+  backgrounds,
+  foregrounds,
+  borders,
+  accent,
+  status,
+  selection,
+  highlights,
   git: {
     // added: mix(palette.seafoam, palette.midnight, 0.5),
-    added: palette.celery,
-    // modified: mix(palette.peach, palette.midnight, 0.2),
-    modified: palette.gold,
-    deleted: palette.crimson,
-    untracked: palette.alphaWhite,
-    ignored: palette.dark1,
-    conflict: palette.crimson,
+    added: mix(foregrounds.muted, palette.celery, 0.2),
+    // modified: mix(palette.peach, foregrounds.muted, 0.2),
+    modified: mix(foregrounds.muted, palette.cyan, 0.2),
+    deleted: mix(foregrounds.muted, palette.crimson, 0.2),
+    untracked: mix(foregrounds.muted, palette.dark1, 0.5),
+    ignored: mix(foregrounds.subtle, palette.dark1, 0.5),
+    conflict: mix(foregrounds.muted, palette.crimson, 0.5),
   }
 };
 
@@ -357,11 +392,11 @@ const components: UIComponents = {
   editor: {
     background: ui.backgrounds.base,
     foreground: ui.foregrounds.default,
-    lineHighlight: ui.highlights?.selectionBackgroundActive || ui.backgrounds.overlay,
+    lineHighlight: ui.highlights?.activeLine?.background || ui.backgrounds.overlay,
     lineHighlightBorder: palette.midnight,
-    inactiveSelectionBackground: transparentize(mix(palette.cyan, palette.midnight, 0.9), 0.7),
+    inactiveSelectionBackground: transparentize(mix(foregrounds.accent, palette.midnight, 0.9), 0.7),
     selectionBackground: l10(palette.midnight),
-    selectionHighlightBackground: transparentize(mix(palette.cyan, palette.midnight, 0.95), 0.5),
+    selectionHighlightBackground: transparentize(mix(foregrounds.accent, palette.midnight, 0.95), 0.5),
     findRangeHighlightBackground: transparentize(mix(palette.grape, palette.midnight, 0.2), 0.5),
     findMatchHighlightBackground: transparentize(mix(palette.grape, palette.midnight, 0.8), 0.5),
     lineNumberActiveForeground: palette.mist,
@@ -551,7 +586,7 @@ const components: UIComponents = {
 }
 
 export const slate: ThemeDefinition = {
-  name: "Minted",
+  name: "Slate",
   type: "dark",
   palette,
   background: ui.backgrounds.base,

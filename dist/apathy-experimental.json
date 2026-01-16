@@ -150,12 +150,62 @@
 		"merge.commonHeaderBackground": "#1B1629",
 		"merge.commonContentBackground": "#36333E",
 		"editorSuggestWidget.background": "#1B1629",
+		"editorIndentGuide.background1": "#212131",
+		"editorIndentGuide.activeBackground1": "#45414C",
+		"editorWhitespace.foreground": "#212131",
+		"editorRuler.foreground": "#212131",
+		"editorLineNumber.foreground": "#454148",
+		"editorLineNumber.activeForeground": "#cbdbe0b3",
+		"editorHoverWidget.background": "#0a0610",
+		"editorHoverWidget.border": "#45414C",
+		"editorHoverWidget.foreground": "#cbdbe0b3",
+		"sideBarTitle.background": "#0e0b13",
+		"sideBarTitle.foreground": "#cbdbe0b3",
+		"tab.border": "#212131",
+		"editorGroupHeader.tabsBackground": "#0e0b13",
+		"button.border": "#212131",
+		"button.separator": "#45414C",
+		"tree.indentGuidesStroke": "#212131",
+		"composerPane.background": "#0e0b13",
 		"gitDecoration.addedResourceForeground": "#47cf7ec9",
 		"gitDecoration.modifiedResourceForeground": "#ffd014d4",
 		"gitDecoration.deletedResourceForeground": "#F92672",
 		"gitDecoration.untrackedResourceForeground": "#e1d9e79e",
 		"gitDecoration.ignoredResourceForeground": "#444248",
 		"gitDecoration.conflictingResourceForeground": "#FF7A00",
+		"gitDecoration.renamedResourceForeground": "#47cf7ec9",
+		"gitDecoration.stageModifiedResourceForeground": "#ffd014d4",
+		"gitDecoration.stageDeletedResourceForeground": "#F92672",
+		"gitDecoration.submoduleResourceForeground": "#454148",
+		"editorCursor.foreground": "#33b3cc",
+		"window.activeBorder": "#d0cfd3",
+		"window.inactiveBorder": "#212131",
+		"icon.foreground": "#454148",
+		"focusBorder": "#33b3cc",
+		"contrastBorder": "#212131",
+		"menu.background": "#1B1629",
+		"menu.foreground": "#cbdbe0b3",
+		"menu.selectionBackground": "#2d22476b",
+		"menu.selectionForeground": "#cbdbe0b3",
+		"menu.separatorBackground": "#45414C",
+		"editorSuggestWidget.border": "#45414C",
+		"editorSuggestWidget.foreground": "#cbdbe0b3",
+		"editorSuggestWidget.selectedBackground": "#2d22476b",
+		"progressBar.background": "#33b3cc",
+		"debugConsole.infoForeground": "#78DCE8",
+		"debugConsole.warningForeground": "#E6986B",
+		"debugConsole.errorForeground": "#b70b24",
+		"debugConsole.sourceForeground": "#cbdbe0b3",
+		"textLink.foreground": "#33b3cc",
+		"textLink.activeForeground": "#33b3cc",
+		"textPreformat.background": "#1B1629",
+		"textPreformat.foreground": "#cbdbe0b3",
+		"textSeparator.foreground": "#45414C",
+		"editorError.background": "#b70b24",
+		"list.errorForeground": "#b70b24",
+		"peekViewEditor.matchHighlightBackground": "#2d22476b",
+		"peekViewResult.matchHighlightBackground": "#2d22476b",
+		"peekViewTitleDescription.foreground": "#454148",
 		"editorError.foreground": "#b70b24",
 		"editorWarning.foreground": "#E6986B",
 		"editorInfo.foreground": "#78DCE8",
@@ -736,13 +786,31 @@
 				"support.class.component"
 			],
 			"settings": {
-				"foreground": "#ffb547"
+				"foreground": "#cbdbe0b3"
+			}
+		},
+		{
+			"name": "support.class.component.jsx",
+			"scope": [
+				"support.class.component.jsx"
+			],
+			"settings": {
+				"foreground": "#cbdbe0b3"
 			}
 		},
 		{
 			"name": "entity.other.attribute-name",
 			"scope": [
 				"entity.other.attribute-name"
+			],
+			"settings": {
+				"foreground": "#e3e1e8e4"
+			}
+		},
+		{
+			"name": "meta.tag keyword.operator.assignment",
+			"scope": [
+				"meta.tag keyword.operator.assignment"
 			],
 			"settings": {
 				"foreground": "#e3e1e8e4"

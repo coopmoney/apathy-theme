@@ -198,183 +198,354 @@ export interface TokenAssignments {
 		/** /pattern/g */
 		regex: string;
 	}>;
+
+	/**
+	 * Special cases that are important enough to warrant their own token.
+	 */
+	special: {
+		/** <Component /> */
+		jsxClass: string
+	}
 }
 
 // ============================================================================
 // User Interface (workbench colors)
 // ===========================================================================
 
+/**
+ * Component-level UI color overrides.
+ * These provide granular control over specific VS Code UI components
+ * when the semantic primitives in UserInterface aren't sufficient.
+ *
+ * @example VS Code: Maps directly to `editor.*`, `activityBar.*`, `sideBar.*`, etc.
+ * @example Zed: Maps to `editor.*`, `tab_bar.*`, `status_bar.*`, etc.
+ */
 export interface UIComponents<ColorValue extends string = string> {
+	/**
+	 * Main code editor area.
+	 * @example VS Code: `editor.background`, `editor.foreground`, `editor.selectionBackground`
+	 * @example Zed: `editor.background`, `editor.foreground`
+	 */
 	editor: {
+		/** Editor background color */
 		background: ColorValue;
+		/** Default text color */
 		foreground: ColorValue;
-
+		/** Selected text background */
 		selectionBackground: ColorValue;
+		/** Background for other occurrences of selected text */
 		selectionHighlightBackground: ColorValue;
+		/** Selection background when editor is not focused */
 		inactiveSelectionBackground: ColorValue;
+		/** Background of the current search match */
 		findMatchBackground: ColorValue;
+		/** Background of other search matches */
 		findMatchHighlightBackground: ColorValue;
+		/** Background of search range limit */
 		findRangeHighlightBackground: ColorValue;
-
+		/** Current line highlight background */
 		lineHighlight: ColorValue;
+		/** Current line highlight border */
 		lineHighlightBorder: ColorValue;
+		/** Line number color */
 		lineNumberForeground: ColorValue;
+		/** Active line number color */
 		lineNumberActiveForeground: ColorValue;
-		// rangeHighlight: ColorValue;
-		// wordHighlight: ColorValue;
-		// wordHighlightStrong: ColorValue;
-		// findMatch: ColorValue;
-		// findMatchHighlight: ColorValue;
-		// selectionHighlight: ColorValue;
 	};
 
+	/**
+	 * Editor gutter (left margin with line numbers, folding, etc.).
+	 * @example VS Code: `editorGutter.background`, `editorGutter.modifiedBackground`
+	 * @example Zed: `editor.gutter.background`
+	 */
 	editorGutter: {
+		/** Gutter background */
 		background: ColorValue;
+		/** Modified line indicator */
 		modifiedBackground: ColorValue;
+		/** Added line indicator */
 		addedBackground: ColorValue;
+		/** Deleted line indicator */
 		deletedBackground: ColorValue;
+		/** Folding control color */
 		foldingControl: ColorValue;
 	};
 
+	/**
+	 * Editor line numbers.
+	 * @example VS Code: `editorLineNumber.foreground`, `editorLineNumber.activeForeground`
+	 */
 	editorLineNumber: {
+		/** Default line number color */
 		foreground: ColorValue;
+		/** Current line number color */
 		activeForeground: ColorValue;
 	};
 
+	/**
+	 * Editor widgets (find/replace, go to line, etc.).
+	 * @example VS Code: `editorWidget.background`, `editorWidget.border`
+	 */
 	editorWidget: {
 		background: ColorValue;
 		foreground: ColorValue;
 		border: ColorValue;
 	};
 
+	/**
+	 * Window title bar.
+	 * @example VS Code: `titleBar.activeBackground`, `titleBar.activeForeground`
+	 * @example Zed: `title_bar.background`
+	 */
 	titleBar: {
+		/** Background when window is focused */
 		activeBackground: ColorValue;
+		/** Text color when window is focused */
 		activeForeground: ColorValue;
+		/** Background when window is not focused */
 		inactiveBackground: ColorValue;
+		/** Text color when window is not focused */
 		inactiveForeground: ColorValue;
 	};
 
+	/**
+	 * Activity bar (icon sidebar on the left/right).
+	 * @example VS Code: `activityBar.background`, `activityBar.foreground`
+	 */
 	activityBar: {
 		background: ColorValue;
+		/** Active icon color */
 		foreground: ColorValue;
+		/** Inactive icon color */
 		inactiveForeground: ColorValue;
 		border: ColorValue;
+		/** Notification badge background */
 		badgeBackground: ColorValue;
+		/** Notification badge text */
 		badgeForeground: ColorValue;
 	};
 
+	/**
+	 * Side bar (explorer, search, SCM panels).
+	 * @example VS Code: `sideBar.background`, `sideBar.foreground`
+	 * @example Zed: `panel.background`
+	 */
 	sideBar: {
 		background: ColorValue;
 		foreground: ColorValue;
 		border: ColorValue;
+		/** Section header background (e.g., "EXPLORER") */
 		sectionHeaderBackground: ColorValue;
+		/** Section header text */
 		sectionHeaderForeground: ColorValue;
 	};
 
+	/**
+	 * Bottom panel (terminal, output, problems, etc.).
+	 * @example VS Code: `panel.background`, `panel.border`
+	 * @example Zed: `panel.background`
+	 */
 	panel: {
 		background: ColorValue;
 		foreground: ColorValue;
 		border: ColorValue;
+		/** Active tab text */
 		titleActiveForeground: ColorValue;
+		/** Inactive tab text */
 		titleInactiveForeground: ColorValue;
+		/** Active tab indicator */
 		titleActiveBorder: ColorValue;
 	};
 
+	/**
+	 * Status bar (bottom bar with branch, errors, etc.).
+	 * @example VS Code: `statusBar.background`, `statusBar.foreground`
+	 * @example Zed: `status_bar.background`
+	 */
 	statusBar: {
 		background: ColorValue;
 		foreground: ColorValue;
 		border: ColorValue;
+		/** Background when debugging */
 		debuggingBackground: ColorValue;
+		/** Text color when debugging */
 		debuggingForeground: ColorValue;
+		/** Background when no folder is open */
 		noFolderBackground: ColorValue;
+		/** Text color when no folder is open */
 		noFolderForeground: ColorValue;
 	};
 
+	/**
+	 * Editor tabs.
+	 * @example VS Code: `tab.activeBackground`, `tab.inactiveBackground`
+	 * @example Zed: `tab.active_background`, `tab.inactive_background`
+	 */
 	tabs: {
+		/** Active tab background */
 		activeBackground: ColorValue;
+		/** Active tab text */
 		activeForeground: ColorValue;
+		/** Active tab bottom border */
 		activeBorder: ColorValue;
+		/** Active tab top border (accent line) */
 		activeBorderTop: ColorValue;
+		/** Inactive tab background */
 		inactiveBackground: ColorValue;
+		/** Inactive tab text */
 		inactiveForeground: ColorValue;
+		/** Tab background on hover */
 		hoverBackground: ColorValue;
+		/** Tab text on hover */
 		hoverForeground: ColorValue;
+		/** Active tab background when editor group is unfocused */
 		unfocusedActiveBackground: ColorValue;
+		/** Active tab text when editor group is unfocused */
 		unfocusedActiveForeground: ColorValue;
+		/** Border for tabs with unsaved changes */
 		modifiedBorder: ColorValue;
 	};
 
+	/**
+	 * List and tree views (explorer, search results, etc.).
+	 * @example VS Code: `list.activeSelectionBackground`, `list.hoverBackground`
+	 * @example Zed: Uses element.* and ghost_element.*
+	 */
 	list: {
+		/** Selected item background (focused) */
 		activeSelectionBackground: ColorValue;
+		/** Selected item text (focused) */
 		activeSelectionForeground: ColorValue;
+		/** Selected item background (unfocused) */
 		inactiveSelectionBackground: ColorValue;
+		/** Selected item text (unfocused) */
 		inactiveSelectionForeground: ColorValue;
+		/** Item background on hover */
 		hoverBackground: ColorValue;
+		/** Item text on hover */
 		hoverForeground: ColorValue;
+		/** Focused item background (keyboard navigation) */
 		focusBackground: ColorValue;
+		/** Focused item text */
 		focusForeground: ColorValue;
+		/** Highlighted text in search matches */
 		highlightForeground: ColorValue;
 	};
 
+	/**
+	 * Text input fields.
+	 * @example VS Code: `input.background`, `input.foreground`, `input.border`
+	 */
 	input: {
 		background: ColorValue;
 		foreground: ColorValue;
 		border: ColorValue;
+		/** Placeholder text color */
 		placeholderForeground: ColorValue;
 	};
 
+	/**
+	 * Buttons.
+	 * @example VS Code: `button.background`, `button.foreground`
+	 */
 	button: {
+		/** Primary button background */
 		background: ColorValue;
+		/** Primary button text */
 		foreground: ColorValue;
+		/** Primary button hover background */
 		hoverBackground: ColorValue;
+		/** Secondary button background */
 		secondaryBackground: ColorValue;
+		/** Secondary button text */
 		secondaryForeground: ColorValue;
+		/** Secondary button hover background */
 		secondaryHoverBackground: ColorValue;
 	};
 
+	/**
+	 * Dropdown menus and selects.
+	 * @example VS Code: `dropdown.background`, `dropdown.foreground`
+	 */
 	dropdown: {
 		background: ColorValue;
 		foreground: ColorValue;
 		border: ColorValue;
+		/** Dropdown list background */
 		listBackground: ColorValue;
 	};
 
+	/**
+	 * Badges (notification counts, etc.).
+	 * @example VS Code: `badge.background`, `badge.foreground`
+	 */
 	badge: {
 		background: ColorValue;
 		foreground: ColorValue;
 		border: ColorValue;
 	};
 
+	/**
+	 * Scrollbars.
+	 * @example VS Code: `scrollbarSlider.background`, `scrollbarSlider.hoverBackground`
+	 * @example Zed: `scrollbar.thumb.background`
+	 */
 	scrollbar: {
+		/** Scrollbar shadow */
 		shadow: ColorValue;
+		/** Scrollbar thumb default */
 		sliderBackground: ColorValue;
+		/** Scrollbar thumb on hover */
 		sliderHoverBackground: ColorValue;
+		/** Scrollbar thumb when dragging */
 		sliderActiveBackground: ColorValue;
 	};
 
+	/**
+	 * Minimap (code overview on the right).
+	 * @example VS Code: `minimap.background`, `minimap.selectionHighlight`
+	 */
 	minimap: {
 		background: ColorValue;
+		/** Selection highlight in minimap */
 		selectionHighlight: ColorValue;
+		/** Error markers */
 		errorHighlight: ColorValue;
+		/** Warning markers */
 		warningHighlight: ColorValue;
+		/** Search match markers */
 		findMatchHighlight: ColorValue;
 	};
 
+	/**
+	 * Breadcrumb navigation (file path above editor).
+	 * @example VS Code: `breadcrumb.foreground`, `breadcrumb.background`
+	 */
 	breadcrumb: {
 		foreground: ColorValue;
+		/** Focused breadcrumb item */
 		focusForeground: ColorValue;
+		/** Selected breadcrumb item */
 		activeSelectionForeground: ColorValue;
 		background: ColorValue;
 	};
 
+	/**
+	 * Integrated terminal.
+	 * @example VS Code: `terminal.background`, `terminal.foreground`, `terminal.ansi*`
+	 * @example Zed: `terminal.background`, `terminal.foreground`, `terminal.ansi.*`
+	 */
 	terminal: {
 		background: ColorValue;
 		foreground: ColorValue;
 		border: ColorValue;
+		/** Cursor block color */
 		cursor: ColorValue;
+		/** Text color inside cursor */
 		cursorForeground: ColorValue;
+		/** Selected text background */
 		selectionBackground: ColorValue;
-		// ANSI colors
+		// ANSI colors (standard terminal palette)
 		ansiBlack: ColorValue;
 		ansiRed: ColorValue;
 		ansiGreen: ColorValue;
@@ -393,44 +564,84 @@ export interface UIComponents<ColorValue extends string = string> {
 		ansiBrightWhite: ColorValue;
 	};
 
+	/**
+	 * Notification toasts.
+	 * @example VS Code: `notifications.background`, `notifications.foreground`
+	 */
 	notification: {
 		background: ColorValue;
 		foreground: ColorValue;
 		border: ColorValue;
 	};
 
+	/**
+	 * Peek view (inline references/definitions).
+	 * @example VS Code: `peekViewEditor.background`, `peekView.border`
+	 */
 	peekView: {
+		/** Peek editor background */
 		editorBackground: ColorValue;
+		/** Peek view border */
 		editorBorder: ColorValue;
+		/** Results list background */
 		resultBackground: ColorValue;
+		/** Selected result background */
 		resultSelectionBackground: ColorValue;
+		/** Title bar background */
 		titleBackground: ColorValue;
+		/** Title text */
 		titleForeground: ColorValue;
 	};
 
+	/**
+	 * AI chat interface (Copilot Chat, etc.).
+	 * @example VS Code: `chat.requestBackground`, `chat.codeBlockBackground`
+	 */
 	chat?: {
 		background?: ColorValue;
 		foreground?: ColorValue;
 		border?: ColorValue;
+		/** Chat message surface */
 		surface?: ColorValue;
+		/** User message background */
 		requestBackground?: ColorValue;
+		/** Code block background in chat */
 		codeBlockBackground?: ColorValue;
 	};
 
+	/**
+	 * Diff editor (side-by-side or inline diff view).
+	 * @example VS Code: `diffEditor.insertedTextBackground`, `diffEditor.removedTextBackground`
+	 */
 	diffEditor: {
+		/** Added text background (inline) */
 		insertedTextBackground: ColorValue;
+		/** Removed text background (inline) */
 		removedTextBackground: ColorValue;
+		/** Added line background (full line) */
 		insertedLineBackground: ColorValue;
+		/** Removed line background (full line) */
 		removedLineBackground: ColorValue;
+		/** Diagonal fill for unchanged regions */
 		diagonalFill: ColorValue;
 	};
 
+	/**
+	 * Merge conflict editor.
+	 * @example VS Code: `merge.currentHeaderBackground`, `merge.incomingHeaderBackground`
+	 */
 	merge: {
+		/** "Current" (HEAD) header background */
 		currentHeaderBackground: ColorValue;
+		/** "Current" content background */
 		currentContentBackground: ColorValue;
+		/** "Incoming" (merge source) header background */
 		incomingHeaderBackground: ColorValue;
+		/** "Incoming" content background */
 		incomingContentBackground: ColorValue;
+		/** Common ancestor header background */
 		commonHeaderBackground: ColorValue;
+		/** Common ancestor content background */
 		commonContentBackground: ColorValue;
 	};
 }
@@ -440,74 +651,406 @@ export interface UserInterface<ColorValue extends string> {
 	// Primitives (semantic building blocks)
 	// ═══════════════════════════════════════════════════════════════════════════
 
-	/** Background layers from back to front */
+	/**
+	 * Background color layers from back to front (z-order).
+	 * @example VS Code: `editor.background`, `sideBar.background`, `editorWidget.background`
+	 * @example Zed: `background`, `surface.background`, `elevated_surface.background`
+	 */
 	backgrounds: {
-		base: ColorValue; // window/titlebar
-		darker: ColorValue; // panels, sidebars
-		surface: ColorValue; // editor, sidebar, panel
-		raised: ColorValue; // dropdowns, widgets, hover cards
-		overlay: ColorValue; // modals, notifications
-		codeBlock: ColorValue; // code blocks (optional)
+		/** Base layer - window chrome, title bar */
+		base: ColorValue;
+		/** Darker areas - activity bar, some panels */
+		darker: ColorValue;
+		/** Primary surfaces - editor, sidebar, panel */
+		surface: ColorValue;
+		/** Raised elements - dropdowns, widgets, hover cards */
+		raised: ColorValue;
+		/** Top layer - modals, notifications, overlays */
+		overlay: ColorValue;
+		/** Code blocks in markdown/chat (optional) */
+		codeBlock: ColorValue;
 	};
 
-	/** Foreground/text colors */
+	/**
+	 * Foreground/text color hierarchy.
+	 * @example VS Code: `foreground`, `descriptionForeground`, `disabledForeground`
+	 * @example Zed: `text`, `text.muted`, `text.placeholder`
+	 */
 	foregrounds: {
-		default: ColorValue; // primary text
-		muted: ColorValue; // secondary text (inactive tabs, descriptions)
-		subtle: ColorValue; // disabled, placeholders
-		accent: ColorValue; // links, highlighted text
-		focused: ColorValue; // focused elements
+		/** Primary text color */
+		default: ColorValue;
+		/** Secondary text - inactive tabs, descriptions */
+		muted: ColorValue;
+		/** Tertiary text - disabled, placeholders */
+		subtle: ColorValue;
+		/** Accent text - links, highlighted items */
+		accent: ColorValue;
+		/** Focused element text */
+		focused: ColorValue;
 	};
 
-	/** Border colors */
+	/**
+	 * Border color hierarchy.
+	 * @example VS Code: `panel.border`, `focusBorder`, `contrastBorder`
+	 * @example Zed: `border`, `border.variant`, `border.focused`
+	 */
 	borders: {
-		default: ColorValue; // standard borders
-		active: ColorValue; // focused/selected borders
-		subtle: ColorValue; // subtle dividers
-		separator: ColorValue; // separators
+		/** Standard borders between sections */
+		default: ColorValue;
+		/** Active/focused element borders */
+		active: ColorValue;
+		/** Subtle dividers, less prominent */
+		subtle: ColorValue;
+		/** Separator lines */
+		separator: ColorValue;
 	};
 
-	/** Accent/brand colors */
+	elements: {
+		/** Default element background (buttons, lists, etc.) */
+		background: ColorValue;
+		/** Hover state background for elements */
+		hover: ColorValue;
+		active: ColorValue;
+		selected: ColorValue;
+		disabled: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
+		borderActive?: ColorValue;
+		foregroundActive?: ColorValue;
+		backgroundActive?: ColorValue;
+	}
+
+	subtleElements: {
+		background: ColorValue;
+		hover: ColorValue;
+		active: ColorValue;
+		selected: ColorValue;
+		disabled: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
+		borderActive?: ColorValue;
+		foregroundActive?: ColorValue;
+		backgroundActive?: ColorValue;
+	}
+
+	/**
+	 * Brand/accent colors for interactive elements.
+	 * @example VS Code: `button.background`, `badge.background`, `focusBorder`
+	 * @example Zed: `accents[0]`, `element.active`
+	 */
 	accent: {
-		primary: ColorValue; // buttons, badges, focus rings
-		primaryForeground: ColorValue; // text on primary accent
-		secondary?: ColorValue; // secondary actions
+		/** Primary accent - buttons, badges, focus rings */
+		primary: ColorValue;
+		/** Text color on primary accent background */
+		primaryForeground: ColorValue;
+		/** Secondary accent for less prominent actions */
+		secondary?: ColorValue;
+		palette?: string[]
 	};
 
-	/** Status/feedback colors */
+	panels: {
+		background: ColorValue;
+		foreground: ColorValue;
+		border?: ColorValue;
+		titleForeground?: ColorValue;
+		titleBackground?: ColorValue;
+
+	};
+
+	/**
+	 * Semantic status/feedback colors.
+	 * @example VS Code: `editorError.foreground`, `editorWarning.foreground`, `editorInfo.foreground`
+	 * @example Zed: `error`, `warning`, `info`, `success`
+	 */
 	status: {
+		/** Error state - validation failures, errors */
 		error: ColorValue;
+		/** Warning state - caution, deprecation */
 		warning: ColorValue;
+		/** Info state - hints, notifications */
 		info: ColorValue;
+		/** Success state - completion, positive feedback */
 		success: ColorValue;
 	};
 
-	/** Selection & highlighting */
+	/**
+	 * Text/code selection colors.
+	 * @example VS Code: `editor.selectionBackground`, `editor.inactiveSelectionBackground`
+	 * @example Zed: player selection colors
+	 */
 	selection: {
+		/** Primary selection background */
 		background: ColorValue;
+		/** Selection in focused editor */
 		backgroundActive?: ColorValue;
+		/** Selection in unfocused editor */
 		backgroundInactive?: ColorValue;
-		text?: ColorValue; // text selection in inputs
+		/** Selected text color (if different from default) */
+		text?: ColorValue;
 	};
 
+	/**
+	 * Line/word/selection highlighting colors.
+	 * @example VS Code: `editor.lineHighlightBackground`, `editor.wordHighlightBackground`
+	 * @example Zed: `editor.active_line.background`, `editor.document_highlight.read_background`
+	 */
 	highlights?: {
-		wordBackground?: ColorValue;
-		wordBorder?: ColorValue;
-		wordForeground?: ColorValue;
-		selectionForeground?: ColorValue;
-		selectionBorder?: ColorValue;
-		selectionBackgroundInactive?: ColorValue;
-		selectionBackgroundActive?: ColorValue;
+		/** Active/current line highlight */
+		activeLine: {
+			background: ColorValue;
+			foreground?: ColorValue;
+		}
+		/** Word highlight (e.g., same symbol occurrences) */
+		word: {
+			background: ColorValue;
+			border?: ColorValue;
+			foreground?: ColorValue;
+			backgroundStrong?: ColorValue;
+		}
+		/** Selection highlighting */
+		selection: {
+			backgroundInactive: ColorValue;
+			backgroundActive: ColorValue;
+			foreground?: ColorValue;
+			border?: ColorValue;
+		}
 	};
 
-	/** Git/SCM decorations */
+	/**
+	 * Indentation guide lines.
+	 * @example VS Code: `editorIndentGuide.background`, `editorIndentGuide.activeBackground`
+	 * @example Zed: `editor.indent_guide`, `editor.active_indent_guide`
+	 */
+	indentGuide: {
+		/** Default indent guide color */
+		background: ColorValue;
+		/** Indent guide for the active scope */
+		activeBackground: ColorValue;
+	};
+
+	/**
+	 * Whitespace character rendering (spaces, tabs).
+	 * @example VS Code: `editorWhitespace.foreground`
+	 * @example Zed: `editor.invisible`
+	 */
+	whitespace: {
+		foreground: ColorValue;
+	};
+
+	/**
+	 * Editor ruler (vertical line at column position).
+	 * @example VS Code: `editorRuler.foreground`
+	 * @example Zed: `editor.wrap_guide`
+	 */
+	ruler: {
+		foreground: ColorValue;
+	}
+
+	/**
+	 * Line number gutter colors.
+	 * @example VS Code: `editorLineNumber.foreground`, `editorLineNumber.activeForeground`
+	 * @example Zed: `editor.line_number`, `editor.active_line_number`
+	 */
+	lineNumbers: {
+		/** Default line number color */
+		foreground: ColorValue;
+		/** Active/current line number color */
+		activeForeground: ColorValue;
+	};
+
+	/**
+	 * Inlay hints (inline type hints, parameter names).
+	 * @example VS Code: `editorInlayHint.foreground`, `editorInlayHint.background`
+	 */
+	inlineHints: {
+		foreground: ColorValue;
+		background: ColorValue;
+		border: ColorValue;
+	}
+
+	/**
+	 * Hover information widget (documentation popups).
+	 * @example VS Code: `editorHoverWidget.background`, `editorHoverWidget.foreground`
+	 */
+	hoverWidget: {
+		background: ColorValue;
+		foreground: ColorValue;
+		border: ColorValue;
+	};
+
+	/**
+	 * Git/SCM decoration colors for file status in explorer and SCM views.
+	 * @example VS Code: `gitDecoration.addedResourceForeground`, `gitDecoration.modifiedResourceForeground`
+	 * @example Zed: `created`, `modified`, `deleted`
+	 */
 	git: {
+		/** New/added files */
 		added: ColorValue;
+		/** Modified/changed files */
 		modified: ColorValue;
+		/** Deleted/removed files */
 		deleted: ColorValue;
+		/** Untracked files (not in git) */
 		untracked?: ColorValue;
+		/** Ignored files (in .gitignore) */
 		ignored?: ColorValue;
+		/** Files with merge conflicts */
 		conflict?: ColorValue;
+		/**
+		 * Color for renamed files in file explorer/SCM views.
+		 * @example VS Code: `gitDecoration.renamedResourceForeground`
+		 * @example Zed: `renamed`
+		 */
+		renamed?: ColorValue;
+		/**
+		 * Color for staged modified files.
+		 * @example VS Code: `gitDecoration.stageModifiedResourceForeground`
+		 */
+		stageModified?: ColorValue;
+		/**
+		 * Color for staged deleted files.
+		 * @example VS Code: `gitDecoration.stageDeletedResourceForeground`
+		 */
+		stageDeleted?: ColorValue;
+		/**
+		 * Color for submodule resources.
+		 * @example VS Code: `gitDecoration.submoduleResourceForeground`
+		 */
+		submodule?: ColorValue;
+	};
+
+	/**
+	 * Editor cursor appearance.
+	 * @example VS Code: `editorCursor.foreground`
+	 * @example Zed: player cursor color
+	 */
+	cursor: {
+		foreground: ColorValue;
+	};
+
+	/**
+	 * Window chrome colors (borders, title bar accents).
+	 * @example VS Code: `window.activeBorder`, `window.inactiveBorder`
+	 */
+	window?: {
+		/** Border color when window is focused */
+		activeBorder?: ColorValue;
+		/** Border color when window is not focused */
+		inactiveBorder?: ColorValue;
+	};
+
+	/**
+	 * Default icon colors throughout the UI.
+	 * @example VS Code: `icon.foreground`
+	 * @example Zed: `icon`, `icon.muted`
+	 */
+	icon?: {
+		/** Default icon color */
+		foreground: ColorValue;
+		/** Muted/secondary icon color */
+		muted?: ColorValue;
+		/** Disabled icon color */
+		disabled?: ColorValue;
+	};
+
+	/**
+	 * Focus indicator colors (keyboard navigation).
+	 * @example VS Code: `focusBorder`, `contrastBorder`
+	 * @example Zed: `border.focused`
+	 */
+	focus?: {
+		/** Border color for focused elements */
+		border: ColorValue;
+		/** High contrast border (accessibility) */
+		contrastBorder?: ColorValue;
+	};
+
+	/**
+	 * Menu/dropdown colors.
+	 * @example VS Code: `menu.background`, `menu.foreground`, etc.
+	 */
+	menu?: {
+		background: ColorValue;
+		foreground: ColorValue;
+		/** Background when hovering/selecting a menu item */
+		selectionBackground: ColorValue;
+		/** Foreground when hovering/selecting a menu item */
+		selectionForeground: ColorValue;
+		/** Separator line between menu sections */
+		separatorBackground?: ColorValue;
+	};
+
+	/**
+	 * Autocomplete/suggestion widget colors.
+	 * @example VS Code: `editorSuggestWidget.*`
+	 * @example Zed: completion menu styling
+	 */
+	suggestWidget?: {
+		background?: ColorValue;
+		foreground?: ColorValue;
+		border?: ColorValue;
+		/** Background of selected suggestion */
+		selectedBackground?: ColorValue;
+	};
+
+	/**
+	 * Progress bar/indicator colors.
+	 * @example VS Code: `progressBar.background`
+	 */
+	progressBar?: {
+		background: ColorValue;
+	};
+
+	/**
+	 * Debug console output colors.
+	 * @example VS Code: `debugConsole.infoForeground`, `debugConsole.errorForeground`, etc.
+	 */
+	debug?: {
+		/** Info messages (stdout, general output) */
+		infoForeground: ColorValue;
+		/** Warning messages */
+		warningForeground: ColorValue;
+		/** Error messages (stderr) */
+		errorForeground: ColorValue;
+		/** Source file references in stack traces */
+		sourceForeground?: ColorValue;
+	};
+
+	/**
+	 * Text content colors (links, preformatted, separators).
+	 * @example VS Code: `textLink.foreground`, `textPreformat.*`, `textSeparator.foreground`
+	 */
+	text?: {
+		/** Hyperlink color */
+		linkForeground: ColorValue;
+		/** Preformatted/code text background */
+		preformatBackground?: ColorValue;
+		/** Preformatted/code text foreground */
+		preformatForeground?: ColorValue;
+		/** Separator line color */
+		separatorForeground?: ColorValue;
+	};
+
+	/**
+	 * Error display colors (editor squiggles, list items).
+	 * @example VS Code: `editorError.background`, `list.errorForeground`
+	 */
+	error?: {
+		/** Background behind error text/squiggles */
+		background?: ColorValue;
+		/** Error text in lists/trees */
+		listForeground?: ColorValue;
+	};
+
+	/**
+	 * Peek view colors (inline reference/definition views).
+	 * @example VS Code: `peekViewEditor.matchHighlightBackground`, `peekViewTitleDescription.foreground`
+	 */
+	peekView?: {
+		/** Highlight color for matches in peek editor */
+		matchHighlightBackground?: ColorValue;
+		/** Title description text color */
+		titleDescriptionForeground?: ColorValue;
 	};
 
 	// ═══════════════════════════════════════════════════════════════════════════

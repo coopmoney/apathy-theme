@@ -7,7 +7,7 @@
 import { make, type ThemeDefinition } from "./types";
 import { SemanticTokenModifier } from "../types";
 import Color from "color";
-import { mix } from "./utils";
+import { darken, lighten, mix } from "./utils";
 
 // ============================================================================
 // 1. Color Palette
@@ -140,215 +140,105 @@ export const v = (k: PaletteValue): PaletteValue => k;
 // ============================================================================
 // 2. Theme Definition
 // ============================================================================
-
-export const apatheticOcean: ThemeDefinition = {
-  name: "Apathetic Ocean",
-  type: "dark",
-  palette,
-  background: palette.background,
-
-  tokens: {
-    source: palette.softWhite,
-    comments: palette.charcoal,
-    strings: make({
-      default: palette.wasabi,
-      regex: palette.rose,
-    }),
-    operators: {
-      default: palette.razzmatazz,
-    },
-
-    literals: {
-      default: palette.cyan,
-      string: palette.wasabi,
-      number: palette.cyan,
-      boolean: palette.cyan,
-      null: palette.cyan,
-      undefined: palette.cyan,
-      regex: palette.rose,
-    },
-
-    keywords: {
-      default: palette.softBlue,
-      control: "#e3e1e8a8",
-      declaration: palette.gray,
-      import: palette.importPurple,
-      modifier: "#5b6467",
-      operator: palette.razzmatazz,
-    },
-
-    variables: {
-      default: "#e3e1e8c7",
-      local: palette.steel,
-      parameter: palette.paramPurple,
-      property: palette.steel,
-      global: palette.amber,
-      other: palette.steel,
-    },
-
-    constants: {
-      default: palette.cyan,
-      numeric: palette.cyan,
-      language: palette.cyan,
-      userDefined: palette.steel,
-    },
-
-    functions: {
-      default: "#f5e0dc",
-      declaration: palette.seafoam,
-      call: "#f5e0dc",
-      method: "#f5e0dc",
-      builtin: palette.seafoam,
-    },
-
-    types: {
-      default: palette.lightOrchid,
-      primitive: palette.lightOrchid,
-      class: palette.lightOrchid,
-      interface: palette.ice,
-      enum: palette.lightOrchid,
-      typeParameter: palette.ice,
-      namespace: palette.namespace,
-    },
-
-    punctuation: {
-      default: palette.faintGray,
-      definition: "#362942",
-      delimiter: palette.faintGray,
-      bracket: "#362942",
-      accessor: palette.accessor,
-    },
-
-    meta: {
-      default: palette.lightOrchid,
-      decorator: palette.pink,
-      macro: palette.pink,
-      annotation: palette.pink,
-      label: palette.softBlue,
-    },
-    storage: {
-      default: "#5b6467",
-      type: "#5b6467",
-    },
-  },
-
-  languageOverrides: {
-    python: {
-      functions: {
-        default: palette.yellow,
-        declaration: palette.yellow,
-        call: "#96d5ce",
-      },
-      storage: {
-        default: "#fe90a0",
-        type: "#fe90a0",
-      },
-    },
-    go: {
-      functions: {
-        default: "#73bf9c",
-      },
-    },
-  },
-
-  // Semantic overrides for fine-tuning
-  semantic: {
-    comment: palette.muted,
-    string: palette.wasabi,
-    keyword: palette.softBlue,
-    number: palette.cyan,
-    regexp: palette.rose,
-    operator: palette.razzmatazz,
-    namespace: palette.namespace,
-    type: palette.gold,
-    struct: palette.lightOrchid,
-    class: palette.classColor,
-    interface: palette.ice,
-    enum: palette.lightOrchid,
-    typeParameter: palette.ice,
-    function: palette.seafoam,
-    method: palette.seafoam,
-    decorator: palette.pink,
-    macro: palette.pink,
-    variable: "#999eb8",
-    parameter: palette.paramPurple,
-    property: palette.blush,
-    label: palette.softBlue,
-  },
-
-  // Modifier handlers
-  modifiers: {
-    [SemanticTokenModifier.documentation]: {
-      global: { foreground: palette.muted, fontStyle: "italic" },
-    },
-    [SemanticTokenModifier.static]: {
-      global: { fontStyle: "" },
-    },
-    [SemanticTokenModifier.deprecated]: {
-      global: { fontStyle: "strikethrough" },
-    },
-    [SemanticTokenModifier.modification]: {
-      global: { foreground: "#ffd014d4" },
-    },
-    [SemanticTokenModifier.async]: {
-      transform: (color: string) => Color(color).mix(Color(palette.softBlue), 0.1).hex(),
-    },
-  },
-
-  ui: {
-    backgrounds: {
-      base: palette.background,
-      surface: palette.gutterBg,
-      raised: palette.suggestBg,
-      overlay: palette.widgetBg,
-    },
-    foregrounds: {
-      default: palette.softWhite,
-      muted: "#827b90cf",
-      subtle: palette.inputBorder,
-      accent: palette.cyan,
-    },
-    borders: {
-      default: palette.widgetBorder,
-      active: "#182356",
-      subtle: palette.tabBorder,
-    },
-    accent: {
-      primary: palette.cyan,
-      primaryForeground: palette.brightGreen,
-      secondary: palette.gold,
-    },
-    status: {
-      error: palette.errorRed,
-      warning: palette.gold,
-      info: palette.info,
-      success: palette.addedGreen,
-    },
-    selection: {
-      background: palette.selection,
-      backgroundInactive: palette.inactiveSelection,
-      text: palette.white,
-    },
-    git: {
-      added: palette.addedGreen,
-      modified: palette.gitModified,
-      deleted: palette.gitDeleted,
-      untracked: palette.addedGreen,
-      ignored: "#515670",
-      conflict: palette.deletedRed,
-    },
-    overrides: {
+const backgrounds: ThemeDefinition["ui"]["backgrounds"] = {
+  base: palette.background,
+  surface: palette.panelBg,
+  raised: lighten(palette.background, 0.5),
+  overlay: palette.widgetBg,
+  darker: darken(palette.background, 0.1),
+  codeBlock: darken(palette.background, 0.5),
+};
+const foregrounds: ThemeDefinition["ui"]["foregrounds"] = {
+  default: palette.softWhite,
+  muted: "#827b90cf",
+  subtle: palette.inputBorder,
+  accent: palette.cyan,
+  focused: palette.white,
+};
+const borders: ThemeDefinition["ui"]["borders"] = {
+  default: palette.focusBorder,
+  active: "#182356",
+  subtle: palette.tabBorder,
+  separator: lighten(palette.background, 0.56)
+};
+const accent: ThemeDefinition["ui"]["accent"] = {
+  primary: palette.cyan,
+  primaryForeground: palette.brightGreen,
+  secondary: palette.gold,
+};
+const status: ThemeDefinition["ui"]["status"] = {
+  error: palette.errorRed,
+  warning: palette.gold,
+  info: palette.info,
+  success: palette.addedGreen,
+};
+const selection: ThemeDefinition["ui"]["selection"] = {
+  background: palette.selection,
+  backgroundInactive: palette.inactiveSelection,
+  text: palette.white,
+};
+const git: ThemeDefinition["ui"]["git"] = {
+  added: palette.addedGreen,
+  modified: palette.gitModified,
+  deleted: palette.gitDeleted,
+  untracked: palette.addedGreen,
+  ignored: "#515670",
+  conflict: palette.deletedRed,
+};
+const ui: ThemeDefinition["ui"] = {
+  backgrounds,
+  foregrounds,
+  borders,
+  accent,
+  status,
+  selection,
+  git,
+  elements: {
+    background: palette.buttonBg,
+    hover: "#8d61ff2e",
+    active: palette.buttonBg,
+    selected: palette.listActive,
+    disabled: "#26242a54",
+    foreground: foregrounds.default,
+    border: palette.buttonBorder,
+  }
+  // panels: {
+  //   background: palette.panelBg,
+  //   border: palette.tabBorder,
+  // },
+  // tabs: {
+  //   headerBackground: palette.tabHeaderBg,
+  //   border: palette.tabBorder,
+  //   activeBorder: palette.tabActiveBorder,
+  // },
+  // indentGuide: {
+  //   default: palette.indentGuide,
+  //   active: palette.indentGuideActive,
+  // },
+  // ruler: {
+  //   color: palette.ruler,
+  // },
+}
+const overrides: ThemeDefinition["ui"]["overrides"] = {
       editor: {
         background: palette.background,
         foreground: palette.mist,
         lineHighlight: palette.lineHighlight,
         lineHighlightBorder: palette.lineHighlight,
-        selectionHighlight: palette.selectionHighlight,
-        wordHighlight: palette.wordHighlight,
-        wordHighlightStrong: palette.wordHighlightStrong,
-        findMatchHighlight: palette.findMatchHighlight,
-        findMatch: palette.findMatch,
-        rangeHighlight: "#2A244120",
+        lineNumberActiveForeground: palette.softWhite,
+        lineNumberForeground: palette.charcoal,
+        inactiveSelectionBackground: palette.inactiveSelection,
+        selectionBackground: palette.selection,
+        selectionHighlightBackground: palette.selectionHighlight,
+        findMatchBackground: palette.findMatch,
+        findMatchHighlightBackground: palette.findMatchHighlight,
+        findRangeHighlightBackground: "#39324952",
+        // line: palette.selectionHighlight,
+        // wordHighlight: palette.wordHighlight,
+        // wordHighlightStrong: palette.wordHighlightStrong,
+        // findMatchHighlight: palette.findMatchHighlight,
+        // findMatch: palette.findMatch,
+        // rangeHighlight: "#2A244120",
       },
       editorGutter: {
         background: palette.gutterBg,
@@ -511,7 +401,165 @@ export const apatheticOcean: ThemeDefinition = {
         incomingContentBackground: mix(palette.gold, palette.background, 0.3),
         commonContentBackground: mix("#45414C", palette.background, 0.3),
       },
+    };
+
+export const apatheticOcean: ThemeDefinition = {
+  name: "Apathetic Ocean",
+  type: "dark",
+  palette,
+  background: palette.background,
+
+  tokens: {
+    source: palette.softWhite,
+    comments: palette.charcoal,
+    strings: make({
+      default: palette.wasabi,
+      regex: palette.rose,
+    }),
+    operators: {
+      default: palette.razzmatazz,
     },
+
+    literals: {
+      default: palette.cyan,
+      string: palette.wasabi,
+      number: palette.cyan,
+      boolean: palette.cyan,
+      null: palette.cyan,
+      undefined: palette.cyan,
+      regex: palette.rose,
+    },
+
+    keywords: {
+      default: palette.softBlue,
+      control: "#e3e1e8a8",
+      declaration: palette.gray,
+      import: palette.importPurple,
+      modifier: "#5b6467",
+      operator: palette.razzmatazz,
+    },
+
+    variables: {
+      default: "#e3e1e8c7",
+      local: palette.steel,
+      parameter: palette.paramPurple,
+      property: palette.steel,
+      global: palette.amber,
+      other: palette.steel,
+    },
+
+    constants: {
+      default: palette.cyan,
+      numeric: palette.cyan,
+      language: palette.cyan,
+      userDefined: palette.steel,
+    },
+
+    functions: {
+      default: "#f5e0dc",
+      declaration: palette.seafoam,
+      call: "#f5e0dc",
+      method: "#f5e0dc",
+      builtin: palette.seafoam,
+    },
+
+    types: {
+      default: palette.lightOrchid,
+      primitive: palette.lightOrchid,
+      class: palette.lightOrchid,
+      interface: palette.ice,
+      enum: palette.lightOrchid,
+      typeParameter: palette.ice,
+      namespace: palette.namespace,
+    },
+
+    punctuation: {
+      default: palette.faintGray,
+      definition: "#362942",
+      delimiter: palette.faintGray,
+      bracket: "#362942",
+      accessor: palette.accessor,
+    },
+
+    meta: {
+      default: palette.lightOrchid,
+      decorator: palette.pink,
+      macro: palette.pink,
+      annotation: palette.pink,
+      label: palette.softBlue,
+    },
+    storage: {
+      default: "#5b6467",
+      type: "#5b6467",
+    },
+  },
+
+  languageOverrides: {
+    python: {
+      functions: {
+        default: palette.yellow,
+        declaration: palette.yellow,
+        call: "#96d5ce",
+      },
+      storage: {
+        default: "#fe90a0",
+        type: "#fe90a0",
+      },
+    },
+    go: {
+      functions: {
+        default: "#73bf9c",
+      },
+    },
+  },
+
+  // Semantic overrides for fine-tuning
+  semantic: {
+    comment: palette.muted,
+    string: palette.wasabi,
+    keyword: palette.softBlue,
+    number: palette.cyan,
+    regexp: palette.rose,
+    operator: palette.razzmatazz,
+    namespace: palette.namespace,
+    type: palette.gold,
+    struct: palette.lightOrchid,
+    class: palette.classColor,
+    interface: palette.ice,
+    enum: palette.lightOrchid,
+    typeParameter: palette.ice,
+    function: palette.seafoam,
+    method: palette.seafoam,
+    decorator: palette.pink,
+    macro: palette.pink,
+    variable: "#999eb8",
+    parameter: palette.paramPurple,
+    property: palette.blush,
+    label: palette.softBlue,
+  },
+
+  // Modifier handlers
+  modifiers: {
+    [SemanticTokenModifier.documentation]: {
+      global: { foreground: palette.muted, fontStyle: "italic" },
+    },
+    [SemanticTokenModifier.static]: {
+      global: { fontStyle: "" },
+    },
+    [SemanticTokenModifier.deprecated]: {
+      global: { fontStyle: "strikethrough" },
+    },
+    [SemanticTokenModifier.modification]: {
+      global: { foreground: "#ffd014d4" },
+    },
+    [SemanticTokenModifier.async]: {
+      transform: (color: string) => Color(color).mix(Color(palette.softBlue), 0.1).hex(),
+    },
+  },
+
+  ui: {
+    ...ui,
+    overrides
   },
 };
 
