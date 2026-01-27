@@ -652,6 +652,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "deleted.border": gitDeleted,
     error,
     "error.background": withAlpha(darken(error, 0.5), 0.5),
+    // "error.background": transparentize(c("ui.error.background"), 0.5),
     "error.border": error,
     hidden: gitIgnored,
     "hidden.background": withAlpha(gitIgnored, 0.25),

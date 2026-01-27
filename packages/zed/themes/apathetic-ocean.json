@@ -7,7 +7,7 @@
 			"name": "Apathetic Ocean",
 			"appearance": "dark",
 			"style": {
-				"background.appearance": "blurred",
+				"background.appearance": "transparent",
 				"accents": [
 					"#ff0000",
 					"#ff7f00",
@@ -129,9 +129,9 @@
 				"deleted": "#914c54",
 				"deleted.background": "#914C5414",
 				"deleted.border": "#914c54",
-				"error": "#b70b24",
-				"error.background": "#5B061280",
-				"error.border": "#b70b24",
+				"error": "#FF6188",
+				"error.background": "#100404e6",
+				"error.border": "#FF6188",
 				"hidden": "#515670",
 				"hidden.background": "#51567040",
 				"hidden.border": "#515670",
@@ -189,9 +189,9 @@
 						"selection": "#FFCB6B40"
 					},
 					{
-						"cursor": "#b70b24",
-						"background": "#b70b24",
-						"selection": "#B70B2440"
+						"cursor": "#FF6188",
+						"background": "#FF6188",
+						"selection": "#FF618840"
 					}
 				],
 				"syntax": {

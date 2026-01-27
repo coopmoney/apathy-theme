@@ -7,7 +7,7 @@
 import { make, type ThemeDefinition } from "./types";
 import { SemanticTokenModifier } from "../types";
 import Color from "color";
-import { darken, lighten, mix } from "./utils";
+import { darken, lighten, mix, transparentize } from "./utils";
 
 // ============================================================================
 // 1. Color Palette
@@ -71,6 +71,7 @@ export enum palette {
   pink = "#f184bce6",
   coral = "#FF7859",
   errorRed = "#b70b24",
+  errorRedForeground = "#943c4c",
   gitDeleted = "#914c54",
   deletedRed = "#e46876",
 
@@ -167,7 +168,7 @@ const accent: ThemeDefinition["ui"]["accent"] = {
   secondary: palette.gold,
 };
 const status: ThemeDefinition["ui"]["status"] = {
-  error: palette.errorRed,
+  error: palette.rose,
   warning: palette.gold,
   info: palette.info,
   success: palette.addedGreen,
@@ -193,6 +194,40 @@ const ui: ThemeDefinition["ui"] = {
   status,
   selection,
   git,
+  hoverWidget: {
+    background: palette.widgetBg,
+    border: palette.widgetBorder,
+    foreground: palette.widgetFg,
+  },
+  cursor: {
+    foreground: palette.white,
+  },
+  window: {
+    activeBorder: palette.focusBorder,
+  },
+  suggestWidget: {
+    background: palette.suggestBg,
+    border: palette.widgetBorder,
+    foreground: palette.widgetFg,
+  },
+  lineNumbers: {
+    activeForeground: palette.softWhite,
+    foreground: palette.charcoal,
+  },
+  inlineHints: {
+    border: palette.scrollbarBorder,
+    background: lighten(palette.background, 0.2),
+    foreground: palette.muted,
+  },
+  subtleElements: {
+    background: lighten(palette.background, 0.3),
+    foreground: mix(palette.softWhite, palette.background, 0.7),
+    active: mix(palette.softWhite, palette.background, 0.3),
+    hover: mix(palette.softWhite, palette.background, 0.5),
+    selected: mix(palette.softWhite, palette.background, 0.2),
+    disabled: mix(palette.softWhite, palette.background, 0.8),
+    border: mix(palette.softWhite, palette.background, 0.6),
+  },
   elements: {
     background: palette.buttonBg,
     hover: "#8d61ff2e",
@@ -201,6 +236,25 @@ const ui: ThemeDefinition["ui"] = {
     disabled: "#26242a54",
     foreground: foregrounds.default,
     border: palette.buttonBorder,
+  },
+  panels: {
+    background: palette.panelBg,
+    border: palette.tabBorder,
+    foreground: foregrounds.default,
+  },
+  indentGuide: {
+    activeBackground: palette.indentGuideActive,
+    background: palette.indentGuide,
+  },
+  ruler: {
+    foreground: palette.ruler,
+  },
+  whitespace: {
+    foreground: palette.whitespace,
+  },
+  error: {
+    background: transparentize(palette.errorRed, 0.5),
+    listForeground: palette.errorRedForeground,
   }
   // panels: {
   //   background: palette.panelBg,
@@ -242,9 +296,9 @@ const overrides: ThemeDefinition["ui"]["overrides"] = {
       },
       editorGutter: {
         background: palette.gutterBg,
-        modifiedBackground: "#E9C062",
-        addedBackground: "#A8FF60",
-        deletedBackground: "#CC6666",
+        modifiedBackground: "#e9c162c0",
+        addedBackground: "#0a2b20ff",
+        deletedBackground: "#2c0c15ff",
         foldingControl: palette.charcoal,
       },
       editorLineNumber: {
@@ -387,10 +441,10 @@ const overrides: ThemeDefinition["ui"]["overrides"] = {
         titleForeground: "#E6E2D1",
       },
       diffEditor: {
-        insertedTextBackground: "#09131588",
-        removedTextBackground: "#2e060982",
-        insertedLineBackground: "#09131588",
-        removedLineBackground: "#1202049e",
+        insertedTextBackground: "#061611d9",
+        removedTextBackground: "#290011cc",
+        insertedLineBackground: "#091511",
+        removedLineBackground: "#12080b",
         diagonalFill: "#45414C",
       },
       merge: {
