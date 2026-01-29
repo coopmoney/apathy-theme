@@ -574,7 +574,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
 
     // Scrollbar
     "scrollbar.thumb.background": withAlpha(scrollbarThumb, 0.25),
-    "scrollbar.thumb.hover_background": withAlpha(scrollbarThumbHover, 0.5),
+    "scrollbar.thumb.hover_background": c("ui.overrides.scrollbar.sliderHoverBackground", "ui.backgrounds.raised"),
     "scrollbar.thumb.border": pal("scrollbarBorder", scrollbarBorder),
     "scrollbar.track.background": "#00000000",
     "scrollbar.track.border": "#00000000",
