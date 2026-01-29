@@ -287,7 +287,7 @@ const borders: UserInterface<PaletteValue | string>["borders"] = {
   default: lighten(palette.midnight, 0.4),
   active: palette.semiblack,
   subtle: lighten(palette.midnight, 0.2),
-  separator: palette.semiblack,
+  separator: lighten(palette.midnight, 0.4),
 };
 const accent: UserInterface<PaletteValue | string>["accent"] = {
   primary: palette.cyan,

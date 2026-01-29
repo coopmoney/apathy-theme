@@ -7,7 +7,7 @@
 			"name": "Apathetic Ocean",
 			"appearance": "dark",
 			"style": {
-				"background.appearance": "transparent",
+				"background.appearance": "blurred",
 				"accents": [
 					"#ff0000",
 					"#ff7f00",
@@ -130,7 +130,7 @@
 				"deleted.background": "#914C5414",
 				"deleted.border": "#914c54",
 				"error": "#FF6188",
-				"error.background": "#100404e6",
+				"error.background": "#B0002B80",
 				"error.border": "#FF6188",
 				"hidden": "#515670",
 				"hidden.background": "#51567040",
