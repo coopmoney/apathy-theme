@@ -79,5 +79,10 @@
 		"color": "^5.0.3",
 		"tsx": "^4.20.5",
 		"vsce": "^2.15.0"
+	},
+	"release-it": {
+		"hooks": {
+			"after:version:bump": "nix run nixpkgs#toml-cli -- set packages/zed/extension.toml version ${version} > /tmp/extension.toml && mv /tmp/extension.toml packages/zed/extension.toml && git add packages/zed/extension.toml"
+		}
 	}
 }
