@@ -63,7 +63,7 @@
 				"pane_group.border": "#45414C26",
 				"scrollbar.thumb.background": "#45414C40",
 				"scrollbar.thumb.hover_background": "#45414C80",
-				"scrollbar.thumb.border": "#45414C",
+				"scrollbar.thumb.border": "#00000000",
 				"scrollbar.track.background": "#00000000",
 				"scrollbar.track.border": "#00000000",
 				"editor.foreground": "#6e6a7b",

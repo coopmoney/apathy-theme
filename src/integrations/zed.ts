@@ -573,9 +573,9 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "pane_group.border": withAlpha(borderDefault, 0.15),
 
     // Scrollbar
-    "scrollbar.thumb.background": withAlpha(scrollbarThumb, 0.25),
+    "scrollbar.thumb.background": c("ui.overrides.scrollbar.sliderBackground", "ui.borders.subtle"),
     "scrollbar.thumb.hover_background": c("ui.overrides.scrollbar.sliderHoverBackground", "ui.backgrounds.raised"),
-    "scrollbar.thumb.border": pal("scrollbarBorder", scrollbarBorder),
+    "scrollbar.thumb.border": "#00000000",
     "scrollbar.track.background": "#00000000",
     "scrollbar.track.border": "#00000000",
 

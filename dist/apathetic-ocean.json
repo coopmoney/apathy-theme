@@ -966,7 +966,7 @@
 				"punctuation"
 			],
 			"settings": {
-				"foreground": "#74727794"
+				"foreground": "#394060"
 			}
 		},
 		{
@@ -984,7 +984,7 @@
 				"punctuation.separator"
 			],
 			"settings": {
-				"foreground": "#74727794"
+				"foreground": "#394060"
 			}
 		},
 		{
@@ -993,7 +993,7 @@
 				"punctuation.terminator"
 			],
 			"settings": {
-				"foreground": "#74727794"
+				"foreground": "#394060"
 			}
 		},
 		{

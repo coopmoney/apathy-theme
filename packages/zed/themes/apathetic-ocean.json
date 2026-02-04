@@ -63,7 +63,7 @@
 				"pane_group.border": "#A099AE26",
 				"scrollbar.thumb.background": "#45414C40",
 				"scrollbar.thumb.hover_background": "#45414C80",
-				"scrollbar.thumb.border": "#45414C",
+				"scrollbar.thumb.border": "#00000000",
 				"scrollbar.track.background": "#00000000",
 				"scrollbar.track.border": "#00000000",
 				"editor.foreground": "#8e93b0c2",
@@ -276,16 +276,16 @@
 						"color": "#96a5b6"
 					},
 					"punctuation": {
-						"color": "#74727794"
+						"color": "#394060"
 					},
 					"punctuation.bracket": {
 						"color": "#362942"
 					},
 					"punctuation.delimiter": {
-						"color": "#74727794"
+						"color": "#394060"
 					},
 					"punctuation.list_marker": {
-						"color": "#74727794"
+						"color": "#394060"
 					},
 					"punctuation.markup": {
 						"color": "#e0a2d3"

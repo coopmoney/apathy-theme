@@ -1,5 +1,5 @@
 {
   "hooks": {
-    "after:version:bump": "nix run nixpkgs#toml-cli -- set packages/zed/extension.toml version ${version} > /tmp/extension.toml && mv /tmp/extension.toml packages/zed/extension.toml && git add packages/zed/extension.toml"
+    "after:release": "bash packages/scripts/update-zed-submodule.sh"
   }
 }

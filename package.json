@@ -19,6 +19,9 @@
 		"color-theme",
 		"apathy"
 	],
+	"imports": {
+		"#/*": "./src/*"
+	},
 	"contributes": {
 		"configurationDefaults": {
 			"editor.semanticHighlighting.enabled": true

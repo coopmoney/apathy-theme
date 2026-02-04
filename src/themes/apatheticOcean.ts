@@ -8,6 +8,7 @@ import { make, type ThemeDefinition } from "./types";
 import { SemanticTokenModifier } from "../types";
 import Color from "color";
 import { darken, lighten, mix, transparentize } from "./utils";
+import { makeColors } from '@/core/color';
 
 // ============================================================================
 // 1. Color Palette
@@ -30,7 +31,7 @@ export enum palette {
   muted = "#4D4A56",
   gray = "#7d7a8b",
   lightGray = "#B5B5B5",
-  faintGray = "#74727794",
+  faintGray = "#394060",
   iconMuted = "#5f6384b8",
   scrollbarBorder = "#45414C",
 
@@ -45,7 +46,7 @@ export enum palette {
   importPurple = "#d09bd2",
 
   // Greens
-  wasabi = "#aac17b",
+  wasabi = "#95c17b",
   mint = "#A1EFE4",
   lime = "#A6E22E",
   lightGreen = "#79e3bd",
@@ -133,6 +134,8 @@ export enum palette {
   ansiBrightRed = "#FF6B82",
   ansiWhite = "#D1D3D9",
 }
+
+const colors = makeColors(palette);
 
 export type PaletteValue = `${palette}`;
 
@@ -473,7 +476,9 @@ export const apatheticOcean: ThemeDefinition = {
     operators: {
       default: palette.razzmatazz,
     },
-
+    special: {
+      jsxClass: colors.charcoal,,
+    },
     literals: {
       default: palette.cyan,
       string: palette.wasabi,

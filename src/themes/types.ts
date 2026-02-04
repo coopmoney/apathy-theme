@@ -22,6 +22,7 @@ import type {
 } from "../types";
 import type { ThemeFilters } from "../filters";
 import Color from "color";
+import type { Color as CoreColor } from "../core/color";
 
 // ============================================================================
 // Color Palette
@@ -220,7 +221,23 @@ export interface TokenAssignments {
  * @example VS Code: Maps directly to `editor.*`, `activityBar.*`, `sideBar.*`, etc.
  * @example Zed: Maps to `editor.*`, `tab_bar.*`, `status_bar.*`, etc.
  */
-export interface UIComponents<ColorValue extends string = string> {
+export type ColorLike = string | CoreColor;
+
+function toHex(value: unknown): string {
+	if (typeof value === "string") return value;
+	try {
+		const v: any = value as any;
+		if (v == null) return "";
+		if (typeof v.hex === "function") return v.hex();
+		if (v.cv && typeof v.cv.hex === "function") return v.cv.hex();
+		if (typeof v.toString === "function") return v.toString();
+	} catch (e) {
+		// fallthrough
+	}
+	return String(value as any);
+}
+
+export interface UIComponents<ColorValue extends ColorLike = string> {
 	/**
 	 * Main code editor area.
 	 * @example VS Code: `editor.background`, `editor.foreground`, `editor.selectionBackground`
@@ -646,7 +663,7 @@ export interface UIComponents<ColorValue extends string = string> {
 	};
 }
 
-export interface UserInterface<ColorValue extends string> {
+export interface UserInterface<ColorValue extends ColorLike> {
 	// ═══════════════════════════════════════════════════════════════════════════
 	// Primitives (semantic building blocks)
 	// ═══════════════════════════════════════════════════════════════════════════
@@ -1098,7 +1115,7 @@ export interface SemanticOverrides
 // Complete Theme Definition
 // ============================================================================
 
-export interface ThemeDefinition<ColorValue extends string = string> {
+export interface ThemeDefinition<ColorValue extends ColorLike = string> {
 	/** Name of the theme */
 	name: string;
 
@@ -1234,15 +1251,15 @@ export function getThemeValue<P extends ThemePath>(
 	for (const part of parts) {
 		if (current === null || current === undefined) {
 			// If we have a default from a parent, use it
-			if (typeof lastDefault === "string") {
-				return lastDefault;
+			if (lastDefault !== undefined) {
+				return toHex(lastDefault);
 			}
 			return null;
 		}
 		if (typeof current !== "object") {
 			// If we have a default from a parent, use it
-			if (typeof lastDefault === "string") {
-				return lastDefault;
+			if (lastDefault !== undefined) {
+				return toHex(lastDefault);
 			}
 			throw new Error(
 				`Cannot access '${part}' on non-object at path '${path}'`,
@@ -1252,7 +1269,7 @@ export function getThemeValue<P extends ThemePath>(
 		const obj = current as Record<string, unknown>;
 
 		// Track the default value at this level if it exists
-		if ("default" in obj && typeof obj.default === "string") {
+		if ("default" in obj) {
 			lastDefault = obj.default;
 		}
 
@@ -1280,10 +1297,10 @@ export function getThemeValue<P extends ThemePath>(
 	}
 
 	if (typeof current === "object" && "default" in (current as any)) {
-		return (current as any).default as string;
+		return toHex((current as any).default);
 	}
 
-	return current as string;
+	return toHex(current);
 }
 
 export function applyFilters(c: string, filters: ThemeFilters): string {
@@ -1349,11 +1366,10 @@ function getExactValue(theme: ThemeDefinition, path: string): string | null {
 		current = next;
 	}
 
-	// If we landed on an object with a default, don't use it - we want exact matches only
-	if (typeof current === "string") {
-		return current;
-	}
-	return null;
+	// If we landed on an object/value, convert color-like values to strings
+	if (current === null || current === undefined) return null;
+	if (typeof current === "string") return current;
+	return toHex(current);
 }
 
 export function strictColorFactory(t: ThemeDefinition) {
@@ -1387,7 +1403,8 @@ export function semanticFactory(t: ThemeDefinition) {
 		T extends SemanticTokenModifier,
 		S extends ThemePath,
 	>(path: P, fallback: S = "ui.foregrounds.default" as S, mod?: T): string {
-		let v: string = t.semantic?.[path] || getThemeValue(t, fallback) || t.ui.foregrounds.default;
+		const rawV = t.semantic?.[path] ?? getThemeValue(t, fallback) ?? t.ui.foregrounds.default;
+		let v: string = toHex(rawV);
 		const parts = path.split(".");
 		const last = parts.length > 1 ? parts[parts.length - 1] : null;
 		const mk = Object.keys(t.modifiers || {}).includes(last as string)
@@ -1400,7 +1417,8 @@ export function semanticFactory(t: ThemeDefinition) {
 			v = tokenModifier.transform(v);
 		} else if (tokenModifier?.global?.foreground) {
 			// mix colors
-			const color = Color(v).mix(Color(tokenModifier.global.foreground), 0.5);
+			const fg = toHex(tokenModifier.global.foreground);
+			const color = Color(v).mix(Color(fg), 0.5);
 			v = color.hex();
 		}
 		v = applyFilters(v, t.filters || {});
@@ -1418,16 +1436,16 @@ export function getComponentColor<P extends ComponentPath>(
   // Try override first
   const parts = path.split('.') as [keyof UIComponents, string];
   const [component, prop] = parts;
-  const override = theme.ui.overrides?.[component]?.[prop as keyof UIComponents[typeof component]];
-  if (override) return override;
+	const override = theme.ui.overrides?.[component]?.[prop as keyof UIComponents[typeof component]];
+	if (override) return toHex(override);
 
   // Use fallback mapping
   const fallbackPath = fallbacks[path];
   if (fallbackPath) {
-    return getThemeValue(theme, `ui.${fallbackPath}` as ThemePath) ?? theme.ui.foregrounds.default;
+		return getThemeValue(theme, `ui.${fallbackPath}` as ThemePath) ?? toHex(theme.ui.foregrounds.default);
   }
 
-  return theme.ui.foregrounds.default;
+	return toHex(theme.ui.foregrounds.default);
 }
 
 
@@ -1438,7 +1456,7 @@ export function uiFactory(t: ThemeDefinition) {
 	};
 }
 
-const fallbacks: Partial<Record<ComponentPath, UIPath>> = {
+const fallbacks: Record<string, UIPath> = {
 	// Editor
 	"editor.background": "backgrounds.surface",
 	"editor.foreground": "foregrounds.default",
