@@ -9,11 +9,11 @@ export class Color {
   ) {
     this.cv = ColorLib(input);
   }
-  lighter() {
-    return this.cv.lighten(0.2);
+  lighter(n = 0.2) {
+    return this.cv.lighten(n);
   }
-  darker() {
-    return this.cv.darken(0.2);
+  darker(n = 0.2) {
+    return this.cv.darken(n);
   }
   transparent(amount = 0.5)  {
     return this.cv.alpha(amount);

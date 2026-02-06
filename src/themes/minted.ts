@@ -9,6 +9,7 @@ import { make, UIComponents, type ThemeDefinition, type UserInterface } from "./
 import { SemanticTokenModifier } from "../types";
 import Color from "color";
 import { alpha20, alpha50, darken, l10, lighten, mix, transparentize } from "./utils";
+import { makeColors } from "@/core/color";
 
 // ============================================================================
 // 1. Color Palette
@@ -180,6 +181,7 @@ export enum palette {
 export type PaletteValue = `${palette}`;
 
 export const v = (k: PaletteValue): PaletteValue => k;
+const colors = makeColors(palette);
 
 // ============================================================================
 // 2. Theme Definition
@@ -562,7 +564,7 @@ const components: UIComponents<PaletteValue | string> = {
   },
   scrollbar: {
     shadow: palette.midnight,
-    sliderBackground: transparentize(palette.steel, 0.7),
+    sliderBackground: colors.midnight.lighter().hex(),
     sliderHoverBackground: palette.midnight,
     sliderActiveBackground: palette.midnight,
   },
