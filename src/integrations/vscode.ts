@@ -23,7 +23,6 @@ import {
 } from "../themes/types";
 import { applyFiltersToTheme, type ThemeFilters } from "../filters";
 import { SemanticTokenModifier, SemanticTokenType, vscode } from "../types";
-import Color from "color";
 
 // ============================================================================
 // VS Code Theme Output Types
@@ -358,6 +357,8 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		"button.background": c("ui.overrides.button.background", "ui.accent.primary"),
 		"button.foreground": c("ui.overrides.button.foreground", "ui.accent.primaryForeground"),
+		"button.border": c("ui.overrides.button.border", "ui.borders.default"),
+		"button.secondaryBorder": c("ui.overrides.button.secondaryBorder", "ui.borders.default"),
 		"button.hoverBackground": c("ui.overrides.button.hoverBackground", "ui.accent.primary"),
 		"button.secondaryBackground": c("ui.overrides.button.secondaryBackground", "ui.backgrounds.raised"),
 		"button.secondaryForeground": c("ui.overrides.button.secondaryForeground", "ui.foregrounds.default"),

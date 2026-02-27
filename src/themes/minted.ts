@@ -5,11 +5,10 @@
  * This preserves the exact same output while using the new system.
  */
 
-import { make, UIComponents, type ThemeDefinition, type UserInterface } from "./types";
+import { make, UIComponents, type ThemeDefinition, type UserInterface, type ColorLike } from "./types";
 import { SemanticTokenModifier } from "../types";
-import Color from "color";
+import { Color, makeColors } from "@/core/color";
 import { alpha20, alpha50, darken, l10, lighten, mix, transparentize } from "./utils";
-import { makeColors } from "@/core/color";
 
 // ============================================================================
 // 1. Color Palette
@@ -18,7 +17,7 @@ import { makeColors } from "@/core/color";
 export enum palette {
   // Backgrounds
   // midnight = "#0d1117",
-  midnight = "#0f0f15",
+  midnight = "#0e0e15",
   midnight2 = "#0e0e15",
   midnightLight = "#161620",
   midnightDark = "#07070a",
@@ -34,6 +33,8 @@ export enum palette {
   darkBlue = "#4B6672",      // luminance ~95
   bluegray = "#6372a1",      // luminance ~115
   "#527bb254" = "#527bb254", // luminance ~117
+  // named version
+  obsidian = "#201f31", // luminance ~117
   taupe = "#7f8797",         // luminance ~131
   // taupe = "#888278ff",         // luminance ~131
   mist = "#767b95c2",        // luminance ~149 #7f8797
@@ -41,7 +42,7 @@ export enum palette {
   slate = "#9aa1c7",         // luminance ~163
   flatwhite = "#b1b1bffa",   // luminance ~179
   devwhite = "#afd1e9cf",    // luminance ~202
-  white = "#e1e2e5",         // luminance ~226
+  white = "#e1e3e5",         // luminance ~226
 
   // Greens
   wasabi = "#c3dc8f",
@@ -178,9 +179,6 @@ export enum palette {
   lineNumberActiveFg = "#9B8FB5",
 }
 
-export type PaletteValue = `${palette}`;
-
-export const v = (k: PaletteValue): PaletteValue => k;
 const colors = makeColors(palette);
 
 // ============================================================================
@@ -270,31 +268,44 @@ const tokens: ThemeDefinition["tokens"] = {
       jsxClass: palette.blush,
     }
 };
-const backgrounds: UserInterface<PaletteValue | string>["backgrounds"] = {
-  base: palette.midnight,
-  darker: darken(palette.midnight, 0.2),
-  surface: lighten(palette.midnight, 0.15),
-  raised: lighten(palette.midnight, 1),
-  overlay: lighten(palette.midnight, 1),
-  codeBlock: palette["#08080c"],
+
+
+
+const core = {
+  background: colors.midnight,
+  accent: colors.lavender,
+  active: colors.lavender.desaturate(0.1).darker(0.4).transparent(0.4)
+} as const;
+
+
+const overlay = colors.charcoal.saturate().lighter().transparent(0.1).rotate(15).hexa();
+const backgrounds: UserInterface<ColorLike>["backgrounds"] = {
+  base: colors.midnight,
+  darker: colors.midnight.darker(0.2),
+  surface: colors.midnight.lighter(0.15),
+  raised: colors.obsidian,
+  overlay,
+  codeBlock: colors.midnightDark.darker(0.2),
 }
-const foregrounds: UserInterface<PaletteValue | string>["foregrounds"] = {
-  default: tokens.source,
-  muted: alpha20(palette.mist),
-  subtle: palette.charcoal,
-  accent: palette.cyan,
-  focused: lighten(palette.mist, 0.3),
+const focusColor = colors.mist.mix(colors.cyan, 0.5).lighter(0.2).transparent(0.6)
+const foregrounds: UserInterface<ColorLike>["foregrounds"] = {
+  default: colors.mist.mix(colors.midnight, 0.2),
+  muted: colors.mist.mix(colors.midnight, 0.5).mix(colors.charcoal, 2),
+  subtle: colors.charcoal.mix(colors.midnight, 0.3),
+  accent: core.accent,
+  focused: focusColor,
 }
-const borders: UserInterface<PaletteValue | string>["borders"] = {
-  default: lighten(palette.midnight, 0.4),
-  active: palette.semiblack,
-  subtle: lighten(palette.midnight, 0.2),
-  separator: lighten(palette.midnight, 0.4),
+const baseBorder = colors.charcoal.mix(colors.midnight, 0.8);
+const borders: UserInterface<ColorLike>["borders"] = {
+  default: baseBorder,
+  active: core.accent.desaturate(0.1).darker(0.4).transparent(0.4),
+  subtle: baseBorder.transparent(0.9),
+  separator: colors.mist.alpha(0.05).hexa(),
 };
-const accent: UserInterface<PaletteValue | string>["accent"] = {
-  primary: palette.cyan,
-  primaryForeground: palette.cyan,
-  secondary: palette.peach,
+const accent: UserInterface<ColorLike>["accent"] = {
+  primary: colors.ice,
+  primaryForeground: colors.ice,
+  secondary: colors.peach,
   palette: [
     "#88e6d6",
     "#C3E88D",
@@ -305,7 +316,7 @@ const accent: UserInterface<PaletteValue | string>["accent"] = {
   ]
 };
 
-const ui: UserInterface<PaletteValue | string> = {
+const ui: UserInterface<ColorLike> = {
   backgrounds,
   foregrounds,
   borders,
@@ -346,7 +357,7 @@ const ui: UserInterface<PaletteValue | string> = {
     foreground: palette.editorWhitespace,
   },
   ruler: {
-    foreground: palette.indentGuide,
+    foreground: core.accent.mix(colors.midnight),
   },
   lineNumbers: {
     foreground: palette.lineNumberFg,
@@ -363,7 +374,7 @@ const ui: UserInterface<PaletteValue | string> = {
     added: palette.seafoam,
     // modified: mix(palette.peach, palette.midnight, 0.2),
     modified: palette.bluegray,
-    deleted: palette.crimson,
+    deleted: colors.crimson.desaturate(0.4),
     untracked: palette.mist,
     ignored: palette.mist,
     conflict: palette.crimson,
@@ -432,7 +443,7 @@ const ui: UserInterface<PaletteValue | string> = {
   }
 };
 
-const components: UIComponents<PaletteValue | string> = {
+const components: UIComponents<ColorLike> = {
   editor: {
     background: darken(ui.backgrounds.base, 0.1),
     foreground: ui.foregrounds.default,
@@ -461,10 +472,10 @@ const components: UIComponents<PaletteValue | string> = {
   },
   editorGutter: {
     background: ui.backgrounds.darker,
-    modifiedBackground: mix(palette.gold, ui.backgrounds.base, 0.6),
-    addedBackground: mix(palette.seafoam, ui.backgrounds.base, 0.6),
-    deletedBackground: mix(palette.crimson, ui.backgrounds.base, 0.6),
-    foldingControl: mix(palette.steel, ui.backgrounds.base, 0.6),
+    modifiedBackground: colors.gold.transparent(),
+    addedBackground: colors.seafoam.transparent(),
+    deletedBackground: colors.crimson.transparent(),
+    foldingControl: colors.steel.transparent(),
   },
   editorLineNumber: {
     foreground: palette.charcoal,
@@ -509,7 +520,7 @@ const components: UIComponents<PaletteValue | string> = {
     foreground: palette.mist,
     border: ui.borders.default,
     debuggingBackground: palette.seafoam,
-    debuggingForeground: palette.crimson,
+    debuggingForeground: colors.ice.darker(0.8),
     noFolderBackground: palette.midnight,
     noFolderForeground: palette.mist,
   },
@@ -543,14 +554,20 @@ const components: UIComponents<PaletteValue | string> = {
     placeholderForeground: darken(palette.mist, 0.2),
     border: ui.borders.subtle,
   },
-  button: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    hoverBackground: palette.midnight,
-    secondaryBackground: palette.midnight,
-    secondaryForeground: palette.mist,
-    secondaryHoverBackground: palette.midnight,
-  },
+  button: (() => {
+    const bg = colors.midnight.mix(colors.devwhite, 0.15).rotate(15);
+    const secondaryBg = colors.midnight.transparent(0.1);
+    return {
+    background: bg,
+    foreground: colors.white.cool(1).darker(),
+    hoverBackground: bg.lighter(),
+    secondaryBackground: secondaryBg,
+    secondaryForeground: colors.blush.lighter(0.1).transparent(0.9),
+    secondaryHoverBackground: colors.midnight,
+    border: bg.lighter(),
+    secondaryBorder: bg.lighter(),
+  }
+  })(),
   dropdown: {
     background: palette.midnight,
     foreground: palette.mist,
@@ -564,7 +581,7 @@ const components: UIComponents<PaletteValue | string> = {
   },
   scrollbar: {
     shadow: palette.midnight,
-    sliderBackground: colors.midnight.lighter().hex(),
+    sliderBackground: colors.midnight.lighter(),
     sliderHoverBackground: palette.midnight,
     sliderActiveBackground: palette.midnight,
   },
@@ -625,14 +642,19 @@ const components: UIComponents<PaletteValue | string> = {
     removedLineBackground: "#1202049e",
     diagonalFill: palette.steel,
   },
-  merge: {
-    currentHeaderBackground: palette.midnight,
-    incomingHeaderBackground: palette.midnight,
-    commonHeaderBackground: palette.midnight,
-    currentContentBackground: mix(palette.seafoam, palette.midnight, 0.3),
-    incomingContentBackground: palette.peach,
-    commonContentBackground: mix(palette.steel, palette.midnight, 0.3),
-  },
+  merge: (() => {
+    const incoming = colors.midnight.mix(colors.seafoam, 0.1).saturate(1).darker(0.2);
+    const current = colors.midnight.mix(colors.cyan, 0.1).saturate(1).darker(0.2)
+    const common = colors.midnight.mix(colors.peach, 0.1).saturate(1).darker(0.2);
+     return {
+    currentHeaderBackground: current.darker(0.1),
+    currentContentBackground: current.darker(0.2),
+    incomingHeaderBackground: incoming.darker(0.1),
+    incomingContentBackground: incoming.darker(0.2),
+    commonHeaderBackground: common.darker(0.1),
+    commonContentBackground: common.darker(0.2),
+     }
+  })(),
   chat: {
     background: ui.backgrounds.darker,
     foreground: ui.foregrounds.default,
@@ -703,7 +725,7 @@ export const minted: ThemeDefinition = {
     },
 
     [SemanticTokenModifier.async]: {
-      transform: (color: string) => Color(color).mix(Color(palette.lavender), 0.1).hex(),
+      transform: (color: string) => new Color(color).mix(palette.lavender, 0.1),
     },
     [SemanticTokenModifier.declaration]: {
       transform: c => mix(c, ui.foregrounds.default, 0.5),
@@ -736,7 +758,7 @@ export const minted: ThemeDefinition = {
     "editorHoverWidget.foreground": palette.hoverFg,
 
     // Sidebar title (VS Code specific)
-    "sideBarTitle.foreground": transparentize(palette.white, 0.5),
+    "sideBarTitle.foreground": transparentize(palette.white, 0.5).hexa(),
 
     // Status bar debugging (VS Code specific states)
     "statusBar.debuggingBackground": palette.debuggingBg,

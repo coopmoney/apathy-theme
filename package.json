@@ -62,6 +62,7 @@
 	"private": true,
 	"scripts": {
 		"build": "bun run src/main.ts",
+		"dev": "bun run src/dev-server.ts",
 		"watch": "bun run --watch src/main.ts",
 		"bump:patch": "bun run src/main.ts bump patch",
 		"bump:minor": "bun run src/main.ts bump minor",

@@ -5,10 +5,10 @@
  * setting defaults and then overriding specific values.
  */
 
-import { make, type ThemeDefinition, ColorPalette, UserInterface, UIComponents } from "./types";
+import { make, type ThemeDefinition, ColorPalette, UserInterface, UIComponents, type ColorLike } from "./types";
 import { SemanticTokenModifier } from "../types";
 import { alpha20, darken, l10, lighten, mix, transparentize } from './utils';
-import Color from 'color';
+import { Color, makeColors } from '@/core/color';
 
 // ============================================================================
 // 1. Color Palette
@@ -90,7 +90,7 @@ const whites = {
   "700": palette["#527bb254"],
 }
 
-type CV = string;
+type CV = ColorLike;
 export const WHITE: CV = "#d1d3d9";
 export const MIDNIGHT: CV = "#0e0e15";
 export const MUTEDWHITE: CV = "#a7a4af";
@@ -236,54 +236,58 @@ export const CRIMSON: CV = "#E60063";
 
 export const v = (k: string): k is keyof typeof palette => k in palette;
 
+const colors = makeColors(palette);
+const bgbase = colors.midnight;
+const bgsurface = colors.midnight.lighter(0.2);
+
 // ============================================================================
 // 2. Theme Definition
 // ============================================================================
-const backgrounds: UserInterface<keyof typeof palette | string>["backgrounds"] = {
-  base: palette.midnight,
-  surface: lighten(palette.midnight, 0.2),
+const backgrounds: UserInterface<ColorLike>["backgrounds"] = {
+  base: bgbase,
+  surface: bgsurface,
   raised: lighten(palette.midnight, 0.6),
   overlay: mix(lighten(palette.midnight, 0.6), palette.peach, 0.05),
   darker: palette.black,
   codeBlock: palette.black,
 };
 
-const foregrounds: UserInterface<keyof typeof palette | string>["foregrounds"] = {
+const foregrounds: UserInterface<ColorLike>["foregrounds"] = {
   default: palette.mutedwhite,
   muted: palette.stormGray,
-  subtle: palette.charcoal,
+  subtle: palette.charcoal;,
   accent: palette.peach,
   focused: palette.vanillaCream,
 };
 
-const borders: UserInterface<keyof typeof palette | string>["borders"] = {
-  default: palette.sageGray,
+const borders: UserInterface<ColorLike>["borders"] = {
+  default: colors.sageGray.mix(colors.midnight, 0.5),
   active: palette.dustyBlue,
   subtle: palette.black,
   separator: palette.dark1,
 };
 
-const accent: UserInterface<keyof typeof palette | string>["accent"] = {
+const accent: UserInterface<ColorLike>["accent"] = {
   primary: palette.dustyBlue,
   primaryForeground: palette.cyan,
   secondary: palette.lavender,
 };
 
-const status: UserInterface<keyof typeof palette | string>["status"] = {
+const status: UserInterface<ColorLike>["status"] = {
   error: palette.crimson,
   warning: palette.gold,
   info: palette.cyan,
   success: palette.celery,
 };
 
-const selection: UserInterface<keyof typeof palette | string>["selection"] = {
+const selection: UserInterface<ColorLike>["selection"] = {
   background: mix(foregrounds.default, palette.midnight, 0.5),
   backgroundInactive: transparentize(palette.mutedwhite, 0.1),
   text: palette.charcoal,
   backgroundActive: lighten(palette.cyan, 0.4),
 };
 
-const highlights: UserInterface<keyof typeof palette | string>["highlights"] = {
+const highlights: UserInterface<ColorLike>["highlights"] = {
   activeLine: {
     background: lighten(backgrounds.base, 0.5),
   },
@@ -368,7 +372,7 @@ const tokens: ThemeDefinition["tokens"] = {
 
 
 
-const ui: UserInterface<keyof typeof palette | string> = {
+const ui: UserInterface<ColorLike> = {
   backgrounds,
   foregrounds,
   borders,
@@ -376,6 +380,39 @@ const ui: UserInterface<keyof typeof palette | string> = {
   status,
   selection,
   highlights,
+  panels: {
+    background: backgrounds.surface,
+    border: borders.default,
+    titleBackground: backgrounds.surface,
+    titleForeground: foregrounds.default,
+    foreground: foregrounds.default,
+  },
+  indentGuide: {
+    background: palette.dark1,
+    activeBackground: palette.dark1,
+
+  },
+  window: {},
+  whitespace: {
+    foreground: palette.dark1,
+  },
+  ruler: {
+    foreground: palette.dark1,
+  },
+  lineNumbers: {
+    foreground: palette.dark1,
+    activeForeground: palette.mist,
+  },
+  inlineHints: {
+    background: transparentize(palette.steel, 0.5),
+    foreground: palette.mist,
+    border: transparentize(palette.steel, 0.5),
+  },
+  highlights: {
+    activeLine: {
+      background: lighten(backgrounds.base, 0.5),
+    },
+  },
   git: {
     // added: mix(palette.seafoam, palette.midnight, 0.5),
     added: mix(foregrounds.muted, palette.celery, 0.2),
@@ -421,6 +458,9 @@ const components: UIComponents = {
   editorLineNumber: {
     foreground: palette.charcoal,
     activeForeground: palette.mist,
+  },
+  window: {
+    borders: palette.semiblack,
   },
   activityBar: {
     background: palette.black,
@@ -645,7 +685,7 @@ export const slate: ThemeDefinition = {
     },
 
     [SemanticTokenModifier.async]: {
-      transform: (color: string) => Color(color).mix(Color(palette.lavender), 0.1).hex(),
+      transform: (color: string) => new Color(color).mix(palette.lavender, 0.1),
     },
   },
   ui: {

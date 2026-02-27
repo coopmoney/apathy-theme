@@ -1,6 +1,6 @@
 /**
  * Color filters for post-processing themes
- * 
+ *
  * Apply these filters after theme generation to adjust
  * contrast, brightness, saturation, and other color properties.
  */
@@ -43,16 +43,16 @@ export interface ThemeFilters {
  */
 function isColor(value: string): boolean {
   if (!value || typeof value !== "string") return false;
-  
+
   // Hex colors
   if (/^#[0-9A-Fa-f]{3,8}$/.test(value)) return true;
-  
+
   // RGB/RGBA
   if (/^rgba?\s*\(/.test(value)) return true;
-  
+
   // HSL/HSLA
   if (/^hsla?\s*\(/.test(value)) return true;
-  
+
   return false;
 }
 
@@ -119,7 +119,7 @@ export function applyFilters(colorStr: string, filters: ThemeFilters): string {
 
     // Custom filter
     if (filters.custom) {
-      const result = filters.custom(color.hex());
+      const result = filters.custom(color.hexa());
       color = Color(result);
     }
 
@@ -128,7 +128,7 @@ export function applyFilters(colorStr: string, filters: ThemeFilters): string {
       return color.alpha(Color(colorStr).alpha()).hexa();
     }
 
-    return color.hex();
+    return color.hexa();
   } catch {
     // If color parsing fails, return original
     return colorStr;
@@ -148,7 +148,7 @@ export function applyFiltersWithContext(
   try {
     let color = Color(colorStr);
     const hasAlpha = color.alpha() < 1;
-    const effectiveContext = context === "auto" 
+    const effectiveContext = context === "auto"
       ? (isLightColor(colorStr) ? "foreground" : "background")
       : context;
 
@@ -164,7 +164,7 @@ export function applyFiltersWithContext(
     }
 
     // Then apply the rest
-    const tempHex = hasAlpha ? color.alpha(Color(colorStr).alpha()).hexa() : color.hex();
+    const tempHex = hasAlpha ? color.alpha(Color(colorStr).alpha()).hexa() : color.hexa();
     return applyFilters(tempHex, {
       ...filters,
       foregroundLightness: undefined,
@@ -184,7 +184,7 @@ export function applyFiltersWithContext(
  */
 export function applyFiltersToObject<T>(obj: T, filters: ThemeFilters): T {
   if (!filters || Object.keys(filters).length === 0) return obj;
-  
+
   if (typeof obj === "string") {
     return applyFilters(obj, filters) as unknown as T;
   }
@@ -206,7 +206,7 @@ export function applyFiltersToObject<T>(obj: T, filters: ThemeFilters): T {
 
 /**
  * Apply filters to a VS Code theme object
- * 
+ *
  * This intelligently applies filters to colors, tokenColors, and semanticTokenColors.
  */
 export function applyFiltersToTheme<T extends {
@@ -222,8 +222,8 @@ export function applyFiltersToTheme<T extends {
 
   return {
     ...theme,
-    colors: theme.colors 
-      ? applyFiltersToObject(theme.colors, filters) 
+    colors: theme.colors
+      ? applyFiltersToObject(theme.colors, filters)
       : theme.colors,
     tokenColors: theme.tokenColors
       ? theme.tokenColors.map((token) => ({

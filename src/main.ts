@@ -5,7 +5,9 @@
 import * as bun from "bun";
 import { mapVSCode } from "./integrations/vscode";
 import { mapZed } from "./integrations/zed";
+import { generatePreviewHTML } from "./integrations/preview";
 import type { Modifier, ThemeDefinition, TokenAssignments } from "./themes/types";
+import { toHex } from "./core/color";
 import { presets as filterPresets, type ThemeFilters } from "./filters";
 
 // Import theme definitions
@@ -61,7 +63,7 @@ const themes: ThemeConfig[] = [
 ];
 
 function applyModifiers(obj: Record<string, string | Modifier>): Record<string, string> {
-  const defaultColor = obj.default as string;
+  const defaultColor = toHex(obj.default);
   if (!defaultColor) {
     throw new Error("Default color is required");
   }
@@ -72,7 +74,7 @@ function applyModifiers(obj: Record<string, string | Modifier>): Record<string, 
     if (typeof value === "function") {
       output[key] = value(defaultColor);
     } else {
-      output[key] = value as string;
+      output[key] = toHex(value);
     }
   }
   return output;
@@ -192,7 +194,66 @@ Examples:
       await bun.write(config.zedOutputPath, JSON.stringify(zedTheme, null, "\t"));
       console.log(`Built: ${config.theme.name} (Zed) -> ${config.zedOutputPath}`);
     }
+
+    // Generate HTML preview
+    const previewSlug = config.outputPath.replace("./dist/", "").replace(".json", "");
+    const previewPath = `./dist/previews/${previewSlug}.html`;
+    const previewHtml = generatePreviewHTML(config.theme);
+    await bun.write(previewPath, previewHtml);
+    console.log(`Built: ${config.theme.name} (preview) -> ${previewPath}`);
   }
+
+  // Generate preview index page
+  const previewIndex = generatePreviewIndex(themes);
+  await bun.write("./dist/previews/index.html", previewIndex);
+  console.log("Built: preview index -> ./dist/previews/index.html");
+}
+
+function generatePreviewIndex(configs: ThemeConfig[]): string {
+  const links = configs.map(c => {
+    const slug = c.outputPath.replace("./dist/", "").replace(".json", "");
+    const bg = toHex(c.theme.ui.backgrounds.base) || "#0f0f15";
+    const fg = toHex(c.theme.ui.foregrounds.default) || "#e1e2e5";
+    const accent = toHex(c.theme.ui.accent.primary) || "#33b3cc";
+    return `<a href="${slug}.html" class="theme-card" style="background:${bg};color:${fg};border-color:${accent}22">
+      <div class="card-accent" style="background:${accent}"></div>
+      <div class="card-name">${c.theme.name}</div>
+      <div class="card-type">${c.theme.type}</div>
+      <div class="card-palette">${Object.values(c.theme.palette).slice(0, 8).map((color: any) => `<span class="mini-swatch" style="background:${toHex(color)}"></span>`).join("")}</div>
+    </a>`;
+  }).join("\n    ");
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apathy Theme Previews</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0e; color: #c0c0c8; padding: 48px; }
+  h1 { font-size: 32px; margin-bottom: 8px; color: #e1e2e5; }
+  .subtitle { opacity: .5; margin-bottom: 32px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .theme-card { display: block; text-decoration: none; color: inherit; border-radius: 12px; border: 1px solid; overflow: hidden; transition: transform .15s, box-shadow .15s; }
+  .theme-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px #00000060; }
+  .card-accent { height: 4px; }
+  .card-name { font-size: 20px; font-weight: 600; padding: 20px 20px 4px; }
+  .card-type { font-size: 13px; opacity: .5; padding: 0 20px; text-transform: uppercase; letter-spacing: .5px; }
+  .card-palette { display: flex; gap: 4px; padding: 16px 20px 20px; }
+  .mini-swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid #ffffff10; }
+  .timestamp { text-align: center; opacity: .3; font-size: 11px; padding: 32px 0; }
+</style>
+</head>
+<body>
+  <h1>🎨 Apathy Theme Previews</h1>
+  <div class="subtitle">Click a theme to see the full preview</div>
+  <div class="grid">
+    ${links}
+  </div>
+  <div class="timestamp">Generated ${new Date().toISOString()}</div>
+</body>
+</html>`;
 }
 
 async function bumpVersion(part: "patch" | "minor" | "major") {

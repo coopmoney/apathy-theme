@@ -6,9 +6,8 @@
 
 import { make, type ThemeDefinition } from "./types";
 import { SemanticTokenModifier } from "../types";
-import Color from "color";
+import { Color, makeColors } from '@/core/color';
 import { darken, lighten, mix, transparentize } from "./utils";
-import { makeColors } from '@/core/color';
 
 // ============================================================================
 // 1. Color Palette
@@ -477,7 +476,7 @@ export const apatheticOcean: ThemeDefinition = {
       default: palette.razzmatazz,
     },
     special: {
-      jsxClass: colors.charcoal,,
+      jsxClass: colors.charcoal,
     },
     literals: {
       default: palette.cyan,
@@ -612,7 +611,7 @@ export const apatheticOcean: ThemeDefinition = {
       global: { foreground: "#ffd014d4" },
     },
     [SemanticTokenModifier.async]: {
-      transform: (color: string) => Color(color).mix(Color(palette.softBlue), 0.1).hex(),
+      transform: (color: string) => new Color(color).mix(palette.softBlue, 0.1),
     },
   },
 

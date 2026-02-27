@@ -11,7 +11,7 @@ import {
   get,
 } from "../themes/types";
 import type { ThemeFilters } from "../filters";
-import Color from "color";
+import { Color } from '../core/color';
 import { mix } from '../themes/utils';
 
 // ============================================================================
@@ -237,7 +237,7 @@ export interface BuildOptions {
  */
 function withAlpha(color: string, alpha: number): string {
   try {
-    return Color(color).alpha(alpha).hexa();
+    return new Color(color).alpha(alpha).hexa();
   } catch {
     return color;
   }
@@ -248,7 +248,7 @@ function withAlpha(color: string, alpha: number): string {
  */
 function lighten(color: string, amount: number): string {
   try {
-    return Color(color).lighten(amount).hex();
+    return new Color(color).lighter(amount).hexa();
   } catch {
     return color;
   }
@@ -259,7 +259,7 @@ function lighten(color: string, amount: number): string {
  */
 function darken(color: string, amount: number): string {
   try {
-    return Color(color).darken(amount).hex();
+    return new Color(color).darker(amount).hexa();
   } catch {
     return color;
   }
@@ -590,7 +590,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "editor.active_line_number": activeLineNumber,
     "editor.hover_line_number": pal("lineNumberHover", muted),
     "editor.invisible": pal("whitespace", borderSubtle),
-    "editor.wrap_guide": pal("ruler", withAlpha(borderDefault, 0.13)),
+    "editor.wrap_guide": pal("ruler", borderSubtle),
     "editor.active_wrap_guide": pal("indentGuideActive", withAlpha(borderActive, 0.86)),
     "editor.indent_guide": pal("indentGuide", withAlpha(borderDefault, 0.1)),
     "editor.indent_guide_active": pal("indentGuideActive", withAlpha(borderActive, 0.3)),
@@ -682,7 +682,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "unreachable.background": withAlpha(subtle, 0.25),
     "unreachable.border": subtle,
     warning,
-    "warning.background": withAlpha(warning, 0.25),
+    "warning.background": withAlpha(warning, 0.5),
     "warning.border": warning,
 
     players,

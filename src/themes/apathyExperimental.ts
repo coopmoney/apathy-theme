@@ -6,7 +6,7 @@
 
 import { make, type ThemeDefinition } from "./types";
 import { SemanticTokenModifier } from "../types";
-import Color from "color";
+import { Color } from "@/core/color";
 import { mix } from "./utils";
 
 // ============================================================================
@@ -277,7 +277,7 @@ export const apathyExperimental: ThemeDefinition = {
       global: { foreground: palette.gitModified },
     },
     [SemanticTokenModifier.async]: {
-      transform: (color: string) => Color(color).mix(Color(palette.softBlue), 0.1).hex(),
+      transform: (color: string) => new Color(color).mix(palette.softBlue, 0.1),
     },
   },
 
