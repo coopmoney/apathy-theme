@@ -64,6 +64,15 @@ export enum palette {
   crimson = "#ca175d",
   gold = "#ffd014d4",
 
+  // UI foreground hierarchy
+  softMist = "#585B70",
+  dimGray = "#3A4158",
+  deepGray = "#2B2F3F",
+
+  // Surfaces & accents
+  nightPurple = "#201F31",
+  deletedRose = "#A63B65",
+
   // todo
   gray1 = "#5C5675",
   gray2 = "#3e3645d2",
@@ -374,7 +383,7 @@ const ui: UserInterface<ColorLike> = {
     added: palette.seafoam,
     // modified: mix(palette.peach, palette.midnight, 0.2),
     modified: palette.bluegray,
-    deleted: colors.crimson.desaturate(0.4),
+    deleted: palette.deletedRose,
     untracked: palette.mist,
     ignored: palette.mist,
     conflict: palette.crimson,

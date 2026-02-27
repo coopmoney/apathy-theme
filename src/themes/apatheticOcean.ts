@@ -476,7 +476,7 @@ export const apatheticOcean: ThemeDefinition = {
       default: palette.razzmatazz,
     },
     special: {
-      jsxClass: colors.charcoal,
+      jsxClass: palette.charcoal,
     },
     literals: {
       default: palette.cyan,
