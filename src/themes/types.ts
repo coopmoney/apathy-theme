@@ -22,7 +22,7 @@ import type {
 } from "../types";
 import type { ThemeFilters } from "../filters";
 import Color from "color";
-import { Color as CoreColor, type ColorLike, toHex } from "../core/color";
+import { Color as CoreColor, type ColorLike, toHex, Color } from "../core/color";
 
 // ============================================================================
 // Color Palette
@@ -223,7 +223,7 @@ export interface TokenAssignments {
  * @example VS Code: Maps directly to `editor.*`, `activityBar.*`, `sideBar.*`, etc.
  * @example Zed: Maps to `editor.*`, `tab_bar.*`, `status_bar.*`, etc.
  */
-export interface UIComponents<ColorValue extends ColorLike = string> {
+export interface UIComponents<ColorValue extends ColorLike = Color> {
 	/**
 	 * Main code editor area.
 	 * @example VS Code: `editor.background`, `editor.foreground`, `editor.selectionBackground`
@@ -1146,6 +1146,8 @@ export interface ThemeDefinition<ColorValue extends ColorLike = ColorLike> {
 	extraColors?: Record<string, string>;
 }
 
+export type ThemeDefinitionExtended = ThemeDefinition<Color>;
+
 // ============================================================================
 // Resolution helpers
 // ============================================================================
@@ -1366,7 +1368,7 @@ function getExactValue(theme: ThemeDefinition, path: string): string | null {
 	return toHex(current);
 }
 
-export function strictColorFactory(t: ThemeDefinition) {
+export function strictColorFactory(t: ThemeDefinition<string>) {
 	const c = colorFactory(t);
 
 	/**
