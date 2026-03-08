@@ -17,7 +17,7 @@ import { alpha20, alpha50, darken, l10, lighten, mix, transparentize } from "./u
 export enum palette {
   // Backgrounds
   // midnight = "#0d1117",
-  midnight = "#0e0e15",
+  midnight = "#0c0c13",
   midnight2 = "#0e0e15",
   midnightLight = "#161620",
   midnightDark = "#07070a",
@@ -48,7 +48,7 @@ export enum palette {
   wasabi = "#c3dc8f",
   wasabi2 = "#b7d194",
   // wasabi2 = "#82bfa6ff",
-  seafoam = "#7ce6bc",
+  seafoam = "#9cd6bc",
 
   // Blues & Cyans
   cyan = "#33b3cc",
@@ -282,8 +282,10 @@ const tokens: ThemeDefinition["tokens"] = {
 
 const core = {
   background: colors.midnight,
+  foreground: colors.mist.mix(colors.midnight, 0.2),
   accent: colors.lavender,
-  active: colors.lavender.desaturate(0.1).darker(0.4).transparent(0.4)
+  highlight: colors.peach,
+  active: colors.ice,
 } as const;
 
 
@@ -292,11 +294,11 @@ const backgrounds: UserInterface<ColorLike>["backgrounds"] = {
   base: colors.midnight,
   darker: colors.midnight.darker(0.2),
   surface: colors.midnight.lighter(0.15),
-  raised: colors.obsidian,
+  raised: colors.obsidian.mix(colors.midnight, 0.8).saturate(0.3),
   overlay,
   codeBlock: colors.midnightDark.darker(0.2),
 }
-const focusColor = colors.mist.mix(colors.cyan, 0.5).lighter(0.2).transparent(0.6)
+const focusColor = colors.peach
 const foregrounds: UserInterface<ColorLike>["foregrounds"] = {
   default: colors.mist.mix(colors.midnight, 0.2),
   muted: colors.mist.mix(colors.midnight, 0.5).mix(colors.charcoal, 2),
@@ -309,7 +311,7 @@ const borders: UserInterface<ColorLike>["borders"] = {
   default: baseBorder,
   active: core.accent.desaturate(0.1).darker(0.4).transparent(0.4),
   subtle: baseBorder.transparent(0.9),
-  separator: colors.mist.alpha(0.05).hexa(),
+  separator: colors.mist.alpha(0.1).hexa(),
 };
 const accent: UserInterface<ColorLike>["accent"] = {
   primary: colors.ice,
