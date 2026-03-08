@@ -5,18 +5,20 @@
 import * as bun from "bun";
 import { mapVSCode } from "./integrations/vscode";
 import { mapZed } from "./integrations/zed";
+import { mapShiki } from "./integrations/shiki";
+import { mapObsidian } from "./integrations/obsidian";
 import { generatePreviewHTML } from "./integrations/preview";
-import type { Modifier, ThemeDefinition, TokenAssignments } from "./themes/types";
+import type { ThemeDefinition } from "./themes/types";
 import { toHex } from "./core/color";
 import { presets as filterPresets, type ThemeFilters } from "./filters";
 
 // Import theme definitions
 import { minted } from "./themes/minted";
+import { mintedTheory } from "./themes/mintedTheory";
 import { slate } from "./themes/slate";
 import { apathy } from "./themes/apathy";
 import { apatheticOcean } from "./themes/apatheticOcean";
 import { apathyExperimental } from "./themes/apathyExperimental";
-import { TokenType } from "./types";
 
 interface ThemeConfig {
   theme: ThemeDefinition;
@@ -27,6 +29,10 @@ interface ThemeConfig {
   filters?: ThemeFilters;
   /** Output path for Zed theme (optional) */
   zedOutputPath?: string;
+  /** Output path for Shiki theme (optional) */
+  shikiOutputPath?: string;
+  /** Output path for Obsidian snippet (optional) */
+  obsidianOutputPath?: string;
 }
 
 const themes: ThemeConfig[] = [
@@ -35,51 +41,49 @@ const themes: ThemeConfig[] = [
     outputPath: "./dist/minted.json",
     // basePath: "./themes/minted.jsonc",
     zedOutputPath: "./packages/zed/themes/minted.json",
+    shikiOutputPath: "./dist/shiki/minted.json",
+    obsidianOutputPath: "./packages/obsidian/minted.css",
     // Example: You can add filters here to override/add to theme.filters
     // filters: filterPresets.lowContrast,
+  },
+  {
+    theme: mintedTheory,
+    outputPath: "./dist/minted-theory.json",
+    zedOutputPath: "./packages/zed/themes/minted-theory.json",
+    shikiOutputPath: "./dist/shiki/minted-theory.json",
+    obsidianOutputPath: "./packages/obsidian/minted-theory.css",
   },
   {
     theme: slate,
     outputPath: "./dist/slate.json",
     basePath: "./themes/minted.jsonc",
     zedOutputPath: "./packages/zed/themes/slate.json",
+    shikiOutputPath: "./dist/shiki/slate.json",
+    obsidianOutputPath: "./packages/obsidian/slate.css",
     // No basePath = fresh build
   },
   {
     theme: apathy,
     outputPath: "./dist/apathy.json",
     zedOutputPath: "./packages/zed/themes/apathy.json",
+    shikiOutputPath: "./dist/shiki/apathy.json",
+    obsidianOutputPath: "./packages/obsidian/apathy.css",
   },
   {
     theme: apatheticOcean,
     outputPath: "./dist/apathetic-ocean.json",
     zedOutputPath: "./packages/zed/themes/apathetic-ocean.json",
+    shikiOutputPath: "./dist/shiki/apathetic-ocean.json",
+    obsidianOutputPath: "./packages/obsidian/apathetic-ocean.css",
   },
   {
     theme: apathyExperimental,
     outputPath: "./dist/apathy-experimental.json",
     zedOutputPath: "./packages/zed/themes/apathy-experimental.json",
+    shikiOutputPath: "./dist/shiki/apathy-experimental.json",
+    obsidianOutputPath: "./packages/obsidian/apathy-experimental.css",
   },
 ];
-
-function applyModifiers(obj: Record<string, string | Modifier>): Record<string, string> {
-  const defaultColor = toHex(obj.default);
-  if (!defaultColor) {
-    throw new Error("Default color is required");
-  }
-  const output: Record<string, string> = {
-    default: defaultColor,
-  };
-  for (const [key, value] of Object.entries(obj)) {
-    if (typeof value === "function") {
-      output[key] = value(defaultColor);
-    } else {
-      output[key] = toHex(value);
-    }
-  }
-  return output;
-}
-
 
 /**
  * Parse CLI filter arguments
@@ -120,6 +124,38 @@ function parseFilterArgs(args: string[]): ThemeFilters {
   return filters;
 }
 
+function parseZedMaxSaturationArg(args: string[]): number | undefined {
+  const arg = args.find((entry) => entry.startsWith("--zed-max-saturation="));
+  if (!arg) return undefined;
+  const raw = Number.parseFloat(arg.split("=")[1]);
+  if (Number.isNaN(raw)) {
+    console.warn(`Invalid --zed-max-saturation value: ${arg.split("=")[1]}`);
+    return undefined;
+  }
+  if (raw < 0 || raw > 1) {
+    console.warn(`--zed-max-saturation should be between 0 and 1, got ${raw}. Clamping.`);
+  }
+  return Math.max(0, Math.min(1, raw));
+}
+
+function parseOptionalNumberArg(args: string[], key: string): number | undefined {
+  const arg = args.find((entry) => entry.startsWith(`${key}=`));
+  if (!arg) return undefined;
+  const raw = Number.parseFloat(arg.split("=")[1]);
+  if (Number.isNaN(raw)) {
+    console.warn(`Invalid ${key} value: ${arg.split("=")[1]}`);
+    return undefined;
+  }
+  return raw;
+}
+
+function parseOptionalStringArg(args: string[], key: string): string | undefined {
+  const arg = args.find((entry) => entry.startsWith(`${key}=`));
+  if (!arg) return undefined;
+  const raw = arg.split("=")[1]?.trim();
+  return raw ? raw : undefined;
+}
+
 async function main() {
   const args = bun.argv.slice(2);
 
@@ -145,6 +181,16 @@ Filter options (applied to all themes):
   --hue-shift=<0-360>      Shift hue in degrees
   --fg-lightness=<-1 to 1> Adjust foreground lightness
   --bg-lightness=<-1 to 1> Adjust background lightness
+  --zed-max-saturation=<0-1> Clamp Zed color saturation (default: 0.65)
+  --zed-saturated-base=<hex> Base color used to compute Zed saturated colors
+  --zed-saturated-count=<n> Number of computed saturated colors (default: 6)
+  --zed-saturated-hue-step=<deg> Hue step between generated colors (default: 26)
+  --zed-saturated-saturation=<0-1> Target saturation for generated colors
+  --zed-saturated-lightness=<0-1> Target lightness for generated colors
+  --zed-red-max-saturation=<0-1> Max saturation for red-ish colors
+  --zed-red-hue-center=<0-360> Hue center for red cap (default: 0)
+  --zed-red-hue-window=<0-180> Hue window for red cap (default: 28)
+  --zed-red-min-lightness=<0-1> Minimum lightness for red-ish colors
   --preset=<name>          Use a filter preset
 
 Available presets: ${Object.keys(filterPresets).join(", ")}
@@ -153,16 +199,35 @@ Examples:
   bun run build --contrast=0.2
   bun run build --preset=highContrast
   bun run build --saturation=-0.3 --brightness=0.1
+  bun run build --zed-max-saturation=0.55
+  bun run build --zed-saturated-base=#d08770 --zed-saturated-hue-step=22
+  bun run build --zed-red-max-saturation=0.4 --zed-red-min-lightness=0.58
 `);
     return;
   }
 
   // Parse CLI filters
   const cliFilters = parseFilterArgs(args);
+  const zedMaxSaturation = parseZedMaxSaturationArg(args);
+  const zedSaturatedBaseColor = parseOptionalStringArg(args, "--zed-saturated-base");
+  const zedSaturatedCount = parseOptionalNumberArg(args, "--zed-saturated-count");
+  const zedSaturatedHueStep = parseOptionalNumberArg(args, "--zed-saturated-hue-step");
+  const zedSaturatedSaturation = parseOptionalNumberArg(args, "--zed-saturated-saturation");
+  const zedSaturatedLightness = parseOptionalNumberArg(args, "--zed-saturated-lightness");
+  const zedRedMaxSaturation = parseOptionalNumberArg(args, "--zed-red-max-saturation");
+  const zedRedHueCenter = parseOptionalNumberArg(args, "--zed-red-hue-center");
+  const zedRedHueWindow = parseOptionalNumberArg(args, "--zed-red-hue-window");
+  const zedRedMinLightness = parseOptionalNumberArg(args, "--zed-red-min-lightness");
   const hasCliFilters = Object.keys(cliFilters).length > 0;
 
   if (hasCliFilters) {
     console.log("Applying filters:", cliFilters);
+  }
+  if (zedMaxSaturation !== undefined) {
+    console.log("Applying Zed max saturation:", zedMaxSaturation);
+  }
+  if (zedSaturatedBaseColor) {
+    console.log("Applying Zed saturated base color:", zedSaturatedBaseColor);
   }
 
   // Build all themes
@@ -190,9 +255,36 @@ Examples:
     if (config.zedOutputPath) {
       const zedTheme = mapZed(config.theme, {
         filters: Object.keys(filters).length > 0 ? filters : undefined,
+        maxSaturation: zedMaxSaturation,
+        saturatedBaseColor: zedSaturatedBaseColor,
+        saturatedColorCount: zedSaturatedCount,
+        saturatedHueStep: zedSaturatedHueStep,
+        saturatedSaturation: zedSaturatedSaturation,
+        saturatedLightness: zedSaturatedLightness,
+        redMaxSaturation: zedRedMaxSaturation,
+        redHueCenter: zedRedHueCenter,
+        redHueWindow: zedRedHueWindow,
+        redMinLightness: zedRedMinLightness,
       });
       await bun.write(config.zedOutputPath, JSON.stringify(zedTheme, null, "\t"));
       console.log(`Built: ${config.theme.name} (Zed) -> ${config.zedOutputPath}`);
+    }
+
+    // Build Shiki theme if output path is specified
+    if (config.shikiOutputPath) {
+      const shikiTheme = mapShiki(config.theme, {
+        filters: Object.keys(filters).length > 0 ? filters : undefined,
+      });
+      await bun.write(config.shikiOutputPath, JSON.stringify(shikiTheme, null, "\t"));
+      console.log(`Built: ${config.theme.name} (Shiki) -> ${config.shikiOutputPath}`);
+    }
+
+    if (config.obsidianOutputPath) {
+      const obsidianTheme = mapObsidian(config.theme, {
+        filters: Object.keys(filters).length > 0 ? filters : undefined,
+      });
+      await bun.write(config.obsidianOutputPath, obsidianTheme);
+      console.log(`Built: ${config.theme.name} (Obsidian) -> ${config.obsidianOutputPath}`);
     }
 
     // Generate HTML preview
@@ -219,7 +311,7 @@ function generatePreviewIndex(configs: ThemeConfig[]): string {
       <div class="card-accent" style="background:${accent}"></div>
       <div class="card-name">${c.theme.name}</div>
       <div class="card-type">${c.theme.type}</div>
-      <div class="card-palette">${Object.values(c.theme.palette).slice(0, 8).map((color: any) => `<span class="mini-swatch" style="background:${toHex(color)}"></span>`).join("")}</div>
+      <div class="card-palette">${Object.values(c.theme.palette).slice(0, 8).map((color) => `<span class="mini-swatch" style="background:${toHex(color)}"></span>`).join("")}</div>
     </a>`;
   }).join("\n    ");
 
